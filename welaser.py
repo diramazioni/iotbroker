@@ -45,6 +45,11 @@ PORT_FROM = int(os.getenv('PORT_FROM'))
 USER_FROM = os.getenv('USER_FROM')
 PASS_FROM = os.getenv('PASS_FROM')
 
+
+PATH_LOCAL = os.getenv('PATH_LOCAL')
+FIWARE = os.getenv('FIWARE')
+ENTITY = os.getenv('ENTITY')
+
 #  ==========================================
 #                global variables
 
