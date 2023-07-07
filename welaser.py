@@ -19,7 +19,7 @@ import time
 from time import strftime, localtime
 from datetime import datetime  # datetime data type
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv # legge codici di accesso
 #  ==========================================
 #          LOADS ENVIROMENT VARIABLES
 load_dotenv()
@@ -51,10 +51,7 @@ PASS_FROM = os.getenv('PASS_FROM')
 PATH_ROBOT = "/robot_images"
 PATH_FIELD = "/field_images"
 
-PATH_LOCAL = "/home/www/data"
 
-FIWARE = "/4jggokgpepnvsb2uv4s40d59ov/"
-ENTITY = "urn:ngsi-ld:"
 
 stopic1 = "WeLaser/PublicIntercomm/CameraToDashboard"
 stopic2 = "WeLaser/PublicIntercomm/RobotToDashboard"
@@ -73,7 +70,7 @@ remotePath = ""
 #                    MQTT(S)
 #--------------------------------------------
 def on_mqtt_connect(client, userdata, flags, rc):
-    global mqtt_connected  # Use global variable
+    #global mqtt_connected  # Use global variable
     if rc == 0:
         print("[INFO] Connected to MQTT broker - ARDESIA")
         mqtt_connected = True  # Signal connection
@@ -82,7 +79,7 @@ def on_mqtt_connect(client, userdata, flags, rc):
 
 # -------------------------------------------------
 def on_mqtts_connect(client, userdata, flags, rc):
-    global mqtts_connected  # Use global variable
+    #global mqtts_connected  # Use global variable
     if rc == 0:
         print("[INFO] Connected to MQTTS broker - WeLASER")
         mqtts_connected = True  # Signal connection
@@ -99,9 +96,9 @@ def on_mqtts_publish(client, userdata, result):
     
 # -------------------------------------------------
 def on_mqtt_message(client, userdata, result):
-    global device
-    global picture
-    global remotePath
+    #global device
+    #global picture
+    #global remotePath
      # Here Persistency could be configured -> always receive the same message ""
     message = str(result.payload.decode("utf-8")).replace(" ", "").replace("\'", "\"").replace('/n', '')
     print("---------vvvvvv ---- New Message on MQTT !")
@@ -113,7 +110,7 @@ def on_mqtt_message(client, userdata, result):
     device = content['nodeId']
     print('device = nodeId:',device)  
     packetType = content['packetType']
-    #print('packetType:',packetType)  
+    print('packetType:',packetType)  
     if (packetType == "picture") :
         picture = content['data'] 
         print( ">>>>>>>>>>>>>> WITH PICTURE:" + picture ) 
@@ -128,7 +125,7 @@ def on_mqtt_message(client, userdata, result):
 # ----------------------------------- INVIO FTP
         x = threading.Thread(target=ftp_bounce, args=(remotePath,device,picture,))
         x.start()
-        x.join(timeout=10)
+        #x.join(timeout=10)
 #       ftp_bounce(remotePath,device,picture)
 # --------------------------------        
 # preparo il topic (append)
@@ -157,12 +154,12 @@ def on_mqtts_message(client, userdata, result):
 # ----------------------------------- APPEND MESSAGE 
     y = threading.Thread(target=mess_append, args=(device,message))
     y.start()
-    y.join(timeout=10)
+    #y.join(timeout=10)
 # -------------------------------------------------
 # connect to mqtt ARDESIA
 def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
-    global mqtt_client
-    global mqtt_connected
+    #global mqtt_client
+    #global mqtt_connected
 
     if not mqtt_connected:
         mqtt_client.username_pw_set(mqtt_username, password=mqtt_password)
@@ -189,8 +186,8 @@ def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
 # -------------------------------------------------
 # conect a mqtts WeLASER
 def mqtts_connect(mqtt_username, mqtt_password, broker_endpoint, port):
-    global mqtts_client
-    global mqtts_connected
+    #global mqtts_client
+    #global mqtts_connected
 
     if not mqtts_connected:
         mqtts_client.username_pw_set(mqtt_username, password=mqtt_password)
@@ -305,8 +302,8 @@ def mess_append(device, message):
         return True
 # ==========================================================
 def main():
-    global mqtt_client
-    global mqtts_client
+# global mqtt_client
+# global mqtts_client
 # mi connetto a 'MQTTS WeLASER
     if not mqtts_connect(MQTTS_USERNAME,MQTTS_PASSWORD, MQTTS_BROKER, MQTTS_PORT):
         return False
@@ -334,6 +331,6 @@ def main():
     return True
 # ---------------------------------------------------------
 if __name__ == '__main__':
-    while True:
-        main()
-        time.sleep(60)
+#while True:
+    main()
+    #time.sleep(60)
