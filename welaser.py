@@ -251,36 +251,44 @@ def sendFile(ftp, remotePath, localPath, fileName):
     file.close()
 
 # -------------------------------------------------
+def ftp_connect(host,port,user,password):
+    try:
+        client_ftp = FTP()
+        client_ftp.debugging = 5
+        client_ftp.connect(host=host, port=port)
+        client_ftp.login(user=user, passwd=password)
+        return  client_ftp
+    except all_errors as e:
+        print(f"Error in Ftp -> {host} \n{e}")
 def ftp_bounce(remotePath,device,picture):
     print("THREAD <BOUNCE> LAUNCHED ",remotePath," <<<<<<<< ", picture)
     try:
-        client_from = FTP()
-        client_from.debugging = 5
-        client_from.connect(host=HOST_FROM, port=PORT_FROM)
-        client_from.login(user=USER_FROM,passwd=PASS_FROM)
+        client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
         print("connected ftp 1")
         retrieveFile(client_from, remotePath, PATH_LOCAL, picture)
         client_from.close()
         print("ftp 1 done")
+    except all_errors as e:
+        print('Error in Ftp1 -> ', e)
         # --------------------
-        client_to = FTP()
-        client_to.debugging = 5
-        client_to.connect(host=HOST_TO, port=PORT_TO)
-        client_to.login(user=USER_TO,passwd=PASS_TO)
+    try:
+        client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
         print("connected ftp 2")
         #-------------------
         sendFile(client_to,remotePath,PATH_LOCAL,picture)
         client_to.close()
         print("ftp 2 done")
-        # es> check if fix works
-        oldFile = os.path.join(PATH_LOCAL, picture)
-        newFile = os.path.join(PATH_LOCAL, device + '.jpg')
-        shutil.move(oldFile, newFile)
-        #os.system("mv -f " + oldFile +" "+newFile)
-        return True
     except all_errors as e:
-        print( 'Error in Ftp -> ', e )
+        print('Error in Ftp2 -> ', e)
         return False
+
+    # es> check if fix works
+    oldFile = os.path.join(PATH_LOCAL, picture)
+    newFile = os.path.join(PATH_LOCAL, device + '.jpg')
+    shutil.move(oldFile, newFile)
+        #os.system("mv -f " + oldFile +" "+newFile)
+    return True
+
 # ==========================================================
 #                    APPEND
 # -------------------------------------------------
@@ -359,12 +367,16 @@ def main():
     in_=""
     while not in_ in ["x","X"]:
         print("\/"*10 + "    WAITING FOR INPUT    " + "\/"*10 )
-        in_ = input('"x" to exit., \n"a" test ARDESIA \n"w" test WELASER \n')
+        in_ = input('"x" to exit., \n"a" test ARDESIA \n"w" test WELASER \n"f" test ftp 1 e 2 connections\n')
         print("\/"*40)
         if in_ in ["a", "A"]:
             test_ARDESIA()
         elif in_ in ["w", "W"]:
             test_WELASER()
+        elif in_ in ["f", "F"]:
+            print("test ftp connections")
+            client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
+            client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
     print("Quit!")
     mqtt_client.loop_stop()
     mqtts_client.loop_stop()
