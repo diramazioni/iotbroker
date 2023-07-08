@@ -236,20 +236,19 @@ def mqtt_subscribe(client,topic):
 def retrieveFile(ftp, remotePath, localPath, fileName):
     localFile = os.path.join(localPath,  fileName)
     print("retrieving:" + localFile)
-    file = open(localFile, 'wb')
-    ftp.cwd(remotePath)
-    ftp.retrbinary('RETR ' + fileName, file.write, 1024)
-    file.close()
+    with open(localFile, 'wb') as file:
+        ftp.cwd(remotePath)
+        ftp.retrbinary('RETR ' + fileName, file.write, 1024)
 
 # -------------------------------------------------
 def sendFile(ftp, remotePath, localPath, fileName):
     localFile = os.path.join(localPath,  fileName)
     print("sending:" + localFile)
     if os.path.exists(localFile):
-        file = open(localFile, 'rb')
-        ftp.cwd(remotePath)
-        ftp.storbinary('STOR '+ fileName , file)
-        file.close()
+        with open(localFile, 'rb') as file:
+        #file = open(localFile, 'rb')
+            ftp.cwd(remotePath)
+            ftp.storbinary('STOR '+ fileName , file)
     else:
         print("ftp file not found")
 
