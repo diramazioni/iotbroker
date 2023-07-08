@@ -12,14 +12,15 @@ import os
 import threading
 import paho.mqtt.client as mqttClient
 import json
-import ast # to convert string into dictionary
+#import ast # to convert string into dictionary
 import ssl
-from ftplib import FTP
+from ftplib import FTP, all_errors
 import time
 from time import strftime, localtime
-from datetime import datetime  # datetime data type
+#from datetime import datetime  # datetime data type
 
 from dotenv import load_dotenv # legge codici di accesso
+import shutil
 #  ==========================================
 #          LOADS ENVIROMENT VARIABLES
 load_dotenv()
@@ -122,10 +123,11 @@ def on_mqtt_message(client, userdata, result):
 # verifico chi produce l'immagine     
         camType = device[0:5]   # camtype = [camer | robot]
         print(" >>>> CAM >>>>> ",camType)
+        # es> paths should be built using os.path.join(path1, subdir, etc)
         remotePath = ""
         if camType == "camer":
             remotePath  = PATH_FIELD
-        if camType == "robot":
+        elif camType == "robot":
             remotePath  = PATH_ROBOT
 # ----------------------------------- INVIO FTP
         x = threading.Thread(target=ftp_bounce, args=(remotePath,device,picture,))
@@ -243,7 +245,7 @@ def mqtt_subscribe(client,topic):
 #                     FTP
 # -------------------------------------------------
 def retrieveFile(ftp, remotePath, localPath, fileName):
-    localFile = localPath + "/" + fileName
+    localFile = os.path.join(localPath,  fileName)
     print("retrieving:" + localFile)
     file = open(localFile, 'wb')
     ftp.cwd(remotePath)
@@ -252,7 +254,7 @@ def retrieveFile(ftp, remotePath, localPath, fileName):
 
 # -------------------------------------------------
 def sendFile(ftp, remotePath, localPath, fileName):
-    localFile = localPath + "/" + fileName
+    localFile = os.path.join(localPath,  fileName)
     print("sending:" + localFile)
     file = open(localFile, 'rb')
     ftp.cwd(remotePath)
@@ -262,30 +264,32 @@ def sendFile(ftp, remotePath, localPath, fileName):
 # -------------------------------------------------
 def ftp_bounce(remotePath,device,picture):
     print("THREAD <BOUNCE> LAUNCHED ",remotePath," <<<<<<<< ", picture)
-# --------------------
-    client_from = FTP()
-    client_from.debugging = 5
-    client_from.connect(host=HOST_FROM, port=PORT_FROM)
-    client_from.login(user=USER_FROM,passwd=PASS_FROM)
-    print("connected ftp 1")
-# --------------------
-    client_to = FTP()
-    client_to.debugging = 5
-    client_to.connect(host=HOST_TO, port=PORT_TO)
-    client_to.login(user=USER_TO,passwd=PASS_TO)
-    print("connected ftp 2")
-#-------------------
-    retrieveFile(client_from,remotePath,PATH_LOCAL,picture)
-    sendFile(client_to,remotePath,PATH_LOCAL,picture)
-
-    oldFile = PATH_LOCAL + picture
-    newFile = PATH_LOCAL + device + '.jpg'
-    os.system("mv -f " + oldFile +" "+newFile) 
- 
-    client_from.close()
-    client_to.close()
-
-    return True
+    try:
+        client_from = FTP()
+        client_from.debugging = 5
+        client_from.connect(host=HOST_FROM, port=PORT_FROM)
+        client_from.login(user=USER_FROM,passwd=PASS_FROM)
+        print("connected ftp 1")
+        # --------------------
+        client_to = FTP()
+        client_to.debugging = 5
+        client_to.connect(host=HOST_TO, port=PORT_TO)
+        client_to.login(user=USER_TO,passwd=PASS_TO)
+        print("connected ftp 2")
+        #-------------------
+        retrieveFile(client_from,remotePath,PATH_LOCAL,picture)
+        sendFile(client_to,remotePath,PATH_LOCAL,picture)
+        client_from.close()
+        client_to.close()
+        # es> check if fix works
+        oldFile = os.path.join(PATH_LOCAL, picture)
+        newFile = os.path.join(PATH_LOCAL, device + '.jpg')
+        shutil.move(oldFile, newFile)
+        #os.system("mv -f " + oldFile +" "+newFile)
+        return True
+    except all_errors as e:
+        print( 'Error in Ftp -> ', e )
+        return False
 # ==========================================================
 #                    APPEND
 # -------------------------------------------------
@@ -293,11 +297,13 @@ def mess_append(device, message):
     print("THREAD <APPEND> LAUNCHED on device:",device)
     # NON FA IN TEMPO..ARRIVA UN ALTRO MESSAGGIO
     if (device != "test") :
+        ''' # es> removed because managed by .env
         if os.name == "nt":
-            PATH_LOCAL = "DATA/"               
-        FNAME = PATH_LOCAL + device + '.txt'
+            PATH_LOCAL = "DATA/"'''
+        # es>
+        FNAME = os.path.join(PATH_LOCAL, device + '.txt')
         print("FNAME:" + FNAME)
-        if not os.path.isfile(FNAME):
+        if not os.path.exists(FNAME):
             file1 = open(FNAME, "w")  # NEW write file
         else:
             file1 = open(FNAME, "a")  # append mode
@@ -309,13 +315,11 @@ def mess_append(device, message):
 def main():
 # global mqtt_client
 # global mqtts_client
-# mi connetto a 'MQTTS WeLASER
-    if not mqtts_connect(MQTTS_USERNAME,MQTTS_PASSWORD, MQTTS_BROKER, MQTTS_PORT):
-        return False
-# mi connetto a 'MQTT Ardesia
-    if not mqtt_connect(MQTT_USERNAME,MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT):
-        return False
-# pubblico il messaggio TEST su MQTTS
+    # mi connetto a 'MQTTS WeLASER
+    mqtts_connect(MQTTS_USERNAME,MQTTS_PASSWORD, MQTTS_BROKER, MQTTS_PORT)
+    # mi connetto a 'MQTT Ardesia
+    mqtt_connect(MQTT_USERNAME,MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT)
+    # pubblico il messaggio TEST su MQTTS
     ptopic = "{}{}{}".format(FIWARE, ENTITY,"device:test/attrs")
     print("ptopic=" + ptopic)
     ID = "{}{}".format(ENTITY,"device:test")
@@ -325,15 +329,15 @@ def main():
                         #"timestamp": TS,
                         "message": 'test'})
     mqtt_publish(mqtts_client, ptopic, payload)
-# mi iscrivo a MQTTS
+    # mi iscrivo a MQTTS
     stopic = "{}{}".format(FIWARE, "+/attrs")
     print("WELASER stopic=" + stopic)
     mqtt_subscribe(mqtts_client, stopic)
-# mi iscrivo ad una certa classe di messaggi su MQTT
+    # mi iscrivo ad una certa classe di messaggi su MQTT
     stopic = "#"
     print("ARDESIA stopic=" + stopic)
     mqtt_subscribe(mqtt_client,stopic)  
-    return True
+
 # ---------------------------------------------------------
 if __name__ == '__main__':
 #while True:
