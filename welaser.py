@@ -245,10 +245,13 @@ def retrieveFile(ftp, remotePath, localPath, fileName):
 def sendFile(ftp, remotePath, localPath, fileName):
     localFile = os.path.join(localPath,  fileName)
     print("sending:" + localFile)
-    file = open(localFile, 'rb')
-    ftp.cwd(remotePath)
-    ftp.storbinary('STOR '+ fileName , file)
-    file.close()
+    if os.path.exists(localFile):
+        file = open(localFile, 'rb')
+        ftp.cwd(remotePath)
+        ftp.storbinary('STOR '+ fileName , file)
+        file.close()
+    else:
+        print("ftp file not found")
 
 # -------------------------------------------------
 def ftp_connect(host,port,user,password):
@@ -316,7 +319,7 @@ def test_WELASER():
     ptopic = "{}{}{}".format(FIWARE, ENTITY,"device:test/attrs")
     print("ptopic=" + ptopic)
     ID = "{}{}".format(ENTITY,"device:test")
-    EPOCH = round(time.time() * 1000)
+    #EPOCH = round(time.time() * 1000)
     #TS = strftime('%Y-%m-%d %H:%M:%S', localtime(EPOCH))
     payload = json.dumps({"id":ID,
                         #"timestamp": TS,
