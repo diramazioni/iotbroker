@@ -365,6 +365,9 @@ def main():
             test_ARDESIA()
         elif in_ in ["w", "W"]:
             test_WELASER()
+    print("Quit!")
+    mqtt_client.loop_stop()
+    mqtts_client.loop_stop()
 # ---------------------------------------------------------
 if __name__ == '__main__':
 #while True:
