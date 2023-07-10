@@ -121,7 +121,7 @@ def on_mqtt_message(client, userdata, result):
     if (packetType == "picture") :
         picture = content['data'] 
         print( ">>>>>>>>>>>>>> WITH PICTURE:" + picture ) 
-# verifico chi produce l'immagine     
+        # verifico chi produce l'immagine
         camType = device[0:5]   # camtype = [camer | robot]
         print(" >>>> CAM >>>>> ",camType)
         # es> paths should be built using os.path.join(path1, subdir, etc)
