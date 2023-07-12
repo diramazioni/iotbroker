@@ -130,10 +130,13 @@ def on_mqtt_message(client, userdata, result):
             remotePath  = PATH_FIELD
         elif camType == "robot":
             remotePath  = PATH_ROBOT
+
         # ----------------------------------- INVIO FTP
+        ftp_bounce(remotePath,device,picture)
+        '''
         x = threading.Thread(target=ftp_bounce, args=(remotePath,device,picture,))
         x.start()
-        #x.join(timeout=10)
+        #x.join(timeout=10)'''
         # --------------------------------
         # preparo il topic (append)
         ptopic = "{}{}{}{}{}".format(FIWARE, ENTITY,"camera:", device,"/attrs")
@@ -159,10 +162,12 @@ def on_mqtts_message(client, userdata, result):
     appendix = result.topic.split(":")[3]
     device = appendix[:-6]
     print("APPEND:" + device)
-# ----------------------------------- APPEND MESSAGE 
+# ----------------------------------- APPEND MESSAGE
+    mess_append(device, message)
+    '''
     y = threading.Thread(target=mess_append, args=(device,message))
     y.start()
-    #y.join(timeout=10)
+    #y.join(timeout=10)'''
 # -------------------------------------------------
 # connect to mqtt ARDESIA
 def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
@@ -295,23 +300,29 @@ def ftp_bounce(remotePath,device,picture):
 #                    APPEND
 # -------------------------------------------------
 def mess_append(device, message):
-    print("THREAD <APPEND> LAUNCHED on device:",device)
-    # NON FA IN TEMPO..ARRIVA UN ALTRO MESSAGGIO
-    if (device != "test") :
-        ''' # es> removed because managed by .env
-        if os.name == "nt":
-            PATH_LOCAL = "DATA/"'''
-        # es>
-        FNAME = os.path.join(PATH_LOCAL, device + '.txt')
-        print("FNAME:" + FNAME)
-        if not os.path.exists(FNAME):
-            file1 = open(FNAME, "w")  # NEW write file
-        else:
-            file1 = open(FNAME, "a")  # append mode
-        file1.write(message)
-        file1.write("\n")
-        file1.close()
-        return True
+    if (device == "test") : return True
+    FNAME = os.path.join(PATH_LOCAL, "data", device + '.json')
+    if not os.path.exists(FNAME):
+        mes = []
+    else:
+        with open(FNAME) as f:
+            mes = json.load(f)
+    # append a new message to the list
+    mes.append(message)
+    with open(FNAME, "w") as f:
+        f.write(json.dumps(mes, indent=2))
+    return True
+
+'''  #print("THREAD <APPEND> LAUNCHED on device:",device)
+    print("FNAME:" + FNAME)
+    if not os.path.exists(FNAME):
+        file1 = open(FNAME, "w")  # NEW write file
+    else:
+        file1 = open(FNAME, "a")  # append mode
+    file1.write(message)
+    file1.write("\n")
+    file1.close() '''
+
 # =========================================================
 def test_WELASER():
     print("="*80+"\ntest_WELASER")
@@ -328,14 +339,12 @@ def test_WELASER():
 def test_ARDESIA():
     print("="*80+"\ntest_ARDESIA")
     # send image to origin (ardesia) ftp for simulating camera real sending
-    client_from = FTP()
-    client_from.debugging = 5
-    client_from.connect(host=HOST_FROM, port=PORT_FROM)
-    client_from.login(user=USER_FROM, passwd=PASS_FROM)
-    sendFile(client_from, PATH_FIELD, "tests", "arrow.jpg")
+    client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
+    sendFile(client_from, PATH_FIELD, "tests", "test.jpg")
+    client_from.close()
 
     # send to we
-    test_img = "arrow.jpg"
+    test_img = "test.jpg"
     message = {
         "nodeId": "camera_36",
         "packetType": "picture",
