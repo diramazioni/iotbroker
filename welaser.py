@@ -274,7 +274,9 @@ def ftp_bounce(device,picture):
     if os.path.exists(oldFile):
         print(f"mv {oldFile} picture to the dashboard")
         newFile = os.path.join(PATH_LOCAL, "dash", "public", device + '.jpg')
-        shutil.move(oldFile, newFile)
+        shutil.copy(oldFile, os.path.join(PATH_LOCAL, "www", device + '.jpg'))  # server www
+        shutil.move(oldFile, newFile) # local copy
+
         #os.system("mv -f " + oldFile +" "+newFile)
     else:
         print(f"{oldFile} DOES NOT EXIST")
@@ -296,17 +298,9 @@ def mess_append(device, message):
     mes.append(message)
     with open(FNAME, "w") as f:
         f.write(json.dumps(mes, indent=2))
+    # copy to the www server
+    shutil.copy(FNAME, os.path.join(PATH_LOCAL, "www", device + '.json'))
     return True
-
-'''  #print("THREAD <APPEND> LAUNCHED on device:",device)
-    print("FNAME:" + FNAME)
-    if not os.path.exists(FNAME):
-        file1 = open(FNAME, "w")  # NEW write file
-    else:
-        file1 = open(FNAME, "a")  # append mode
-    file1.write(message)
-    file1.write("\n")
-    file1.close() '''
 
 # =========================================================
 def test_WELASER():
@@ -388,4 +382,5 @@ if __name__ == '__main__':
         print("Quit!")
         mqtt_client.loop_stop()
         mqtts_client.loop_stop()
+
 
