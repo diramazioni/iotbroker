@@ -97,12 +97,13 @@ def on_mqtts_publish(client, userdata, result):
 def on_mqtt_message(client, userdata, result):
     # Here Persistency could be configured -> always receive the same message ""
     # TODO: Giuliano perché devi fare queste sostituzioni???
-    message = str(result.payload.decode("utf-8")).replace(" ", "").replace("\'", "\"").replace('/n', '')
+    # .replace(" ", "").replace("\'", "\"").replace('/n', '')
+    message = str(result.payload.decode("utf-8"))
     print("---------vvvvvv ---- New Message on MQTT !")
     print( "message:" + message )
     print("---------^^^^^^")
 
-# PARSING - deserialising
+    # PARSING - deserialising
     content = json.loads(message)
     device = content['nodeId']
     print('device = nodeId:',device)  
