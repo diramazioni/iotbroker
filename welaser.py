@@ -112,10 +112,10 @@ def on_mqtt_message(client, userdata, result):
         picture = content['data'] 
         print( ">>>>>>>>>>>>>> WITH PICTURE:" + picture )
         # ----------------------------------- INVIO FTP
-        #ftp_bounce(device,picture)
+        ftp_bounce(device,picture)
 
-        x = threading.Thread(target=ftp_bounce, args=(device,picture,))
-        x.start()
+        #x = threading.Thread(target=ftp_bounce, args=(device,picture,))
+        #x.start()
         #x.join(timeout=10)'''
         # --------------------------------
         # preparo il topic (append)
@@ -128,7 +128,7 @@ def on_mqtt_message(client, userdata, result):
         payload = json.dumps({"id":ID,"timestamp":TS,"picture":picture})
         print( ">>>>>>>> MQTTS payload:",payload )
         # pubblico il messaggio
-        on_mqtts_publish(ptopic, payload, "")
+        mqtt_publish(mqtts_client, ptopic, payload)
 
 
 # -------------------------------------------------
