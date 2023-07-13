@@ -69,19 +69,15 @@ mqtt_client = mqttClient.Client()
 #                    MQTT(S)
 #--------------------------------------------
 def on_mqtt_connect(client, userdata, flags, rc):
-    #global mqtt_connected  # Use global variable
     if rc == 0:
         print("[INFO] Connected to MQTT broker - ARDESIA")
-        #mqtt_connected = True  # Signal connection
     else:
         print("[INFO] Error, connection failed")
 
 # -------------------------------------------------
 def on_mqtts_connect(client, userdata, flags, rc):
-    #global mqtts_connected  # Use global variable
     if rc == 0:
         print("[INFO] Connected to MQTTS broker - WeLASER")
-        #mqtts_connected = True  # Signal connection
     else:
         print("[INFO] Error, connection failed")
 
@@ -97,8 +93,8 @@ def on_mqtts_publish(client, userdata, result):
 def on_mqtt_message(client, userdata, result):
     # Here Persistency could be configured -> always receive the same message ""
     # TODO: Giuliano perché devi fare queste sostituzioni???
-    # .replace(" ", "").replace("\'", "\"").replace('/n', '')
-    message = str(result.payload.decode("utf-8"))
+    # str().replace(" ", "").replace("\'", "\"").replace('/n', '')
+    message = result.payload.decode("utf-8")
     print("---------vvvvvv ---- New Message on MQTT !")
     print( "message:" + message )
     print("---------^^^^^^")
@@ -126,15 +122,15 @@ def on_mqtt_message(client, userdata, result):
         ID = "{}{}{}".format(ENTITY,"camera:", device)
         #EPOCH = round(time.time() * 1000)
         TS = strftime('%Y-%m-%d %H:%M:%S', localtime(time.time()))
-        payload = json.dumps({"id":ID,"timestamp":TS,"picture":picture})
+        payload = {"id":ID,"timestamp":TS,"picture":picture}
         print( ">>>>>>>> MQTTS payload:",payload )
         # pubblico il messaggio
-        mqtt_publish(mqtts_client, ptopic, payload)
+        mqtt_publish(mqtts_client, ptopic, json.dumps(payload))
 
 
 # -------------------------------------------------
 def on_mqtts_message(client, userdata, result):
-    message = str(result.payload.decode("utf-8"))
+    message = result.payload.decode("utf-8")
     print("---------vvvvvv  New Message on MQTTS !")
     print( "message:" + message )
     print("---------^^^^^^")
@@ -144,10 +140,7 @@ def on_mqtts_message(client, userdata, result):
     print("APPEND:" + device)
     # ----------------------------------- APPEND MESSAGE
     mess_append(device, message)
-    '''
-    y = threading.Thread(target=mess_append, args=(device,message))
-    y.start()
-    #y.join(timeout=10)'''
+
 # -------------------------------------------------
 # connect to mqtt ARDESIA
 def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
@@ -291,6 +284,7 @@ def ftp_bounce(device,picture):
 #                    APPEND
 # -------------------------------------------------
 def mess_append(device, message):
+    message = json.loads(message)
     if (device == "test") : return True
     FNAME = os.path.join(PATH_LOCAL, "dash", "data", device + '.json')
     if not os.path.exists(FNAME):
@@ -394,3 +388,4 @@ if __name__ == '__main__':
         print("Quit!")
         mqtt_client.loop_stop()
         mqtts_client.loop_stop()
+
