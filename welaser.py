@@ -9,7 +9,7 @@ append them to device.txt
 Finally publish a TEST message on MQTTS 
 '''
 import os
-import threading
+#import threading
 import paho.mqtt.client as mqttClient
 import json
 #import ast # to convert string into dictionary
@@ -51,6 +51,7 @@ PASS_FROM = os.getenv('PASS_FROM')
 
 
 PATH_LOCAL = os.getenv('PATH_LOCAL')
+FTP_LOCAL = os.getenv('FTP_LOCAL')
 FIWARE = os.getenv('FIWARE')
 ENTITY = os.getenv('ENTITY')
 PATH_ROBOT = "/robot_images"
@@ -59,22 +60,9 @@ PATH_FIELD = "/field_images"
 #  ==========================================
 #                global variables
 
-
-'''
-# es> seems unused
-#stopic1 = "WeLaser/PublicIntercomm/CameraToDashboard"
-#stopic2 = "WeLaser/PublicIntercomm/RobotToDashboard"
-# es> not used as global var
-device = ""
-picture = ""
-remotePath = ""
-'''
-
 mqtts_client = mqttClient.Client()
 mqtt_client = mqttClient.Client()
 
-#mqtt_connected = False  # Stores the connection status
-#mqtts_connected = False  # Stores the connection status
 #  ==========================================
 #                   Functions
 #  ========================================== 
@@ -107,9 +95,8 @@ def on_mqtts_publish(client, userdata, result):
     
 # -------------------------------------------------
 def on_mqtt_message(client, userdata, result):
-
-
     # Here Persistency could be configured -> always receive the same message ""
+    # TODO: Giuliano perché devi fare queste sostituzioni???
     message = str(result.payload.decode("utf-8")).replace(" ", "").replace("\'", "\"").replace('/n', '')
     print("---------vvvvvv ---- New Message on MQTT !")
     print( "message:" + message )
@@ -124,18 +111,10 @@ def on_mqtt_message(client, userdata, result):
     if (packetType == "picture") :
         picture = content['data'] 
         print( ">>>>>>>>>>>>>> WITH PICTURE:" + picture ) 
-        # verifico chi produce l'immagine
-        camType = device[0:5]   # camtype = [camer | robot]
-        print(" >>>> CAM >>>>> ",camType)
-        # es> paths should be built using os.path.join(path1, subdir, etc)
-        remotePath = ""
-        if camType == "camer":
-            remotePath  = PATH_FIELD
-        elif camType == "robot":
-            remotePath  = PATH_ROBOT
+
 
         # ----------------------------------- INVIO FTP
-        ftp_bounce(remotePath,device,picture)
+        ftp_bounce(device,picture)
         '''
         x = threading.Thread(target=ftp_bounce, args=(remotePath,device,picture,))
         x.start()
@@ -150,10 +129,9 @@ def on_mqtt_message(client, userdata, result):
         TS = strftime('%Y-%m-%d %H:%M:%S', localtime(time.time()))
         payload = json.dumps({"id":ID,"timestamp":TS,"picture":picture})
         print( ">>>>>>>> MQTTS payload:",payload )
-# pubblico il messaggio
-        result=""
-        on_mqtts_publish(ptopic, payload, result)
-# dopo non esegue nulla !
+        # pubblico il messaggio
+        on_mqtts_publish(ptopic, payload, "")
+
 
 # -------------------------------------------------
 def on_mqtts_message(client, userdata, result):
@@ -241,16 +219,16 @@ def mqtt_subscribe(client,topic):
 # ==========================================================
 #                     FTP
 # -------------------------------------------------
-def retrieveFile(ftp, remotePath, localPath, fileName):
-    localFile = os.path.join(localPath,  fileName)
+def retrieveFile(ftp, remotePath, fileName):
+    localFile = os.path.join(PATH_LOCAL,  fileName)
     print("retrieving:" + localFile)
     with open(localFile, 'wb') as file:
         ftp.cwd(remotePath)
         ftp.retrbinary('RETR ' + fileName, file.write, 1024)
 
 # -------------------------------------------------
-def sendFile(ftp, remotePath, localPath, fileName):
-    localFile = os.path.join(localPath,  fileName)
+def sendFile(ftp, remotePath, fileName):
+    localFile = os.path.join(PATH_LOCAL,  fileName)
     print("sending:" + localFile)
     if os.path.exists(localFile):
         with open(localFile, 'rb') as file:
@@ -270,12 +248,19 @@ def ftp_connect(host,port,user,password):
         return  client_ftp
     except all_errors as e:
         print(f"Error in Ftp -> {host} \n{e}")
-def ftp_bounce(remotePath,device,picture):
-    print("THREAD <BOUNCE> LAUNCHED ",remotePath," <<<<<<<< ", picture)
+def ftp_bounce(device,picture):
+    # verifico chi produce l'immagine
+    camType = device[0:5]  # camtype = [camer | robot]
+    remotePath = ""
+    if camType == "camer":
+        remotePath = PATH_FIELD
+    elif camType == "robot":
+        remotePath = PATH_ROBOT
+
     try:
         client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
         print("connected ftp 1")
-        retrieveFile(client_from, remotePath, PATH_LOCAL, picture)
+        retrieveFile(client_from, remotePath, picture)
         client_from.close()
         print("ftp 1 done")
     except all_errors as e:
@@ -285,7 +270,7 @@ def ftp_bounce(remotePath,device,picture):
         client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
         print("connected ftp 2")
         #-------------------
-        sendFile(client_to,remotePath,PATH_LOCAL,picture)
+        sendFile(client_to, remotePath, picture)
         client_to.close()
         print("ftp 2 done")
     except all_errors as e:
@@ -294,7 +279,7 @@ def ftp_bounce(remotePath,device,picture):
 
     # es> check if fix works
     oldFile = os.path.join(PATH_LOCAL, picture)
-    newFile = os.path.join(PATH_LOCAL, device + '.jpg')
+    newFile = os.path.join(PATH_LOCAL, "dash", "public", device + '.jpg')
     shutil.move(oldFile, newFile)
         #os.system("mv -f " + oldFile +" "+newFile)
     return True
@@ -304,7 +289,7 @@ def ftp_bounce(remotePath,device,picture):
 # -------------------------------------------------
 def mess_append(device, message):
     if (device == "test") : return True
-    FNAME = os.path.join(PATH_LOCAL, "data", device + '.json')
+    FNAME = os.path.join(PATH_LOCAL, "dash", "data", device + '.json')
     if not os.path.exists(FNAME):
         mes = []
     else:
@@ -343,7 +328,7 @@ def test_ARDESIA():
     print("="*80+"\ntest_ARDESIA")
     # send image to origin (ardesia) ftp for simulating camera real sending
     client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
-    sendFile(client_from, PATH_FIELD, "tests", "test.jpg")
+    sendFile(client_from, PATH_FIELD, "tests/test.jpg")
     client_from.close()
 
     # send to we
@@ -386,6 +371,7 @@ if __name__ == '__main__':
         with daemon.DaemonContext():
             main()
             while True:
+                print("running WeLaser Daemon")
                 time.sleep(1)
     else:
         main()
