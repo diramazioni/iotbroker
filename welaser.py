@@ -279,9 +279,13 @@ def ftp_bounce(device,picture):
 
     # es> check if fix works
     oldFile = os.path.join(PATH_LOCAL, picture)
-    newFile = os.path.join(PATH_LOCAL, "dash", "public", device + '.jpg')
-    shutil.move(oldFile, newFile)
+    if os.path.exists(oldFile):
+        print(f"mv {oldFile} picture to the dashboard")
+        newFile = os.path.join(PATH_LOCAL, "dash", "public", device + '.jpg')
+        shutil.move(oldFile, newFile)
         #os.system("mv -f " + oldFile +" "+newFile)
+    else:
+        print(f"{oldFile} DOES NOT EXIST")
     return True
 
 # ==========================================================
@@ -368,10 +372,10 @@ if __name__ == '__main__':
     parser.add_argument('-D', '--daemon', action='store_true', help='Run as a daemon')
     args = parser.parse_args()
     if args.daemon:
+        print("running WeLaser Daemon")
         with daemon.DaemonContext():
             main()
             while True:
-                print("running WeLaser Daemon")
                 time.sleep(1)
     else:
         main()
