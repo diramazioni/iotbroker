@@ -21,6 +21,9 @@ from time import strftime, localtime
 
 from dotenv import load_dotenv # legge codici di accesso
 import shutil
+import daemon
+import argparse
+
 #  ==========================================
 #          LOADS ENVIROMENT VARIABLES
 load_dotenv()
@@ -373,26 +376,32 @@ def main():
     print("ARDESIA stopic=" + stopic)
     mqtt_subscribe(mqtt_client,stopic)
     # pubblico il messaggio di TEST su MQTTS
-    #test_WELASER()
-    #test_ARDESIA()
-    in_=""
-    while not in_ in ["x","X"]:
-        print("\/"*10 + "    WAITING FOR INPUT    " + "\/"*10 )
-        in_ = input('"x" to exit., \n"a" test ARDESIA \n"w" test WELASER \n"f" test ftp 1 e 2 connections\n')
-        print("\/"*40)
-        if in_ in ["a", "A"]:
-            test_ARDESIA()
-        elif in_ in ["w", "W"]:
-            test_WELASER()
-        elif in_ in ["f", "F"]:
-            print("test ftp connections")
-            client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
-            client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
-    print("Quit!")
-    mqtt_client.loop_stop()
-    mqtts_client.loop_stop()
+
 # ---------------------------------------------------------
 if __name__ == '__main__':
-#while True:
-    main()
-    #time.sleep(60)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-D', '--daemon', action='store_true', help='Run as a daemon')
+    args = parser.parse_args()
+    if args.daemon:
+        with daemon.DaemonContext():
+            main()
+            while True:
+                time.sleep(1)
+    else:
+        main()
+        in_ = ""
+        while not in_ in ["x", "X"]:
+            print("\/" * 10 + "    WAITING FOR INPUT    " + "\/" * 10)
+            in_ = input('"x" to exit., \n"a" test ARDESIA \n"w" test WELASER \n"f" test ftp 1 e 2 connections\n')
+            print("\/" * 40)
+            if in_ in ["a", "A"]:
+                test_ARDESIA()
+            elif in_ in ["w", "W"]:
+                test_WELASER()
+            elif in_ in ["f", "F"]:
+                print("test ftp connections")
+                client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
+                client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
+        print("Quit!")
+        mqtt_client.loop_stop()
+        mqtts_client.loop_stop()
