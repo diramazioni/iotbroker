@@ -328,7 +328,7 @@ def test_ARDESIA():
     print("="*80+"\ntest_ARDESIA")
     # send image to origin (ardesia) ftp for simulating camera real sending
     client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
-    sendFile(client_from, PATH_FIELD, "tests/test.jpg")
+    sendFile(client_from, PATH_FIELD, "test.jpg")
     client_from.close()
 
     # send to we
