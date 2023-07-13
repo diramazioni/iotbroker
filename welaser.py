@@ -9,7 +9,7 @@ append them to device.txt
 Finally publish a TEST message on MQTTS 
 '''
 import os
-#import threading
+import threading
 import paho.mqtt.client as mqttClient
 import json
 #import ast # to convert string into dictionary
@@ -110,13 +110,11 @@ def on_mqtt_message(client, userdata, result):
     print('packetType:',packetType)  
     if (packetType == "picture") :
         picture = content['data'] 
-        print( ">>>>>>>>>>>>>> WITH PICTURE:" + picture ) 
-
-
+        print( ">>>>>>>>>>>>>> WITH PICTURE:" + picture )
         # ----------------------------------- INVIO FTP
-        ftp_bounce(device,picture)
-        '''
-        x = threading.Thread(target=ftp_bounce, args=(remotePath,device,picture,))
+        #ftp_bounce(device,picture)
+
+        x = threading.Thread(target=ftp_bounce, args=(device,picture,))
         x.start()
         #x.join(timeout=10)'''
         # --------------------------------
@@ -139,11 +137,11 @@ def on_mqtts_message(client, userdata, result):
     print("---------vvvvvv  New Message on MQTTS !")
     print( "message:" + message )
     print("---------^^^^^^")
-# Append-EVERY TOPICs to a file with the DEVICE name
+    # Append-EVERY TOPICs to a file with the DEVICE name
     appendix = result.topic.split(":")[3]
     device = appendix[:-6]
     print("APPEND:" + device)
-# ----------------------------------- APPEND MESSAGE
+    # ----------------------------------- APPEND MESSAGE
     mess_append(device, message)
     '''
     y = threading.Thread(target=mess_append, args=(device,message))
