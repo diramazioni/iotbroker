@@ -24,14 +24,13 @@ import shutil
 import daemon
 import argparse
 import logging
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s [%(levelname)s] %(message)s",
+
+'''
     handlers=[
         logging.FileHandler("welaser.log"),
         logging.StreamHandler()
-    ]    #    filename='welaser.log',
-)
+    ]    #    
+'''
 #  ==========================================
 #          LOADS ENVIROMENT VARIABLES
 load_dotenv()
@@ -105,7 +104,7 @@ def on_mqtt_message(client, userdata, result):
     # str().replace(" ", "").replace("\'", "\"").replace('/n', '')
     message = result.payload.decode("utf-8")
     logging.info("---------vvvvvv ---- New Message on MQTT !")
-    logging.info( "message:" + message )
+    logging.debug( "message:" + message )
 
     # PARSING - deserialising
     content = json.loads(message)
@@ -131,7 +130,7 @@ def on_mqtt_message(client, userdata, result):
         #EPOCH = round(time.time() * 1000)
         TS = strftime('%Y-%m-%d %H:%M:%S', localtime(time.time()))
         payload = {"id":ID,"timestamp":TS,"picture":picture}
-        logging.info(f">>>>>>>> MQTTS payload:{payload}" )
+        logging.debug(f">>>>>>>> MQTTS payload:{payload}" )
         # pubblico il messaggio
         mqtt_publish(mqtts_client, ptopic, json.dumps(payload))
 
@@ -140,7 +139,7 @@ def on_mqtt_message(client, userdata, result):
 def on_mqtts_message(client, userdata, result):
     message = result.payload.decode("utf-8")
     logging.info("---------vvvvvv  New Message on MQTTS !")
-    logging.info( "message:" + message )
+    logging.debug( "message:" + message )
     # Append-EVERY TOPICs to a file with the DEVICE name
     appendix = result.topic.split(":")[3]
     device = appendix[:-6]
@@ -258,20 +257,20 @@ def ftp_bounce(device,picture):
 
     try:
         client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
-        logging.info("connected ftp 1")
+        logging.debug("connected ftp 1")
         retrieveFile(client_from, remotePath, picture)
         client_from.close()
-        logging.info("ftp 1 done")
+        logging.debug("ftp 1 done")
     except all_errors as e:
         logging.error(f'Error in Ftp1 -> {e}')
         # --------------------
     try:
         client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
-        logging.info("connected ftp 2")
+        logging.debug("connected ftp 2")
         #-------------------
         sendFile(client_to, remotePath, picture)
         client_to.close()
-        logging.info("ftp 2 done")
+        logging.debug("ftp 2 done")
     except all_errors as e:
         logging.error(f'Error in Ftp2 -> {e}')
         return False
@@ -353,25 +352,34 @@ def main():
         return
     # mi iscrivo a MQTTS
     stopic = f"{FIWARE}+/attrs"
-    logging.info("WELASER stopic=" + stopic)
+    logging.debug("WELASER stopic=" + stopic)
     mqtt_subscribe(mqtts_client, stopic)
     # mi iscrivo ad una certa classe di messaggi su MQTT
     stopic = "#"
-    logging.info("ARDESIA stopic=" + stopic)
+    logging.debug("ARDESIA stopic=" + stopic)
     mqtt_subscribe(mqtt_client,stopic)
     # pubblico il messaggio di TEST su MQTTS
 
 # ---------------------------------------------------------
-if __name__ == '__main__':
-    now = strftime('%Y-%m-%d %H:%M:%S', localtime(time.time()))
+logging.basicConfig()
+file_logger = logging.FileHandler("debug.log", "w")
+formatter = logging.Formatter(fmt='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S ')
+file_logger.setFormatter(formatter)
+file_logger.setLevel(logging.INFO)
+logger = logging.getLogger()
+logger.addHandler(file_logger)
+logger.setLevel(logging.DEBUG)
 
-    logging.info(f"{now}: WELASER iotbroker ")
+
+if __name__ == '__main__':
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-D', '--daemon', action='store_true', help='Run as a daemon')
     args = parser.parse_args()
     if args.daemon:
         print("running WeLaser Daemon")
-        with daemon.DaemonContext():
+        with daemon.DaemonContext(files_preserve=[file_logger.stream.fileno()]):
+            logging.info(f" ~ WELASER iotbroker DAEMON ~ ")
             main()
             while True:
                 time.sleep(1)
