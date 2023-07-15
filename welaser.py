@@ -223,7 +223,7 @@ def retrieveFile(ftp, remotePath, fileName):
     with open(localFile, 'wb') as file:
         ftp.cwd(remotePath)
         ftp.retrbinary('RETR ' + fileName, file.write, 1024)
-
+        file.close()
 # -------------------------------------------------
 def sendFile(ftp, remotePath, fileName):
     localFile = os.path.join(PATH_LOCAL,  fileName)
@@ -233,6 +233,7 @@ def sendFile(ftp, remotePath, fileName):
         #file = open(localFile, 'rb')
             ftp.cwd(remotePath)
             ftp.storbinary('STOR '+ fileName , file)
+            file.close()
     else:
         logging.error("ftp file not found")
 
@@ -305,6 +306,7 @@ def mess_append(device, message):
         mes.append(message)
         with open(FNAME, "w") as f:
             f.write(json.dumps(mes)) #, indent=2
+            f.close()
         # copy to the www server
         shutil.copy(FNAME, os.path.join(PATH_LOCAL, "www", device + '.json'))
         return True
