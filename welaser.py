@@ -131,22 +131,25 @@ def on_mqtt_message(client, userdata, result):
         TS = strftime('%Y-%m-%d %H:%M:%S', localtime(time.time()))
         payload = {"id":ID,"timestamp":TS,"picture":picture}
         logging.debug(f">>>>>>>> MQTTS payload:{payload}" )
+        # faccio l'append 
+        mess_append(device, payload)
         # pubblico il messaggio
         mqtt_publish(mqtts_client, ptopic, json.dumps(payload))
 
 
 # -------------------------------------------------
 def on_mqtts_message(client, userdata, result):
+    return True
+    ''' es> removing logging of all MQTTS messages
     message = result.payload.decode("utf-8")
     logging.info("---------vvvvvv  New Message on MQTTS !")
     logging.debug( "message:" + message )
     # Append-EVERY TOPICs to a file with the DEVICE name
-    appendix = result.topic.split(":")[3]
-    device = appendix[:-6]
+    device = result.topic.split(":")[3][:-6]
     logging.info("APPEND:" + device)
     # ----------------------------------- APPEND MESSAGE
     mess_append(device, message)
-
+    '''
 # -------------------------------------------------
 # connect to mqtt ARDESIA
 def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
