@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+*.log
 
 # Environments
 old/
@@ -15,3 +16,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+/.vs
+
+dash/data
