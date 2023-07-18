@@ -5,6 +5,8 @@ __pycache__/
 
 
 # Environments
+old/
+DATA/
 .idea
 .env
 .venv
