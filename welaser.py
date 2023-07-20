@@ -133,7 +133,7 @@ def on_mqtt_message(client, userdata, result):
         payload = {"id":ID,"timestamp":TS,"picture":picture}
         logging.debug(f">>>>>>>> MQTTS payload:{payload}" )
         # faccio l'append 
-        mess_append(device, payload)
+        # mess_append(device, payload)
         # pubblico il messaggio
         mqtt_publish(mqtts_client, ptopic, json.dumps(payload))
 
