@@ -123,7 +123,8 @@ def on_mqtt_message(client, userdata, result):
         #x.join(timeout=10)'''
         # --------------------------------
         # preparo il topic (append)
-        ptopic = "{}{}{}{}{}".format(FIWARE, ENTITY,"camera:", device,"/attrs")
+        ptopic = f"{FIWARE}{ENTITY}Camera:{device}/attrs"
+        #ptopic = "{}{}{}{}{}".format(FIWARE, ENTITY,"camera:", device,"/attrs")
         logging.debug(f"ptopic:{ptopic}")
         # preparo il nuovo messaggio (JSON)
         ID = "{}{}{}".format(ENTITY,"camera:", device)
