@@ -249,7 +249,10 @@ def ftp_connect(host,port,user,password):
         client_ftp.login(user=user, passwd=password)
         return  client_ftp
     except all_errors as e:
+    
         logging.error(f"Error in Ftp -> {host} \n{e}")
+
+# -------------------------------------------------
 def ftp_bounce(device,picture):
     # verifico chi produce l'immagine
     camType = device[0:5]  # camtype = [camer | robot]
@@ -278,7 +281,9 @@ def ftp_bounce(device,picture):
     except all_errors as e:
         logging.error(f'Error in Ftp2 -> {e}')
         return False
-
+    # last step - copy the image to a local(www) file
+    # ..with the name of camera (es. camera_5.jpg)
+    #
     # es> check if fix works
     oldFile = os.path.join(PATH_LOCAL, picture)
     if os.path.exists(oldFile):
