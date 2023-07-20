@@ -139,11 +139,12 @@ def on_mqtt_message(client, userdata, result):
 
 # -------------------------------------------------
 def on_mqtts_message(client, userdata, result):
-    return True
+    logging.debug( "mqtts message:" + message )
+    
     ''' es> removing logging of all MQTTS messages
     message = result.payload.decode("utf-8")
     logging.info("---------vvvvvv  New Message on MQTTS !")
-    logging.debug( "message:" + message )
+    
     # Append-EVERY TOPICs to a file with the DEVICE name
     device = result.topic.split(":")[3][:-6]
     logging.info("APPEND:" + device)
