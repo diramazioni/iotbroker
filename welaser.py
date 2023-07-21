@@ -364,6 +364,7 @@ def test_WELASER():
 
 def test_ARDESIA():
     print("="*80+"\ntest_ARDESIA")
+    device="camera_36"
     # send image to origin (ardesia) ftp for simulating camera real sending
     client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
     sendFile(client_from, PATH_FIELD, "test.jpg")
