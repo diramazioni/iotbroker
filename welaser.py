@@ -399,7 +399,7 @@ def test_WELASER():
     
     payload = json.dumps(payload)
     print(payload)
-    mqtt_publish(mqtt_mqtts_client, ptopic, payload)
+    mqtt_publish(mqtts_client, ptopic, payload)
     print("="*80+"\nDONE")
 
 def main():
