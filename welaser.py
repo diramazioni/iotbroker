@@ -83,7 +83,7 @@ camera_positions = {
     "8": [ -3.480757, 40.312974,]
 }
 
-image_base_url= "http://welasergui.csr.unibo.it:9080/"
+image_base_url= "http://welasergui.csr.unibo.it:9080"
 
 #  ==========================================
 #                   Functions
@@ -388,7 +388,7 @@ def test_WELASER():
         "type": "Camera",
         "areaServed": "urn:ngsi-ld:AgriFarm:" + areaServed,
         "cameraName": device,
-        "imageSnapshot": image_base_url + remotePath + picture,
+        "imageSnapshot": image_base_url + remotePath + "/" + picture,
         "location": {
             "type": "Point",
             "coordinates": camera_positions[cam_num]
