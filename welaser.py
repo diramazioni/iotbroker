@@ -352,8 +352,9 @@ def mess_append(device, message):
     except all_errors as e:
         logging.error(f'Error in append -> {e}')
 # =========================================================
-def test_WELASER():
-    print("="*80+"\ntest_WELASER")
+def test_ARDESIA():
+    print("="*80+"\ntest_ARDESIA")
+    '''
     ptopic = f"{FIWARE}{ENTITY}device:test/attrs"
     print("ptopic=" + ptopic)
     ID = f"{ENTITY}device:test"
@@ -361,9 +362,10 @@ def test_WELASER():
                         #"timestamp": TS,
                         "message": 'test_WELASER'})
     mqtt_publish(mqtts_client, ptopic, payload)
+    '''
 
-def test_ARDESIA():
-    print("="*80+"\ntest_ARDESIA")
+def test_WELASER():
+    print("="*80+"\ntest_WELASER")
     device="camera_7"
     # send image to origin (ardesia) ftp for simulating camera real sending
     client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
@@ -372,8 +374,8 @@ def test_ARDESIA():
     picture = "test.jpg"
     # creao il payload fittizio
     ID = f"{ENTITY}Camera:{device}"
-    #ptopic = f"{FIWARE}{ID}/attrs"
-    ptopic = "WeLaser/PublicIntercomm/CameraToDashboard"
+    ptopic = f"{FIWARE}{ID}/attrs"
+    #ptopic = "WeLaser/PublicIntercomm/CameraToDashboard"
     logging.debug(f"ptopic:{ptopic}")
     cam_num = device.split("_")[1]
     remotePath = isRobot(device)
@@ -397,7 +399,7 @@ def test_ARDESIA():
     
     payload = json.dumps(payload)
     print(payload)
-    mqtt_publish(mqtt_client, ptopic, payload)
+    mqtt_publish(mqtt_mqtts_client, ptopic, payload)
     print("="*80+"\nDONE")
 
 def main():
