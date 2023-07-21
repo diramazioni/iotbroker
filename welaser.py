@@ -71,6 +71,20 @@ PATH_DATA = os.path.join(PATH_LOCAL, "dash", "data")
 mqtts_client = mqttClient.Client()
 mqtt_client = mqttClient.Client()
 
+areaServed = "6991ac61-8db8-4a32-8fef-c462e2369055"
+camera_positions = {
+    "1": [40.312116, -3.481448],
+    "2": [40.312388, -3.481268],
+    "3": [40.312644, -3.481104],
+    "4": [40.311920, -3.480952],
+    "5": [40.312186, -3.480778],
+    "6": [40.312440, -3.480604],
+    "7": [40.312616, -3.480317],
+    "8": [40.312974, -3.480757]
+}
+
+image_base_url= "http://welasergui.csr.unibo.it:9080/"
+
 #  ==========================================
 #                   Functions
 #  ========================================== 
@@ -123,14 +137,25 @@ def on_mqtt_message(client, userdata, result):
         #x.join(timeout=10)'''
         # --------------------------------
         # preparo il topic (append)
-        ptopic = f"{FIWARE}{ENTITY}Camera:{device}/attrs"
-        #ptopic = "{}{}{}{}{}".format(FIWARE, ENTITY,"camera:", device,"/attrs")
+        ID = f"{ENTITY}Camera:{device}"
+        ptopic = f"{FIWARE}{ID}/attrs"
         logging.debug(f"ptopic:{ptopic}")
+        cam_num = device.split("_")[1]
+        remotePath = isRobot(device)
         # preparo il nuovo messaggio (JSON)
-        ID = "{}{}{}".format(ENTITY,"camera:", device)
-        #EPOCH = round(time.time() * 1000)
         TS = strftime('%Y-%m-%d %H:%M:%S', localtime(time.time()))
-        payload = {"id":ID,"timestamp":TS,"picture":picture}
+        payload = {
+            "id":ID,
+            "timestamp":TS,
+            "type": "Camera",
+            "areaServed": "urn:ngsi-ld:AgriFarm:" + areaServed,
+            "cameraName": device,
+            "imageSnapshot": image_base_url + remotePath + picture,
+            "location": {
+                "type": "Point",
+                "coordinates": camera_positions[cam_num]
+            },
+        }
         logging.debug(f">>>>>>>> MQTTS payload:{payload}" )
         # faccio l'append 
         # mess_append(device, payload)
@@ -242,6 +267,20 @@ def sendFile(ftp, remotePath, fileName):
     else:
         logging.error("ftp file not found")
 
+def isRobot(device):
+    # returns the remote path based on the device name    
+    if "robot" in device: 
+        return  PATH_ROBOT
+    else:
+        return PATH_FIELD 
+
+# ==========================================================
+#                     MQTTS
+# -------------------------------------------------
+def on_mqtts_connect(client, userdata, flags, rc):
+    logging.debug("Connected with result code "+str(rc))
+    # Subscribing in on_connect)        
+
 # -------------------------------------------------
 def ftp_connect(host,port,user,password):
     try:
@@ -252,14 +291,10 @@ def ftp_connect(host,port,user,password):
         return  client_ftp
     except all_errors as e:
         logging.error(f"Error in Ftp -> {host} \n{e}")
+
 def ftp_bounce(device,picture):
     # verifico chi produce l'immagine
-    camType = device[0:5]  # camtype = [camer | robot]
-    remotePath = ""
-    if camType == "camer":
-        remotePath = PATH_FIELD
-    elif camType == "robot":
-        remotePath = PATH_ROBOT
+    remotePath = isRobot(device)
 
     try:
         client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
