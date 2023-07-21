@@ -142,8 +142,7 @@ def on_mqtt_message(client, userdata, result):
         logging.debug(f"ptopic:{ptopic}")
         cam_num = device.split("_")[1]
         remotePath = isRobot(device)
-        # preparo il nuovo messaggio (JSON)
-        TS = strftime('%Y-%m-%d %H:%M:%S', localtime(time.time()))
+        TS = strftime('%Y-%m-%d %H:%M:%S', localtime(time.time()))        
         payload = {
             "id":ID,
             "timestamp":TS,
@@ -369,16 +368,32 @@ def test_ARDESIA():
     client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
     sendFile(client_from, PATH_FIELD, "test.jpg")
     client_from.close()
+    picture = "test.jpg"
+    # creao il payload fittizio
+    ID = f"{ENTITY}Camera:{device}"
+    ptopic = f"{FIWARE}{ID}/attrs"
+    logging.debug(f"ptopic:{ptopic}")
+    cam_num = device.split("_")[1]
+    remotePath = isRobot(device)
+    TS = strftime('%Y-%m-%d %H:%M:%S', localtime(time.time()))
 
     # send to we
-    test_img = "test.jpg"
-    message = {
-        "nodeId": "camera_36",
-        "packetType": "picture",
-        "data": test_img
+    payload = {
+        "id":ID,
+        "timestamp":TS,
+        "type": "Camera",
+        "areaServed": "urn:ngsi-ld:AgriFarm:" + areaServed,
+        "cameraName": device,
+        "imageSnapshot": image_base_url + remotePath + picture,
+        "location": {
+            "type": "Point",
+            "coordinates": camera_positions[cam_num]
+        },
     }
-    ptopic = "WeLaser/PublicIntercomm/CameraToDashboard"
-    payload = json.dumps(message)
+
+
+    #ptopic = "WeLaser/PublicIntercomm/CameraToDashboard"
+    payload = json.dumps(payload)
     print(payload)
     mqtt_publish(mqtt_client, ptopic, payload)
     print("="*80+"\nDONE")
