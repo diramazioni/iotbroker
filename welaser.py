@@ -371,8 +371,9 @@ def test_ARDESIA():
     client_from.close()
     picture = "test.jpg"
     # creao il payload fittizio
-    ID = f"{ENTITY}Camera:{device}"
-    ptopic = f"{FIWARE}{ID}/attrs"
+    #ID = f"{ENTITY}Camera:{device}"
+    #ptopic = f"{FIWARE}{ID}/attrs"
+    ptopic = "WeLaser/PublicIntercomm/CameraToDashboard"
     logging.debug(f"ptopic:{ptopic}")
     cam_num = device.split("_")[1]
     remotePath = isRobot(device)
@@ -393,7 +394,7 @@ def test_ARDESIA():
     }
 
 
-    #ptopic = "WeLaser/PublicIntercomm/CameraToDashboard"
+    
     payload = json.dumps(payload)
     print(payload)
     mqtt_publish(mqtt_client, ptopic, payload)
