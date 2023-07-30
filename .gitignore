@@ -19,3 +19,8 @@ venv.bak/
 /.vs
 
 dash/data
+data/ETRometer_2_.json
+data/1/ETRometer_2.json
+data/1/WeatherStation_n1.json
+www/WeatherStation_n1.json
+www/ETRometer_2.json
