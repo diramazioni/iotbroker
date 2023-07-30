@@ -1,0 +1,64 @@
+// schema.prisma
+
+//generator client {
+//  provider = "prisma-client-js"
+//}
+generator client {
+  provider             = "prisma-client-py"
+  recursive_type_depth = 5
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Device {
+  id          Int       @id @default(autoincrement())
+  name        String
+  calibration Boolean?
+  timestamp   BigInt   
+
+  // Relation to measurements
+  etrometers  ETRometer[]
+  weatherStation WeatherStation[]
+
+}
+
+model WeatherStation {
+  id            Int    @id @default(autoincrement())
+  Temperature   Float
+  Pressure      Float
+  Humidity      Float
+  GasResistance Float
+  Altitude      Float
+  Ts_1          Float
+  Ts_2          Float
+  Ts_3          Float
+  Us_1          Float
+  Us_2          Float
+  Us_3          Float
+  W_vel         Float
+  W_dir         Float
+  device   Device @relation(fields: [deviceId], references: [id])
+  deviceId Int
+}
+
+model ETRometer {
+  id       Int      @id @default(autoincrement())
+  timestamp   String   
+  name     String
+  CO2      Float?
+  TC       Float? 
+  RH       Float? 
+  // Relation to Device model
+  device   Device @relation(fields: [deviceId], references: [id])
+  deviceId Int
+}
+
+
+model Units {
+  id      Int     @id @default(autoincrement())
+  name    String  @unique
+  value   String
+}
