@@ -20,13 +20,15 @@ model Device {
   timestamp   BigInt   
 
   // Relation to measurements
-  etrometers  ETRometer[]
-  weatherStation WeatherStation[]
-
+  etrometers  ETRometer?
+  weatherStation WeatherStation?
 }
 
 model WeatherStation {
   id            Int    @id @default(autoincrement())
+  timestamp   String 
+  Battery_Voltage Float
+  Solar_Panel_Voltage Float
   Temperature   Float
   Pressure      Float
   Humidity      Float
@@ -41,24 +43,36 @@ model WeatherStation {
   W_vel         Float
   W_dir         Float
   device   Device @relation(fields: [deviceId], references: [id])
-  deviceId Int
+  deviceId Int @unique
 }
 
 model ETRometer {
   id       Int      @id @default(autoincrement())
   timestamp   String   
   name     String
-  CO2      Float?
-  TC       Float? 
-  RH       Float? 
+  charge   Float 
+  CO2      Float
+  TC       Float 
+  RH       Float 
   // Relation to Device model
   device   Device @relation(fields: [deviceId], references: [id])
-  deviceId Int
+  deviceId Int @unique
 }
-
 
 model Units {
   id      Int     @id @default(autoincrement())
   name    String  @unique
   value   String
+  type    String
+
+  //ETR     ETRometer[]
+  //WeatherStation WeatherStation[]
+  
+  // One-to-one relationship with WeatherStation
+  //weatherStation WeatherStation? @relation(fields: [weatherStationId], references: [id])
+  //weatherStationId Int? //@unique // Unique identifier for the associated WeatherStation
+
+  // One-to-one relationship with ETRometer
+  //etrometer ETRometer? @relation(fields: [etrometerId], references: [id])
+  //etrometerId Int? @unique // Unique identifier for the associated ETRometer
 }
