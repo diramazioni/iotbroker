@@ -9,7 +9,6 @@ append them to device.txt
 Finally publish a TEST message on MQTTS 
 """
 import os
-import threading
 import paho.mqtt.client as mqttClient
 import json
 
@@ -27,13 +26,6 @@ import daemon
 import argparse
 import logging
 
-
-"""
-    handlers=[
-        logging.FileHandler("welaser.log"),
-        logging.StreamHandler()
-    ]    #    
-"""
 #  ==========================================
 #          LOADS ENVIROMENT VARIABLES
 load_dotenv()
@@ -59,15 +51,13 @@ PORT_FROM = int(os.getenv("PORT_FROM"))
 USER_FROM = os.getenv("USER_FROM")
 PASS_FROM = os.getenv("PASS_FROM")
 
-
-PATH_LOCAL = os.getenv("PATH_LOCAL")
 FTP_LOCAL = os.getenv("FTP_LOCAL")
 FIWARE = os.getenv("FIWARE")
 ENTITY = os.getenv("ENTITY")
-PATH_ROBOT = "/robot_images"
-PATH_FIELD = "/field_images"
 
-PATH_DATA = os.path.join(PATH_LOCAL, "dash", "data")
+PATH_LOCAL = os.getcwd()
+
+
 #  ==========================================
 #                global variables
 
@@ -276,6 +266,8 @@ def ftp_bounce(device, picture):
     # verifico chi produce l'immagine
     camType = device[0:5]  # camtype = [camer | robot]
     remotePath = ""
+    PATH_ROBOT = "/robot_images"
+    PATH_FIELD = "/field_images"
     if camType == "camer":
         remotePath = PATH_FIELD
     elif camType == "robot":
@@ -302,18 +294,14 @@ def ftp_bounce(device, picture):
         return False
     # last step - copy the image to a local(www) file
     # ..with the name of camera (es. camera_5.jpg)
-    #
-    # es> check if fix works
     oldFile = os.path.join(PATH_LOCAL, picture)
     if os.path.exists(oldFile):
         logging.debug(f"mv {oldFile} picture to the www and dashboard")
-        newFile = os.path.join(PATH_DATA, device + ".jpg")
+        newFile = os.path.join(PATH_LOCAL, "data", device + ".jpg")
         shutil.copy(
             oldFile, os.path.join(PATH_LOCAL, "www", device + ".jpg")
         )  # server www
         shutil.move(oldFile, newFile)  # local copy
-
-        # os.system("mv -f " + oldFile +" "+newFile)
     else:
         logging.error(f"{oldFile} DOES NOT EXIST")
     return True
@@ -327,7 +315,7 @@ def mess_append(device, message):
         message = json.loads(message)
         if device == "test":
             return True
-        FNAME = os.path.join(PATH_DATA, device + ".json")
+        FNAME = os.path.join(PATH_LOCAL, "data", device + ".json")
         if not os.path.exists(FNAME):
             mes = []
         else:
@@ -418,14 +406,14 @@ if __name__ == "__main__":
     if args.daemon:
         print("running WeLaser Daemon")
         with daemon.DaemonContext(files_preserve=[file_logger.stream.fileno()]):
-            logging.info(f" ~ WELASER iotbroker DAEMON ~ ")
+            logging.info(" ~ WELASER iotbroker DAEMON ~ ")
             main()
             while True:
                 time.sleep(1)
     else:
         main()
         in_ = ""
-        while not in_ in ["x", "X"]:
+        while in_ not in ["x", "X"]:
             print("\/" * 10 + "    WAITING FOR INPUT    " + "\/" * 10)
             in_ = input(
                 '"x" to exit., \n"a" test ARDESIA \n"w" test WELASER \n"f" test ftp 1 e 2 connections\n'
