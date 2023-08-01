@@ -6,9 +6,11 @@ then parse MQTT message, extract FTP file name and copy
 the files from  Ardesia to Local and to WeLASER
 Further on capture messages from MQTTS and
 append them to device.txt
-Finally publish a TEST message on MQTTS 
+Finally publish a TEST message on MQTTS
 """
 import os
+import sys
+import asyncio
 import paho.mqtt.client as mqttClient
 import json
 
@@ -25,6 +27,8 @@ import shutil
 import daemon
 import argparse
 import logging
+
+from sensor_processor import SensorProcessor
 
 #  ==========================================
 #          LOADS ENVIROMENT VARIABLES
@@ -55,6 +59,8 @@ FTP_LOCAL = os.getenv("FTP_LOCAL")
 FIWARE = os.getenv("FIWARE")
 ENTITY = os.getenv("ENTITY")
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+
 PATH_LOCAL = os.getcwd()
 
 
@@ -63,6 +69,7 @@ PATH_LOCAL = os.getcwd()
 
 mqtts_client = mqttClient.Client()
 mqtt_client = mqttClient.Client()
+db = SensorProcessor()
 
 
 #  ==========================================
@@ -97,14 +104,12 @@ def on_mqtts_publish(client, userdata, result):
 
 # -------------------------------------------------
 def on_mqtt_message(client, userdata, result):
-    # Here Persistency could be configured -> always receive the same message ""
     # TODO: Giuliano perché devi fare queste sostituzioni???
     # str().replace(" ", "").replace("\'", "\"").replace('/n', '')
     message = result.payload.decode("utf-8")
     logging.info("---------vvvvvv ---- New Message on MQTT !")
     logging.debug("message:" + message)
 
-    # PARSING - deserialising
     content = json.loads(message)
     device = content["nodeId"]
     logging.debug(f"device = nodeId:{device}")
@@ -115,39 +120,25 @@ def on_mqtt_message(client, userdata, result):
         logging.debug(">>>>>>>>>>>>>> WITH PICTURE:" + picture)
         # ----------------------------------- INVIO FTP
         ftp_bounce(device, picture)
-
-        # x = threading.Thread(target=ftp_bounce, args=(device,picture,))
-        # x.start()
-        # x.join(timeout=10)'''
-        # --------------------------------
-        # preparo il topic (append)
         ptopic = "{}{}{}{}{}".format(FIWARE, ENTITY, "camera:", device, "/attrs")
         logging.debug(f"ptopic:{ptopic}")
         # preparo il nuovo messaggio (JSON)
         ID = "{}{}{}".format(ENTITY, "camera:", device)
-        # EPOCH = round(time.time() * 1000)
         TS = strftime("%Y-%m-%d %H:%M:%S", localtime(time.time()))
         payload = {"id": ID, "timestamp": TS, "picture": picture}
         logging.debug(f">>>>>>>> MQTTS payload:{payload}")
-        # faccio l'append
-        mess_append(device, payload)
+        # mess_append(device, payload)
         # pubblico il messaggio
         mqtt_publish(mqtts_client, ptopic, json.dumps(payload))
 
 
 # -------------------------------------------------
 def on_mqtts_message(client, userdata, result):
-    return True
-    """ es> removing logging of all MQTTS messages
     message = result.payload.decode("utf-8")
     logging.info("---------vvvvvv  New Message on MQTTS !")
-    logging.debug( "message:" + message )
-    # Append-EVERY TOPICs to a file with the DEVICE name
-    device = result.topic.split(":")[3][:-6]
-    logging.info("APPEND:" + device)
-    # ----------------------------------- APPEND MESSAGE
-    mess_append(device, message)
-    """
+    logging.debug("message:" + message)
+    db_entry(message)
+    return True
 
 
 # -------------------------------------------------
@@ -205,7 +196,7 @@ def mqtts_connect(mqtt_username, mqtt_password, broker_endpoint, port):
 
 
 # -------------------------------------------------
-# publish a MQTT
+# publish to MQTT
 def mqtt_publish(client, topic, payload):
     try:
         client.publish(topic, payload)
@@ -214,7 +205,7 @@ def mqtt_publish(client, topic, payload):
 
 
 # -------------------------------------------------
-# subscribe a MQTT
+# subscribe to MQTT
 def mqtt_subscribe(client, topic):
     try:
         # OVERLAY stopic -> SUBSCRIBE ALL
@@ -366,15 +357,37 @@ def test_ARDESIA():
     print("=" * 80 + "\nDONE")
 
 
+def db_connect():
+    dbpath = DATABASE_URL.replace("file:../../", "")
+    if not os.path.exists(dbpath):
+        print(
+            f"DB not found\n\
+            Create the DB first or change DATABASE_URL {DATABASE_URL}"
+        )
+        sys.exit(1)
+    else:
+        db.connect()
+
+
+def db_entry(message):
+    print("db_entry()")
+    try:
+        message = json.loads(message)
+        db.db_entry(message)
+    except Exception as e:
+        logging.error(f"Error in db_entry -> {e}")
+
+
 def main():
     logging.debug("main()")
+    db_connect()
     # mi connetto a 'MQTTS WeLASER
     mqtts_connect(MQTTS_USERNAME, MQTTS_PASSWORD, MQTTS_BROKER, MQTTS_PORT)
     # mi connetto a 'MQTT Ardesia
     mqtt_connect(MQTT_USERNAME, MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT)
     if not (mqtts_client.is_connected() and mqtt_client.is_connected()):
         logging.error("to many failed attempts to connects to mqtt/mqtts")
-        return
+        sys.exit(1)
     # mi iscrivo a MQTTS
     stopic = f"{FIWARE}+/attrs"
     logging.debug("WELASER stopic=" + stopic)
@@ -383,7 +396,6 @@ def main():
     stopic = "#"
     logging.debug("ARDESIA stopic=" + stopic)
     mqtt_subscribe(mqtt_client, stopic)
-    # pubblico il messaggio di TEST su MQTTS
 
 
 # ---------------------------------------------------------
@@ -407,26 +419,39 @@ if __name__ == "__main__":
         print("running WeLaser Daemon")
         with daemon.DaemonContext(files_preserve=[file_logger.stream.fileno()]):
             logging.info(" ~ WELASER iotbroker DAEMON ~ ")
-            main()
+            try:
+                main()
+            except Exception as e:
+                logging.error(f"Error {e}")
+                sys.exit(1)
+            finally:
+                db.disconnect()
             while True:
                 time.sleep(1)
     else:
-        main()
-        in_ = ""
-        while in_ not in ["x", "X"]:
-            print("\/" * 10 + "    WAITING FOR INPUT    " + "\/" * 10)
-            in_ = input(
-                '"x" to exit., \n"a" test ARDESIA \n"w" test WELASER \n"f" test ftp 1 e 2 connections\n'
-            )
-            print("\/" * 40)
-            if in_ in ["a", "A"]:
-                test_ARDESIA()
-            elif in_ in ["w", "W"]:
-                test_WELASER()
-            elif in_ in ["f", "F"]:
-                print("test ftp connections")
-                client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
-                client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
-        print("Quit!")
-        mqtt_client.loop_stop()
-        mqtts_client.loop_stop()
+        try:
+            main()
+            in_ = ""
+            while in_ not in ["x", "X"]:
+                print("\/" * 10 + "    WAITING FOR INPUT    " + "\/" * 10)
+                in_ = input(
+                    '"x" to exit., \n"a" test ARDESIA \n"w" test WELASER \n"f" test ftp 1 e 2 connections\n'
+                )
+                print("\/" * 40)
+                if in_ in ["a", "A"]:
+                    test_ARDESIA()
+                elif in_ in ["w", "W"]:
+                    test_WELASER()
+                elif in_ in ["f", "F"]:
+                    print("test ftp connections")
+                    client_from = ftp_connect(
+                        HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM
+                    )
+                    client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
+        except Exception as e:
+            logging.error(f"Error {e}")
+            sys.exit(1)
+        finally:
+            mqtt_client.loop_stop()
+            mqtts_client.loop_stop()
+            db.disconnect()

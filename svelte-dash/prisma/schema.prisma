@@ -5,6 +5,7 @@
 //}
 generator client {
   provider             = "prisma-client-py"
+  interface            = "sync"
   recursive_type_depth = 5
 }
 
@@ -20,7 +21,7 @@ model Device {
   timestamp   BigInt   
 
   // Relation to measurements
-  etrometers  ETRometer?
+  etrometers  ETRometer[]
   weatherStation WeatherStation?
 }
 
@@ -56,7 +57,7 @@ model ETRometer {
   RH       Float 
   // Relation to Device model
   device   Device @relation(fields: [deviceId], references: [id])
-  deviceId Int @unique
+  deviceId Int 
 }
 
 model Units {
