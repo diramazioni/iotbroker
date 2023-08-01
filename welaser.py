@@ -421,13 +421,13 @@ if __name__ == "__main__":
             logging.info(" ~ WELASER iotbroker DAEMON ~ ")
             try:
                 main()
+                while True:
+                    time.sleep(1)
             except Exception as e:
-                logging.error(f"Error {e}")
-                sys.exit(1)
+                logging.error(f"Error {e}")                
             finally:
                 db.disconnect()
-            while True:
-                time.sleep(1)
+                sys.exit(1)
     else:
         try:
             main()
@@ -450,8 +450,9 @@ if __name__ == "__main__":
                     client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
         except Exception as e:
             logging.error(f"Error {e}")
-            sys.exit(1)
+            
         finally:
             mqtt_client.loop_stop()
             mqtts_client.loop_stop()
             db.disconnect()
+            sys.exit(1)
