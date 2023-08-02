@@ -1,4 +1,4 @@
-"""
+'''
 WELASER - by GV June 2023
 Capture messages from  Ardesia MQTT (insecure)
 and publish them to WeLASER MQTTS (over TLS)
@@ -6,19 +6,19 @@ then parse MQTT message, extract FTP file name and copy
 the files from  Ardesia to Local and to WeLASER
 Further on capture messages from MQTTS and
 append them to device.txt
-Finally publish a TEST message on MQTTS
-"""
+Finally publish a TEST message on MQTTS 
+'''
 import os
 import sys
-import asyncio
+
 import paho.mqtt.client as mqttClient
 import json
-
-# import ast # to convert string into dictionary
+#import ast # to convert string into dictionary
 import ssl
 from ftplib import FTP, all_errors
 import time
 from time import strftime, localtime
+#from datetime import datetime  # datetime data type
 
 # from datetime import datetime  # datetime data type
 
@@ -28,8 +28,12 @@ import daemon
 import argparse
 import logging
 
-from sensor_processor import SensorProcessor
-
+'''
+    handlers=[
+        logging.FileHandler("welaser.log"),
+        logging.StreamHandler()
+    ]    #    
+'''
 #  ==========================================
 #          LOADS ENVIROMENT VARIABLES
 load_dotenv()
@@ -59,7 +63,6 @@ FTP_LOCAL = os.getenv("FTP_LOCAL")
 FIWARE = os.getenv("FIWARE")
 ENTITY = os.getenv("ENTITY")
 
-DATABASE_URL = os.getenv("DATABASE_URL")
 
 PATH_LOCAL = os.getcwd()
 
@@ -69,14 +72,12 @@ PATH_LOCAL = os.getcwd()
 
 mqtts_client = mqttClient.Client()
 mqtt_client = mqttClient.Client()
-db = SensorProcessor()
-
 
 #  ==========================================
 #                   Functions
-#  ==========================================
+#  ========================================== 
 #                    MQTT(S)
-# --------------------------------------------
+#--------------------------------------------
 def on_mqtt_connect(client, userdata, flags, rc):
     if rc == 0:
         logging.info("[INFO] Connected to MQTT broker - ARDESIA")
@@ -108,8 +109,9 @@ def on_mqtt_message(client, userdata, result):
     # str().replace(" ", "").replace("\'", "\"").replace('/n', '')
     message = result.payload.decode("utf-8")
     logging.info("---------vvvvvv ---- New Message on MQTT !")
-    logging.debug("message:" + message)
+    logging.debug( "message:" + message )
 
+    # PARSING - deserialising
     content = json.loads(message)
     device = content["nodeId"]
     logging.debug(f"device = nodeId:{device}")
@@ -127,20 +129,24 @@ def on_mqtt_message(client, userdata, result):
         TS = strftime("%Y-%m-%d %H:%M:%S", localtime(time.time()))
         payload = {"id": ID, "timestamp": TS, "picture": picture}
         logging.debug(f">>>>>>>> MQTTS payload:{payload}")
-        # mess_append(device, payload)
+        mess_append(device, payload)
         # pubblico il messaggio
         mqtt_publish(mqtts_client, ptopic, json.dumps(payload))
 
 
 # -------------------------------------------------
 def on_mqtts_message(client, userdata, result):
+    return True
+    ''' es> removing logging of all MQTTS messages
     message = result.payload.decode("utf-8")
     logging.info("---------vvvvvv  New Message on MQTTS !")
-    logging.debug("message:" + message)
-    db_entry(message)
-    return True
-
-
+    logging.debug( "message:" + message )
+    # Append-EVERY TOPICs to a file with the DEVICE name
+    device = result.topic.split(":")[3][:-6]
+    logging.info("APPEND:" + device)
+    # ----------------------------------- APPEND MESSAGE
+    mess_append(device, message)
+    '''
 # -------------------------------------------------
 # connect to mqtt ARDESIA
 def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
@@ -150,7 +156,7 @@ def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
     mqtt_client.on_message = on_mqtt_message
     mqtt_client.connect(broker_endpoint, port=port)
     mqtt_client.loop_start()
-    # mqtt_client.loop_forever()
+        #mqtt_client.loop_forever()
     attempts = 0
     while not mqtt_client.is_connected() and attempts < 5:  # Wait for connection
         logging.debug("mqtt waiting to connect...")
@@ -162,7 +168,6 @@ def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
         return False
 
     return True
-
 
 # -------------------------------------------------
 # conect a mqtts WeLASER
@@ -213,7 +218,6 @@ def mqtt_subscribe(client, topic):
     except Exception as e:
         logging.error(f"[ERROR] Could not subscribe: {e}")
 
-
 # ==========================================================
 #                     FTP
 # -------------------------------------------------
@@ -249,6 +253,7 @@ def ftp_connect(host, port, user, password):
         client_ftp.login(user=user, passwd=password)
         return client_ftp
     except all_errors as e:
+    
         logging.error(f"Error in Ftp -> {host} \n{e}")
 
 
@@ -285,6 +290,8 @@ def ftp_bounce(device, picture):
         return False
     # last step - copy the image to a local(www) file
     # ..with the name of camera (es. camera_5.jpg)
+    #
+    # es> check if fix works
     oldFile = os.path.join(PATH_LOCAL, picture)
     if os.path.exists(oldFile):
         logging.debug(f"mv {oldFile} picture to the www and dashboard")
@@ -354,33 +361,10 @@ def test_ARDESIA():
     payload = json.dumps(message)
     print(payload)
     mqtt_publish(mqtt_client, ptopic, payload)
-    print("=" * 80 + "\nDONE")
-
-
-def db_connect():
-    dbpath = DATABASE_URL.replace("file:../../", "")
-    if not os.path.exists(dbpath):
-        print(
-            f"DB not found\n\
-            Create the DB first or change DATABASE_URL {DATABASE_URL}"
-        )
-        sys.exit(1)
-    else:
-        db.connect()
-
-
-def db_entry(message):
-    print("db_entry()")
-    try:
-        message = json.loads(message)
-        db.db_entry(message)
-    except Exception as e:
-        logging.error(f"Error in db_entry -> {e}")
-
+    print("="*80+"\nDONE")
 
 def main():
     logging.debug("main()")
-    db_connect()
     # mi connetto a 'MQTTS WeLASER
     mqtts_connect(MQTTS_USERNAME, MQTTS_PASSWORD, MQTTS_BROKER, MQTTS_PORT)
     # mi connetto a 'MQTT Ardesia
@@ -426,7 +410,6 @@ if __name__ == "__main__":
             except Exception as e:
                 logging.error(f"Error {e}")                
             finally:
-                db.disconnect()
                 sys.exit(1)
     else:
         try:
@@ -454,5 +437,5 @@ if __name__ == "__main__":
         finally:
             mqtt_client.loop_stop()
             mqtts_client.loop_stop()
-            db.disconnect()
+            
             sys.exit(1)
