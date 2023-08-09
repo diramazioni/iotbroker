@@ -1,15 +1,26 @@
 <script lang="ts">
 	import type { PageData } from './$types'
+  import { LineChart } from '@carbon/charts-svelte'
+  import '@carbon/styles/css/styles.css'
+  import '@carbon/charts-svelte/styles.css'
+  import options from './options'
+  import data from './data'
+  // type DataRecord = { x: number, y: number }
+  // export let data: DataRecord[] = [
+  //   { x: 0, y: 0 },
+  //   { x: 1, y: 2 },
+  //   { x: 2, y: 1 },
+  // ]
+  // const x = (d: DataRecord) => d.x
+  // const y = (d: DataRecord) => d.y
 
-	export let data: PageData
-
-	$: ({ devices } = data)
-  
 </script>
 
-<h1>weather stations</h1>
 
+<LineChart {data} {options} style="padding:2rem;" />
 
+<!-- 
+  <h1>weather stations</h1>
 <div class="devices">
   <div>
     <div>name</div>
@@ -29,62 +40,65 @@
     <div>W_vel</div>
     <div>W_dir</div>
   </div>  
-{#each devices as device}
+{#each device as ws}
 <div>
   <div>
-    {device.name}
+    {ws.name}
   </div>  
   <div>
-    {device.timestamp}
+    {ws.timestamp}
   </div>  
   <div>
-    {device.weatherStation.Battery_Voltage}
+    {ws.Battery_Voltage}
   </div>  
   <div>
-    {device.weatherStation.Temperature}
+    {ws.Temperature}
   </div>  
   <div>
-    {device.weatherStation.Pressure}
+    {ws.Pressure}
   </div>  
   <div>
-    {device.weatherStation.Humidity}
+    {ws.Humidity}
   </div>  
   <div>
-    {device.weatherStation.GasResistance}
+    {ws.GasResistance}
   </div>  
   <div>
-    {device.weatherStation.Altitude}
+    {ws.Altitude}
   </div>        
   <div>
-    {device.weatherStation.Ts_1}
+    {ws.Ts_1}
   </div>   
   <div>
-    {device.weatherStation.Ts_2}
+    {ws.Ts_2}
   </div>   
   <div>
-    {device.weatherStation.Ts_3}
+    {ws.Ts_3}
   </div>   
   <div>
-    {device.weatherStation.Us_1}
+    {ws.Us_1}
   </div>   
   <div>
-    {device.weatherStation.Us_2}
+    {ws.Us_2}
   </div>   
   <div>
-    {device.weatherStation.Us_3}
+    {ws.Us_3}
   </div>   
   <div>
-    {device.weatherStation.W_vel}
+    {ws.W_vel}
   </div>   
   <div>
-    {device.weatherStation.W_dir}
+    {ws.W_dir}
   </div>                 
 </div>
 {/each}
   
 </div>
+ -->
+
 
 <style>
+
   .devices  {
     display: flex;
   flex-direction: column;
