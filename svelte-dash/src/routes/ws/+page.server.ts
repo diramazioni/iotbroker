@@ -1,22 +1,22 @@
 
 import { prisma }  from '$lib/prisma';
 import type { PageServerLoad } from './$types';
-
-// export const load = (async () => {
-
-//   // where: { published: true },
-//   // include: { author: true },
-
-// const response = await prisma.device.findMany()
-
-// return { obj: response };
-
-// }) satisfies PageServerLoad;
+import {propertyFromArray, propertyFromWeatherData} from '$lib/index';
 
 export const load: PageServerLoad = async () => {
-  const response = await prisma.device.findMany()
+  const response = await prisma.device.findMany({
+    where: { weatherStation: {'isNot': null } },
+    include: {
+      weatherStation: true
+    }
+  })
   console.log(response)
+  //const temperatures: number[] = propertyFromArray(response, 'Temperature');
+  const temperatures: number[] = propertyFromWeatherData(response, 'Temperature');
+
+  console.log(temperatures)
 	return {
-		devices: response
+		device: response,
+    temperatures: temperatures
 	}
 }
