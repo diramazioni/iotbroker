@@ -58,8 +58,16 @@ class MessageLogger:
       if not self.mqtts_client.is_connected():
           logging.error("Could not connect to broker")
           return False
-      return True
-    
+          return True
+    # subscribe to MQTT
+    def mqtt_subscribe(self, client, topic):
+        try:
+            # OVERLAY stopic -> SUBSCRIBE ALL
+            client.subscribe(topic)
+        except Exception as e:
+            logging.error(f"[ERROR] Could not subscribe: {e}")    
+        logging.debug("subscribed")
+            
     def on_mqtts_connect(self, client, userdata, flags, rc):
         if rc == 0:
             logging.info("Connected to MQTTS broker - CESENA")
@@ -73,7 +81,8 @@ class MessageLogger:
       message = result.payload.decode("utf-8")
       device = result.topic.split(":")[3][:-6]
       logging.info(f"New MQTTS message on {device}: {message}")
-      self.send_websocket_event(message, device)
+      message_ = json.loads(message)
+      self.send_websocket_event(message_, device)
       return True
     
     # WebSocket
@@ -121,6 +130,9 @@ class MessageLogger:
     def main(self, interactive=False):
       logging.debug("main()")
       connected = self.MQTTS_connect(self.MQTTS_USERNAME, self.MQTTS_PASSWORD, self.MQTTS_BROKER, self.MQTTS_PORT)
+      stopic = f"{self.FIWARE}+/attrs"
+      self.mqtt_subscribe(self.mqtts_client, stopic)
+      
       # Start the WebSocket server in a separate thread
       websocket_server_thread = Thread(target=self.start_websocket_server)
       websocket_server_thread.start()
@@ -135,7 +147,19 @@ class MessageLogger:
               )
               print("\/" * 40)
               if in_ in ["a", "A"]:
-                  message = {"id": 1234, "content": "Testone"}
+                  message = {"id": 1234, 'device': 'TEST', 
+                    "content": {
+                      "id": "urn:ngsi-ld:Device:WeatherStation_v8", 
+                      "name": "WeatherStation_v8", 
+                      "areaServed": "urn:ngsi-ld:AgriFarm:007", 
+                      "location": {"coordinates": [5.1729, 51.366], "type": "Point"}, 
+                      "timestamp": 1691600400000, 
+                      "controlledProperty": ["temperature", "humidity", "pressure", "wind_speed", "wind_deg", "rain"], 
+                      "value": [19.79, 61, 1018, 4.55, 300, 0], 
+                      "units": ["degC", "%", "mBar", "m/s", "degNcw", "mm"]
+                    }
+                  }
+                  
                   self.send_websocket_event(message)
                   logging.info("sent websocket event")
               elif in_ in ["x", "X"]:
