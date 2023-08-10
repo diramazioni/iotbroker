@@ -165,7 +165,7 @@ class MessageLogger:
         if interactive:
           in_ = ""
           while in_ not in ["x", "X"]:
-              print("\/" * 10 + "    WAITING FOR INPUT    " + "\/" * 10)
+              print("\/" * 10 + "        WAITING FOR INPUT        " + "\/" * 10)
               in_ = input(
                   '"x" to exit., \n"a" test websocket \n'
               )
@@ -184,7 +184,7 @@ class MessageLogger:
                   message = {"id": 1234, 'device': 'TEST', "content": content}
                   
                   #self.send_websocket_event(message)
-                  ptopic = f"{self.FIWARE}{self.ENTITY}device:test/attrs"
+                  ptopic = f"{self.FIWARE}{self.ENTITY}device:WeatherStation_v8/attrs"
                   self.mqtts_client.publish(ptopic, content)
                   #asyncio.set_event_loop(self.db_loop)
                   #self.db_loop.create_task(self.db.db_entry(message["content"]))
