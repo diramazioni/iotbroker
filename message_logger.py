@@ -12,12 +12,12 @@ from threading import Thread
 import asyncio
 import websockets
 
-from sensor_processor_async import SensorProcessor
+#from sensor_processor_async import SensorProcessor
 class MessageLogger:
     def __init__(self):
         self.id = 0
         self.loop = None
-        self.db_loop = None
+        #self.db_loop = None
         self.connected_clients = set()
         self.load_env_variables()
         self.mqtts_client = mqttClient.Client()
@@ -34,7 +34,7 @@ class MessageLogger:
             ciphers=None,
         )
         self.mqtts_client.tls_insecure_set(True)  # <<<<<<<< MQTTS cert not Valid bypass
-        self.db = SensorProcessor()
+        #self.db = SensorProcessor()
 
 
     def load_env_variables(self):
@@ -197,8 +197,8 @@ class MessageLogger:
       finally:
           self.mqtts_client.loop_stop()
           websocket_server_thread.join()
-          asyncio.set_event_loop(self.loop)
-          self.loop.create_task(self.db.disconnect()) 
+          #asyncio.set_event_loop(self.loop)
+          #self.loop.create_task(self.db.disconnect()) 
           sys.exit(0)
           
 # Logging config
