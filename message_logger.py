@@ -12,10 +12,12 @@ from threading import Thread
 import asyncio
 import websockets
 
+from sensor_processor_async import SensorProcessor
 class MessageLogger:
     def __init__(self):
         self.id = 0
         self.loop = None
+        self.db_loop = None
         self.connected_clients = set()
         self.load_env_variables()
         self.mqtts_client = mqttClient.Client()
@@ -32,6 +34,7 @@ class MessageLogger:
             ciphers=None,
         )
         self.mqtts_client.tls_insecure_set(True)  # <<<<<<<< MQTTS cert not Valid bypass
+        self.db = SensorProcessor()
 
 
     def load_env_variables(self):
@@ -58,7 +61,7 @@ class MessageLogger:
       if not self.mqtts_client.is_connected():
           logging.error("Could not connect to broker")
           return False
-          return True
+      return True
     # subscribe to MQTT
     def mqtt_subscribe(self, client, topic):
         try:
@@ -78,12 +81,18 @@ class MessageLogger:
         pass
     
     def on_mqtts_message(self, client, userdata, result):
-      message = result.payload.decode("utf-8")
-      device = result.topic.split(":")[3][:-6]
-      logging.info(f"New MQTTS message on {device}: {message}")
-      message_ = json.loads(message)
-      self.send_websocket_event(message_, device)
+      try:
+        message = result.payload.decode("utf-8")
+        device = result.topic.split(":")[3][:-6]
+        logging.info(f"New MQTTS message on {device}: {message}")
+        message_ = json.loads(message)
+        # Create a new entry in the db    
+        #asyncio.run(self.db.db_entry(message_))
+        self.send_websocket_event(message_, device)
+      except Exception as e:
+        logging.error("create DB entry error:", e)  
       return True
+    
     
     # WebSocket
     def send_websocket_event(self, message, device=""):
@@ -92,9 +101,13 @@ class MessageLogger:
       new_data = {"id": self.id, "content": message, "device": device }
       logging.debug(f"Sending WebSocket message: {new_data}")
       try:
+        ##################################################################
+        #asyncio.set_event_loop(self.db_loop)
+        #self.db_loop.create_task(self.db.db_entry(message))
+        #asyncio.set_event_loop(self.loop)
         self.loop.create_task(self.send_update_to_clients(new_data))
       except Exception as e:
-        logging.error("send_websocket_event error:", e)  # Print the exception
+        logging.error("send_websocket_event error:", e)  
     
     async def send_update_to_clients(self, update):
         for client in self.connected_clients:
@@ -129,15 +142,26 @@ class MessageLogger:
     
     def main(self, interactive=False):
       logging.debug("main()")
-      connected = self.MQTTS_connect(self.MQTTS_USERNAME, self.MQTTS_PASSWORD, self.MQTTS_BROKER, self.MQTTS_PORT)
-      stopic = f"{self.FIWARE}+/attrs"
-      self.mqtt_subscribe(self.mqtts_client, stopic)
-      
-      # Start the WebSocket server in a separate thread
-      websocket_server_thread = Thread(target=self.start_websocket_server)
-      websocket_server_thread.start()
-      
       try:
+        self.MQTTS_connect(self.MQTTS_USERNAME, self.MQTTS_PASSWORD, self.MQTTS_BROKER, self.MQTTS_PORT)
+        #if connected:
+        stopic = f"{self.FIWARE}+/attrs"
+        self.mqtt_subscribe(self.mqtts_client, stopic)
+        
+        # Start the WebSocket server in a separate thread
+        websocket_server_thread = Thread(target=self.start_websocket_server)
+        websocket_server_thread.start()
+
+        # Connect to db
+        #self.loop.create_task(self.db.connect())
+        #self.db_loop = asyncio.new_event_loop()  # Create a new event loop
+        #asyncio.set_event_loop(self.db_loop)
+        #asyncio.run(self.db.connect())
+        #newfeature = asyncio.get_event_loop().run_until_complete(self.db.connect())
+
+        #self.loop.create_task()
+        
+
         if interactive:
           in_ = ""
           while in_ not in ["x", "X"]:
@@ -147,8 +171,7 @@ class MessageLogger:
               )
               print("\/" * 40)
               if in_ in ["a", "A"]:
-                  message = {"id": 1234, 'device': 'TEST', 
-                    "content": {
+                  content = {
                       "id": "urn:ngsi-ld:Device:WeatherStation_v8", 
                       "name": "WeatherStation_v8", 
                       "areaServed": "urn:ngsi-ld:AgriFarm:007", 
@@ -158,10 +181,15 @@ class MessageLogger:
                       "value": [19.79, 61, 1018, 4.55, 300, 0], 
                       "units": ["degC", "%", "mBar", "m/s", "degNcw", "mm"]
                     }
-                  }
+                  message = {"id": 1234, 'device': 'TEST', "content": content}
                   
-                  self.send_websocket_event(message)
+                  #self.send_websocket_event(message)
+                  ptopic = f"{self.FIWARE}{self.ENTITY}device:test/attrs"
+                  self.mqtts_client.publish(ptopic, content)
+                  #asyncio.set_event_loop(self.db_loop)
+                  #self.db_loop.create_task(self.db.db_entry(message["content"]))
                   logging.info("sent websocket event")
+                  
               elif in_ in ["x", "X"]:
                 sys.exit(0)
       except KeyboardInterrupt:
@@ -169,6 +197,8 @@ class MessageLogger:
       finally:
           self.mqtts_client.loop_stop()
           websocket_server_thread.join()
+          asyncio.set_event_loop(self.loop)
+          self.loop.create_task(self.db.disconnect()) 
           sys.exit(0)
           
 # Logging config

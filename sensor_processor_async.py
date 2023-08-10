@@ -9,6 +9,7 @@ class SensorProcessor:
         self.db = Prisma()
 
     async def connect(self):
+        print("Connecting to DB")
         await self.db.connect()
 
     async def disconnect(self):
