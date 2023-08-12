@@ -1,6 +1,6 @@
 import asyncio
 import aiomqtt
-import paho.mqtt as mqtt
+#import paho.mqtt as mqtt
 import ssl
 from dotenv import load_dotenv
 import os
@@ -8,6 +8,7 @@ import os
 class MessageLogger:
   
   async def init(self):
+    self.background_tasks = set()
     await self.load_env_variables()
     self.tls_params = aiomqtt.TLSParameters(
         ca_certs=None,
@@ -28,8 +29,6 @@ class MessageLogger:
       self.ENTITY = os.getenv("ENTITY")      
       
   async def mqttListen(self):
-      await self.init()
-      
       reconnect_interval = 5  # In seconds
       while True:
           try:  
@@ -49,12 +48,18 @@ class MessageLogger:
               await asyncio.sleep(reconnect_interval)
 
   async def main(self):
-    async with asyncio.TaskGroup() as tg:
-      # Wait for messages in (unawaited) asyncio task
-      #loop = asyncio.get_event_loop()
-      tg.create_task(self.mqttListen())
-      print("...")
-      #await task
+      await self.init()
+      try:  
+        loop = asyncio.new_event_loop()
+        #asyncio.set_event_loop(loop)
+        task = loop.create_task(self.mqttListen())
+        self.background_tasks.add(task)
+        task.add_done_callback(self.background_tasks.discard)
+        print("...")
+        
+      except Exception as error:
+          print(f'Error "{error}"..')      
+      
 
 ml = MessageLogger()
 asyncio.run(ml.main())
