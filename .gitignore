@@ -11,7 +11,7 @@ old/
 DATA/
 .idea
 .env
-.venv
+.venv*
 env/
 venv/
 ENV/
