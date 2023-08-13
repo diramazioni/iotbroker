@@ -1,4 +1,4 @@
-'''
+"""
 WELASER - by GV June 2023
 Capture messages from  Ardesia MQTT (insecure)
 and publish them to WeLASER MQTTS (over TLS)
@@ -7,18 +7,20 @@ the files from  Ardesia to Local and to WeLASER
 Further on capture messages from MQTTS and
 append them to device.txt
 Finally publish a TEST message on MQTTS 
-'''
+"""
 import os
 import sys
 
 import paho.mqtt.client as mqttClient
 import json
-#import ast # to convert string into dictionary
+
+# import ast # to convert string into dictionary
 import ssl
 from ftplib import FTP, all_errors
 import time
 from time import strftime, localtime
-#from datetime import datetime  # datetime data type
+
+# from datetime import datetime  # datetime data type
 
 # from datetime import datetime  # datetime data type
 
@@ -28,12 +30,12 @@ import daemon
 import argparse
 import logging
 
-'''
+"""
     handlers=[
         logging.FileHandler("welaser.log"),
         logging.StreamHandler()
     ]    #    
-'''
+"""
 #  ==========================================
 #          LOADS ENVIROMENT VARIABLES
 load_dotenv()
@@ -73,11 +75,12 @@ PATH_LOCAL = os.getcwd()
 mqtts_client = mqttClient.Client()
 mqtt_client = mqttClient.Client()
 
+
 #  ==========================================
 #                   Functions
-#  ========================================== 
+#  ==========================================
 #                    MQTT(S)
-#--------------------------------------------
+# --------------------------------------------
 def on_mqtt_connect(client, userdata, flags, rc):
     if rc == 0:
         logging.info("[INFO] Connected to MQTT broker - ARDESIA")
@@ -109,7 +112,7 @@ def on_mqtt_message(client, userdata, result):
     # str().replace(" ", "").replace("\'", "\"").replace('/n', '')
     message = result.payload.decode("utf-8")
     logging.info("---------vvvvvv ---- New Message on MQTT !")
-    logging.debug( "message:" + message )
+    logging.debug("message:" + message)
 
     # PARSING - deserialising
     content = json.loads(message)
@@ -137,7 +140,7 @@ def on_mqtt_message(client, userdata, result):
 # -------------------------------------------------
 def on_mqtts_message(client, userdata, result):
     return True
-    ''' es> removing logging of all MQTTS messages
+    """ es> removing logging of all MQTTS messages
     message = result.payload.decode("utf-8")
     logging.info("---------vvvvvv  New Message on MQTTS !")
     logging.debug( "message:" + message )
@@ -146,7 +149,9 @@ def on_mqtts_message(client, userdata, result):
     logging.info("APPEND:" + device)
     # ----------------------------------- APPEND MESSAGE
     mess_append(device, message)
-    '''
+    """
+
+
 # -------------------------------------------------
 # connect to mqtt ARDESIA
 def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
@@ -156,7 +161,7 @@ def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
     mqtt_client.on_message = on_mqtt_message
     mqtt_client.connect(broker_endpoint, port=port)
     mqtt_client.loop_start()
-        #mqtt_client.loop_forever()
+    # mqtt_client.loop_forever()
     attempts = 0
     while not mqtt_client.is_connected() and attempts < 5:  # Wait for connection
         logging.debug("mqtt waiting to connect...")
@@ -168,6 +173,7 @@ def mqtt_connect(mqtt_username, mqtt_password, broker_endpoint, port):
         return False
 
     return True
+
 
 # -------------------------------------------------
 # conect a mqtts WeLASER
@@ -218,6 +224,7 @@ def mqtt_subscribe(client, topic):
     except Exception as e:
         logging.error(f"[ERROR] Could not subscribe: {e}")
 
+
 # ==========================================================
 #                     FTP
 # -------------------------------------------------
@@ -253,7 +260,6 @@ def ftp_connect(host, port, user, password):
         client_ftp.login(user=user, passwd=password)
         return client_ftp
     except all_errors as e:
-    
         logging.error(f"Error in Ftp -> {host} \n{e}")
 
 
@@ -339,9 +345,66 @@ def test_WELASER():
     ID = f"{ENTITY}device:test"
     payload = json.dumps(
         {
-            "id": ID,
-            # "timestamp": TS,
-            "message": "test_WELASER",
+            "name": "WeatherStation_nX",
+            "id": "urn:ngsi-ld:Device:WeatherStation_nX",
+            "value": [
+                {
+                    "name": "WeatherStation_nX_BAT",
+                    "id": "urn:ngsi-ld:Device:WeatherStation_nX_BAT",
+                    "controlledProperty": ["Battery_Voltage"],
+                    "value": [4.130879741],
+                    "units": ["volts"],
+                },
+                {
+                    "name": "WeatherStation_nX_PV",
+                    "id": "urn:ngsi-ld:Device:WeatherStation_nX_PV",
+                    "controlledProperty": ["Solar_Panel_Voltage"],
+                    "value": [0],
+                    "units": ["volts"],
+                },
+                {
+                    "name": "WeatherStation_nX_WIND",
+                    "id": "urn:ngsi-ld:Device:WeatherStation_nX_WIND",
+                    "controlledProperty": ["W_vel", "W_dir"],
+                    "value": [88.63938536, 134.9650667],
+                    "units": ["m/s", "deg-N-cw"],
+                },
+                {
+                    "name": "WeatherStation_nX_BME680",
+                    "id": "urn:ngsi-ld:Device:WeatherStation_nX_BME680",
+                    "controlledProperty": [
+                        "Temperature",
+                        "Pressure",
+                        "Humidity",
+                        "GasResistance",
+                        "Altitude",
+                    ],
+                    "value": [29.62742615, 1005.58, 50.22343063, 834.359, 103.4343262],
+                    "units": ["degC", "hPa", "%", "KOhms", "m"],
+                },
+                {
+                    "name": "WeatherStation_nX_SENTEK",
+                    "id": "urn:ngsi-ld:Device:WeatherStation_nX_SENTEK",
+                    "controlledProperty": [
+                        "Ts_1",
+                        "Ts_2",
+                        "Ts_3",
+                        "Us_1",
+                        "Us_2",
+                        "Us_3",
+                    ],
+                    "value": [
+                        28.4299202,
+                        28.02635002,
+                        28.65796089,
+                        0.000338,
+                        0.004462,
+                        0.002557,
+                    ],
+                    "units": ["degC", "degC", "degC", "%", "%", "%"],
+                },
+            ],
+            "timestamp": 1690740135000,
         }
     )
     mqtt_publish(mqtts_client, ptopic, payload)
@@ -361,7 +424,8 @@ def test_ARDESIA():
     payload = json.dumps(message)
     print(payload)
     mqtt_publish(mqtt_client, ptopic, payload)
-    print("="*80+"\nDONE")
+    print("=" * 80 + "\nDONE")
+
 
 def main():
     logging.debug("main()")
@@ -408,7 +472,7 @@ if __name__ == "__main__":
                 while True:
                     time.sleep(1)
             except Exception as e:
-                logging.error(f"Error {e}")                
+                logging.error(f"Error {e}")
             finally:
                 sys.exit(1)
     else:
@@ -433,9 +497,9 @@ if __name__ == "__main__":
                     client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
         except Exception as e:
             logging.error(f"Error {e}")
-            
+
         finally:
             mqtt_client.loop_stop()
             mqtts_client.loop_stop()
-            
+
             sys.exit(1)

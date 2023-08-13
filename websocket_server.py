@@ -1,27 +1,34 @@
 import asyncio
-import json
 import logging
+import traceback
 import websockets
 from websockets.server import serve
 import signal
-
+from message_parser import MessageParser
+import json
 
 class WebSocketServer:
-    def __init__(self):
+    def __init__(self, parser=None):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
         self.connected_clients = set()
         self.id = 0
+        self.parser = parser
 
-    async def send_event(self, message, device=""):
+    async def send_event(self, message):
         # send websocket event
         self.id += 1
+        device = "test"
         new_data = {"id": self.id, "content": message, "device": device}
         logging.debug(f"Sending WebSocket message: {new_data}")
         try:
-            await self.message_all(new_data)
+            await self.parser.db_entry(json.loads(message))
+            logging.info("*"*50)
+            await self.message_all(message)
+            logging.info("/"*50)
         except Exception as e:
-            logging.error("send_event error:", e)
+            logging.error(f"send_event error:{e}")
+            logging.error(traceback.format_exc())
 
     async def message_all(self, message):
         try:
@@ -29,7 +36,7 @@ class WebSocketServer:
             for client in self.connected_clients:
                 await client.send(message)
         except Exception as e:
-            logging.error("message_all error:", e)  # Print the exception
+            logging.error(f"message_all error:{e}")  # Print the exception
 
     async def _handler(self, websocket, path):
         self.connected_clients.add(websocket)
@@ -58,13 +65,18 @@ class WebSocketServer:
 
 
 async def main(interactive=False):
-    wss = WebSocketServer()
-    asyncio.create_task(wss.start())
-    logging.info("WebSocketServer started...")
-    if interactive:
-        while True:
-            await asyncio.sleep(1)  # Replace with your actual main program logic
-
+    try:
+        message_parser = MessageParser()
+        await message_parser.connect()
+        logging.info("message_parser started")    
+        wss = WebSocketServer(parser=message_parser)
+        asyncio.create_task(wss.start())
+        logging.info("WebSocketServer started...")
+        if interactive:
+            while True:
+                await asyncio.sleep(1)  # Replace with your actual main program logic
+    except Exception as error:
+        logging.error(f'Error "{error}"..')
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)

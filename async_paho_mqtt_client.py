@@ -30,6 +30,7 @@ class AsyncClient:
         notify_birth=False
     ):
         self.logger = logging.getLogger(".".join((__name__, host, str(port))))
+        self.logger.setLevel(logging.INFO)
         self.host = host
         self.keepalive = keepalive
         self.port = port
