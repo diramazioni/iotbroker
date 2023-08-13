@@ -1,5 +1,6 @@
 import json
 import time
+from time import strftime, localtime
 import asyncio
 import logging
 import ssl
@@ -26,6 +27,7 @@ class AsyncClient:
         tls_version=ssl.PROTOCOL_TLSv1_2,
         ciphers=None,
         state_key="state",
+        notify_birth=False
     ):
         self.logger = logging.getLogger(".".join((__name__, host, str(port))))
         self.host = host
@@ -53,7 +55,10 @@ class AsyncClient:
             self.client.username_pw_set(username, password)
         self._misc_loop = None
         self.connected = False
-        self.on_connect = [self.notify_birth]
+        if notify_birth:
+            self.on_connect = [self.notify_birth]
+        else:
+            self.on_connect = []
         self.state_key = state_key
         self.on_disconnect = []
         self.client.will_set(
@@ -191,7 +196,8 @@ class AsyncClient:
 
     @staticmethod
     def timestamp():
-        return time.time()
+        time_format = strftime("%Y-%m-%d %H:%M:%S", localtime(time.time()))
+        return time_format
 
     async def notify_birth(self, *args, **kwargs):
         await self.publish(

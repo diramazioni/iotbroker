@@ -16,12 +16,13 @@
       ws.addEventListener("close", (event: any) => {
         console.log("WebSocket connection closed")
       });                
-      ws.addEventListener("message", (event: any) => {
-        console.log("new ws message")
+      ws.addEventListener("message", (event: any) => {        
         const message: Request = JSON.parse(event.data);
-        if (message.device === "" ) {
-          wsMessages.update((messages) => [...messages, message]);
-        }
+        console.log("new ws message" + {message})
+        // if (message.device === "" ) {
+        //   
+        // }
+        wsMessages.update((messages) => [...messages, message]);
         
       });
     };
@@ -32,6 +33,6 @@
 <h1>WebSocket Messages:</h1>
 <ul>
   {#each $wsMessages as message}
-    <li>{JSON.stringify( message.content)}</li>
+    <li>{JSON.stringify( message)}</li>
   {/each}
 </ul>
