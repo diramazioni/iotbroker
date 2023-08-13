@@ -69,7 +69,7 @@ class MessageParser:
         except Exception as e:
             logging.error(f"db_entry error:{e}")  # Print the exception
             logging.error(traceback.format_exc())
-            
+
     async def process_data(self, data_file) -> None:
         with open(data_file) as f:
             data_json = json.load(f)
@@ -81,7 +81,7 @@ class MessageParser:
 async def main() -> None:
     message_parser = MessageParser()
     await message_parser.connect()
-    # await sensor_processor.process_data("data/ETRometer_1.json")
+    # await message_parser.process_data("data/ETRometer_1.json")
     await message_parser.process_data("data/WeatherStation_n1.json")
     asyncio.sleep(10)
     await message_parser.disconnect()

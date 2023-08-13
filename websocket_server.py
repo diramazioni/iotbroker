@@ -7,6 +7,7 @@ import signal
 from message_parser import MessageParser
 import json
 
+
 class WebSocketServer:
     def __init__(self, parser=None):
         self.logger = logging.getLogger(__name__)
@@ -23,9 +24,9 @@ class WebSocketServer:
         logging.debug(f"Sending WebSocket message: {new_data}")
         try:
             await self.parser.db_entry(json.loads(message))
-            logging.info("*"*50)
+            logging.info("*" * 50)
             await self.message_all(message)
-            logging.info("/"*50)
+            logging.info("/" * 50)
         except Exception as e:
             logging.error(f"send_event error:{e}")
             logging.error(traceback.format_exc())
@@ -68,15 +69,16 @@ async def main(interactive=False):
     try:
         message_parser = MessageParser()
         await message_parser.connect()
-        logging.info("message_parser started")    
+        logging.info("message_parser started")
         wss = WebSocketServer(parser=message_parser)
         asyncio.create_task(wss.start())
         logging.info("WebSocketServer started...")
         if interactive:
             while True:
-                await asyncio.sleep(1)  # Replace with your actual main program logic
+                await asyncio.sleep(1)
     except Exception as error:
         logging.error(f'Error "{error}"..')
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)

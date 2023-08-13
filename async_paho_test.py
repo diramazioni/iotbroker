@@ -4,11 +4,7 @@ from async_paho_mqtt_client import AsyncClient
 
 
 async def main():
-    client = AsyncClient(
-      host="test.mosquitto.org", 
-      port=1883, 
-      client_id="my-client"
-      )
+    client = AsyncClient(host="test.mosquitto.org", port=1883, client_id="my-client")
     await client.start()
 
     await client.wait_started()
@@ -27,7 +23,9 @@ def on_message(client, userdata, message):
     payload = message.payload.decode("utf-8")
     print(f"Received message on topic '{message.topic}': {payload}")
     import sys
-    #sys.exit(1)
+
+    # sys.exit(1)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
