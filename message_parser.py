@@ -21,25 +21,50 @@ class MessageParser:
 
     async def db_entry(self, payload) -> None:
         try:
+            unames_ = dict()
             e = payload
             TS = strftime("%Y-%m-%d %H:%M:%S", localtime(e["timestamp"]))
+            if ("Camera" in e["id"] or "camera" in e["id"]):
+                logging.info(f"Camera: {e['id']}")
+                camera_obj = {"timestamp": int(e['timestamp']), "picture": e['picture']}
+                await self.db.camera.create(camera_obj)
+                return
+            
             sens = {}
-            for se in e["value"]:
-                sens[se["name"]] = dict(zip(se["controlledProperty"], se["value"]))
-                units = dict(zip(se["controlledProperty"], se["units"]))
-                for name, value in units.items():
-                    units_db = await self.db.units.find_unique(where={"name": name})
-                    if not units_db:
-                        logging.info("U" * 80, name)
-                        units_obj = {"name": name, "value": value, "type": e["name"]}
-                        units_db = await self.db.units.create(units_obj)
+            
+            async def insert_units(device_name, unames={}):
+                for name, value in unames.items():
+                    if name not in unames_:
+                        units_db = await self.db.units.find_unique(where={"name": name})
+                        if not units_db:
+                            logging.info(f"Update Units {name}")
+                            units_obj = {"name": name, "value": value, "type": device_name}
+                            units_db = await self.db.units.create(units_obj)
+                            unames_[name] = units_obj
+                        else:  # cache the results
+                            units_obj = {"name": name, "value": value, "type": device_name}
+                            unames_[name] = units_obj
+                            
+            if all(isinstance(item, (int, float)) for item in e["value"]):
+                sens[e["name"]] = dict(zip(e["controlledProperty"], e["value"]))
+                units = dict(zip(e["controlledProperty"], e["units"]))
+                await insert_units(e["name"], units)
+            elif all(isinstance(item, dict) for item in e["value"]):  # gerarchic structure
+                for se in e["value"]:
+                    sens[se["name"]] = dict(zip(se["controlledProperty"], se["value"]))
+                    units = dict(zip(se["controlledProperty"], se["units"]))
+                    await insert_units(e["name"], units)
 
             device_obj = {
                 "name": e["name"],
                 "timestamp": e["timestamp"],
             }
             if "calibration" in e:
-                device_obj["calibration"] = e["calibration"]
+                device_obj["calibration"] = bool(e["calibration"])
+            if "areaServed" in e:
+                device_obj["areaServed"] = e["areaServed"]
+            if "location" in e:
+                device_obj["location"] = str(e["location"]["coordinates"])
             device_db = await self.db.device.create(device_obj)
 
             sens_obj = {
@@ -63,8 +88,13 @@ class MessageParser:
                     sens_obj.update(d)
             if "ETRometer" in e["name"]:
                 pass
-            elif "WeatherStation" in e["name"]:
-                logging.info("-" * 80, sens_obj)
+            elif "WeatherStation_v" in e["name"]:
+                logging.info("-" * 80)
+                logging.info(sens_obj)
+                await self.db.weatherstationvirtual.create(sens_obj)
+            elif "WeatherStation_n" in e["name"]:
+                logging.info("-" * 80)
+                logging.info(sens_obj)
                 await self.db.weatherstation.create(sens_obj)
         except Exception as e:
             logging.error(f"db_entry error:{e}")  # Print the exception

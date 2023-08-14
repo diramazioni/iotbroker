@@ -22,11 +22,31 @@ model Device {
   id          Int       @id @default(autoincrement())
   name        String
   calibration Boolean?
+  location    String?
+  areaServed  String?
   timestamp   BigInt   
 
   // Relation to measurements
   etrometers  ETRometer[]
   weatherStation WeatherStation?
+  weatherStationVirtual WeatherStationVirtual?
+}
+model Camera {
+  id            Int    @id @default(autoincrement())
+  timestamp     BigInt 
+  picture       String
+}
+model WeatherStationVirtual {
+  id            Int    @id @default(autoincrement())
+  timestamp     String 
+  temperature   Float
+  pressure      Float
+  humidity      Float
+  wind_speed    Float
+  wind_deg      Float
+  rain          Float
+  device   Device @relation(fields: [deviceId], references: [id])
+  deviceId Int @unique  
 }
 
 model WeatherStation {
