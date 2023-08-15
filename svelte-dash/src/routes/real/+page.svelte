@@ -1,4 +1,3 @@
-// YourSvelteComponent.svelte
 <script lang="ts">
   import { writable, get } from 'svelte/store';
   import { onMount } from 'svelte';

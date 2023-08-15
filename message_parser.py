@@ -73,7 +73,7 @@ class MessageParser:
                         "id": device_db.id,
                     },
                 },
-                "timestamp": TS,
+                "timestamp": e["timestamp"],
             }
 
             for sensor_name, d in sens.items():
@@ -111,9 +111,10 @@ class MessageParser:
 async def main() -> None:
     message_parser = MessageParser()
     await message_parser.connect()
-    # await message_parser.process_data("data/ETRometer_1.json")
-    await message_parser.process_data("data/WeatherStation_n1.json")
-    asyncio.sleep(10)
+    await message_parser.process_data("data/ETRometer_1.json")
+    
+    #await message_parser.process_data("data/WeatherStation_n1.json")
+    await asyncio.sleep(10)
     await message_parser.disconnect()
 
 

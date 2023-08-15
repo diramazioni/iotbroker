@@ -2,16 +2,16 @@
 
 
 // js client
-// generator client {
-//  provider = "prisma-client-js"
-// }
+generator client {
+ provider = "prisma-client-js"
+}
 
 // python client
-generator client {
-  provider             = "prisma-client-py"
-  interface            = "asyncio" // 'sync'
-  recursive_type_depth = 5
-}
+// generator client {
+//   provider             = "prisma-client-py"
+//   interface            = "asyncio" // 'sync'
+//   recursive_type_depth = 5
+// }
 
 datasource db {
   provider = "sqlite"
@@ -38,7 +38,7 @@ model Camera {
 }
 model WeatherStationVirtual {
   id            Int    @id @default(autoincrement())
-  timestamp     String 
+  timestamp     BigInt 
   temperature   Float
   pressure      Float
   humidity      Float
@@ -51,7 +51,7 @@ model WeatherStationVirtual {
 
 model WeatherStation {
   id            Int    @id @default(autoincrement())
-  timestamp   String 
+  timestamp   BigInt 
   Battery_Voltage Float
   Solar_Panel_Voltage Float
   Temperature   Float
@@ -73,7 +73,7 @@ model WeatherStation {
 
 model ETRometer {
   id       Int      @id @default(autoincrement())
-  timestamp   String   
+  timestamp   BigInt   
   name     String
   charge   Float 
   CO2      Float

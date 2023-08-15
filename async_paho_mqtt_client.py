@@ -27,14 +27,15 @@ class AsyncClient:
         tls_version=ssl.PROTOCOL_TLSv1_2,
         ciphers=None,
         state_key="state",
+        loop=None,
         notify_birth=False
     ):
         self.logger = logging.getLogger(".".join((__name__, host, str(port))))
-        self.logger.setLevel(logging.INFO)
         self.host = host
         self.keepalive = keepalive
         self.port = port
         self._stop = False
+        self.loop = loop or asyncio.get_event_loop()
         self.reconnect_interval = reconnect_interval
         self._reconnector_loop = None
         self.client_id = client_id or None
@@ -43,15 +44,9 @@ class AsyncClient:
         if tls:
             self.client.tls_set(ca_certs, certfile, keyfile, 
                                 cert_reqs, tls_version, ciphers)
-        if tls_insecure:
-            self.client.tls_insecure_set(True)
-        
-        # if tls_context:
-        #     self.client.tls_set_context(tls_context)
-        # if ca_certs and certfile:
-        #     self.client.tls_set(ca_certs, certfile, keyfile)
-        # elif ca_certs:
-        #     self.client.tls_set(ca_certs)
+            if tls_insecure:
+                self.client.tls_insecure_set(True)
+
         if username is not None and password is not None:
             self.client.username_pw_set(username, password)
         self._misc_loop = None

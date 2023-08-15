@@ -9,7 +9,7 @@ export const load: PageServerLoad = async () => {
       weatherStation: true
     }
   })
-  //console.log(response)
+  console.log(response)
 	return {
 		devices: response
 	}

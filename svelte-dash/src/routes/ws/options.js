@@ -1,17 +1,28 @@
 export default {
   title: 'Line (time series)',
+  points: {
+		enabled: false
+	},
   axes: {
     bottom: {
-      title: '2019 Annual Sales Figures',
+      title: 'Time sensor values',
       mapsTo: 'date',
       scaleType: 'time'
     },
     left: {
       mapsTo: 'value',
-      title: 'Conversion rate',
+      title: 'Values',
       scaleType: 'linear'
-    }
+    } 
   },
   curve: 'curveMonotoneX',
-  height: '400px'
+  experimental : true,
+  zoomBar : {
+    top : {
+    enabled : true
+    }
+  },  
+  height: '600px',
+  "resizable": true,
+  // width: '200px'
 }

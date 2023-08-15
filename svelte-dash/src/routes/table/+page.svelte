@@ -7,8 +7,7 @@
 </script>
 
 <h1>weather stations</h1>
-<!-- 
-{JSON.stringify(devices)} -->
+
 
 <div class="devices">
   <div>

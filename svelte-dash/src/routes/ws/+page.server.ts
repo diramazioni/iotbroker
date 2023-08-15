@@ -3,20 +3,18 @@ import { prisma }  from '$lib/prisma';
 import type { PageServerLoad } from './$types';
 import {propertyFromArray, propertyFromWeatherData} from '$lib/index';
 
-export const load: PageServerLoad = async () => {
-  const response = await prisma.device.findMany({
-    where: { weatherStation: {'isNot': null } },
-    include: {
-      weatherStation: true
-    }
-  })
-  console.log(response)
-  //const temperatures: number[] = propertyFromArray(response, 'Temperature');
-  const temperatures: number[] = propertyFromWeatherData(response, 'Temperature');
+export const load: PageServerLoad = async ({ fetch, params }) => {
+  let response = await fetch('/api/weatherstation')
+  const weatherstation = await response.json();
+  response = await fetch('/api/weatherstation_virt')
+  const weatherstation_virt = await response.json();
+  response = await fetch('/api/etrometer')
+  const etrometer = await response.json();  
+  //return { weatherstation };
 
-  console.log(temperatures)
 	return {
-		device: response,
-    temperatures: temperatures
+		weatherstation: weatherstation,
+    weatherstation_virt: weatherstation_virt,
+    etrometer: etrometer
 	}
 }
