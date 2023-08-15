@@ -394,7 +394,7 @@ def test_Canera():
     TS = time.time()
     picture = "test.jpg"
     payload = json.dumps(
-        {"id": ID, "timestamp": TS, "picture": picture}
+        {"id": ID, "name": "Camera_Test", "timestamp": TS, "picture": picture}
     )
     mqtt_publish(mqtts_client, ptopic, payload)
 

@@ -19,14 +19,16 @@ class WebSocketServer:
     async def send_event(self, message):
         # send websocket event
         self.id += 1
-        device = "test"
-        new_data = {"id": self.id, "content": message, "device": device}
-        logging.debug(f"Sending WebSocket message: {new_data}")
+        message_ = json.loads(message)
+        #print(message_)
+        # device = message.name
+        ws_data = {"id": self.id, "content": message_, "device": message_["name"]}
+        logging.debug(f"Sending WebSocket message: {ws_data}")
         try:
-            await self.parser.db_entry(json.loads(message))
+            await self.parser.db_entry(message_)
             logging.info("*" * 50)
-            await self.message_all(message)
-            logging.info("/" * 50)
+            await self.message_all(json.dumps(ws_data))
+            logging.debug(ws_data)
         except Exception as e:
             logging.error(f"send_event error:{e}")
             logging.error(traceback.format_exc())
