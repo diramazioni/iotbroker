@@ -5,8 +5,11 @@
   import { LineChart, AreaChart } from '@carbon/charts-svelte'
   import '@carbon/styles/css/styles.css'
   import '@carbon/charts-svelte/styles.css'
-  import options from './options'
-
+  import options from '../../lib/options'
+	import Slider from '@bulatdashiev/svelte-slider';
+	
+	let value = [10, 100];
+	let range2 = [30, 40];
   export let data: PageData
   $: ({ weatherstation_n, weatherstation_v, etrometer } = data)
   const weatherstationdOptions = { ...options,  title: "Weather Stations" }
@@ -66,10 +69,13 @@
     // Fetch data from the server and update as needed
   }
 </script>
+left: {range2[0]}
+right: {range2[1]}
+<Slider max="200" step="10" bind:value={range2} range order />
 
 <AreaChart data={weatherstation_n} options={weatherstationdOptions} style="padding:2rem;" />
-
-<!-- <AreaChart data={weatherstation_virt} options={weatherstation_virtOptions} style="padding:2rem;" />
+<AreaChart data={weatherstation_v} options={weatherstation_virtOptions} style="padding:2rem;" />
+<!-- 
 <div class="devices">
     <LineChart data={etrometer.CO2} options={etrometerOptionsCO2} style="padding:2rem; flex:1;" />
     <LineChart data={etrometer.TC} options={etrometerOptionsTC} style="padding:2rem; flex:1;" />

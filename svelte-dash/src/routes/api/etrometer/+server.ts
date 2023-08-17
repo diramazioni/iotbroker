@@ -1,7 +1,7 @@
 import { error, json } from "@sveltejs/kit";
 import { prisma } from '$lib/prisma';
 
-export async function GET({ url }) {
+export async function GET({ url, params }) {
   /*   
   const start = Number(url.searchParams.get('start') ?? '0');
   const end = Number(url.searchParams.get('end') ?? '1');

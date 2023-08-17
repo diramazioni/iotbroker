@@ -1,21 +1,26 @@
 import { error, json } from "@sveltejs/kit";
-import { prisma } from '$lib/prisma';
+import { prisma, get_wsv_range } from '$lib/prisma';
 
-export async function GET({ url }) {
-  /*   
-  const start = Number(url.searchParams.get('start') ?? '0');
-  const end = Number(url.searchParams.get('end') ?? '1');
-  const d = end - start;
-  if (isNaN(d) || d < 0) {
-    throw error(400, 'start and end must be numbers, and start must be less than end');
-  }
-   */
+
+export async function GET({ url, params }) {
+
+  const range:BigInt[] = get_wsv_range(url, params.device)
   const db_result = await prisma.device.findMany({
-    where: { weatherStationVirtual: { 'isNot': null } },
+    where: {
+      name: { 'equals': params.device },
+      weatherStationVirtual: {
+        isNot: null,
+      },
+      timestamp: {
+        gte: range[0], // start
+        lte: range[1]  // end
+      }
+    },
     include: {
       weatherStationVirtual: true
     }
-  })
+  });
+
 
   const transformedData = db_result.map(entry => {
     const { timestamp, weatherStationVirtual } = entry;

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@bulatdashiev/svelte-slider':
+    specifier: ^1.0.3
+    version: 1.0.3
   '@carbon/charts-svelte':
     specifier: ^1.11.17
     version: 1.11.17(d3-cloud@1.2.7)(d3-sankey@0.12.3)(d3@7.8.5)(svelte@4.1.1)
@@ -99,6 +102,10 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
+    dev: false
+
+  /@bulatdashiev/svelte-slider@1.0.3:
+    resolution: {integrity: sha512-GkVyqIjzQnqy0FQIm8wqRLIOFQBQ/Ewd381Y7KwABsSwiSu0eMYO0/8s4q/wlMDDb2/+U66rXlalaUokUfw8Vg==}
     dev: false
 
   /@carbon/charts-svelte@1.11.17(d3-cloud@1.2.7)(d3-sankey@0.12.3)(d3@7.8.5)(svelte@4.1.1):
