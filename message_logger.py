@@ -6,7 +6,9 @@ from async_paho_mqtt_client import AsyncClient as amqtt
 from message_parser import MessageParser
 from websocket_server import WebSocketServer
 
-
+'''
+Listen to MQTT messages and echo to the WebSocket server
+'''
 class MessageLogger:
     def __init__(self, id="dev", websocket=None, parser=None) -> None:
         self.logger = logging.getLogger(__name__)

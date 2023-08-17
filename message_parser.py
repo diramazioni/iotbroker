@@ -5,7 +5,10 @@ from prisma import Prisma
 import json
 import logging
 
-
+'''
+Seed the DB with saved json messages from the MQTT broker
+Insert the MQTT messages into the DB
+'''
 class MessageParser:
     def __init__(self):
         self.db = Prisma()

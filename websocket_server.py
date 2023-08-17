@@ -7,7 +7,10 @@ import signal
 from message_parser import MessageParser
 import json
 
-
+'''
+When send_event() is triggered, insert the new message into the DB 
+and send event to all websocket connected clients
+'''
 class WebSocketServer:
     def __init__(self, parser=None):
         self.logger = logging.getLogger(__name__)
@@ -18,13 +21,12 @@ class WebSocketServer:
 
     async def send_event(self, message):
         # send websocket event
-        self.id += 1
-        message_ = json.loads(message)
-        #print(message_)
-        # device = message.name
-        ws_data = {"id": self.id, "content": message_, "device": message_["name"]}
-        logging.debug(f"Sending WebSocket message: {ws_data}")
         try:
+            self.id += 1
+            message_ = json.loads(message)
+            ws_data = {"id": self.id, "device": message_["name"], "content": message_}
+            logging.debug(f"Sending WebSocket message: {ws_data}")
+
             await self.parser.db_entry(message_)
             logging.info("*" * 50)
             await self.message_all(json.dumps(ws_data))
