@@ -7,10 +7,12 @@ import signal
 from message_parser import MessageParser
 import json
 
-'''
+"""
 When send_event() is triggered, insert the new message into the DB 
 and send event to all websocket connected clients
-'''
+"""
+
+
 class WebSocketServer:
     def __init__(self, parser=None):
         self.logger = logging.getLogger(__name__)
@@ -61,6 +63,8 @@ class WebSocketServer:
             self.connected_clients.remove(websocket)
 
     async def start(self):
+        if self.parser:
+            await self.parser.connect()
         # Set the stop condition when receiving SIGTERM.
         self.loop = asyncio.get_event_loop()  # Create a new event loop
         stop = self.loop.create_future()
@@ -68,11 +72,15 @@ class WebSocketServer:
         async with serve(self._handler, "localhost", 8765):
             await stop
 
+    async def stop(self):
+        if self.parser:
+            await self.parser.disconnect()
+            signal.raise_signal(signal.SIGTERM)
+
 
 async def main(interactive=False):
     try:
         message_parser = MessageParser()
-        await message_parser.connect()
         logging.info("message_parser started")
         wss = WebSocketServer(parser=message_parser)
         asyncio.create_task(wss.start())
