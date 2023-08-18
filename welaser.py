@@ -117,6 +117,7 @@ def on_mqtt_message(client, userdata, result):
     # PARSING - deserialising
     content = json.loads(message)
     device = content["nodeId"]
+    device_name = message.topic.split(":")[-1].split("/")[0]
     logging.debug(f"device = nodeId:{device}")
     packetType = content["packetType"]
     logging.debug(f"packetType: {packetType}")
@@ -124,7 +125,7 @@ def on_mqtt_message(client, userdata, result):
         picture = content["data"]
         logging.debug(">>>>>>>>>>>>>> WITH PICTURE:" + picture)
         # ----------------------------------- INVIO FTP
-        ftp_bounce(device, picture)
+        ftp_bounce(device_name, picture)
         ptopic = "{}{}{}{}{}".format(FIWARE, ENTITY, "camera:", device, "/attrs")
         logging.debug(f"ptopic:{ptopic}")
         # preparo il nuovo messaggio (JSON)
@@ -132,9 +133,9 @@ def on_mqtt_message(client, userdata, result):
         TS = strftime("%Y-%m-%d %H:%M:%S", localtime(time.time()))
         payload = {"id": ID, "timestamp": TS, "picture": picture}
         logging.debug(f">>>>>>>> MQTTS payload:{payload}")
-        mess_append(device, payload)
-        # pubblico il messaggio
         mqtt_publish(mqtts_client, ptopic, json.dumps(payload))
+        mess_append(device_name, payload)
+        # pubblico il messaggio
 
 
 # -------------------------------------------------
@@ -448,12 +449,12 @@ def main():
 
 # ---------------------------------------------------------
 logging.basicConfig()
-file_logger = logging.FileHandler("debug.log", "w")
+file_logger = logging.FileHandler("debug.log", "a")
 formatter = logging.Formatter(
     fmt="%(asctime)s %(message)s", datefmt="%m/%d/%Y %I:%M:%S "
 )
 file_logger.setFormatter(formatter)
-file_logger.setLevel(logging.INFO)
+file_logger.setLevel(logging.DEBUG)
 logger = logging.getLogger()
 logger.addHandler(file_logger)
 logger.setLevel(logging.DEBUG)
