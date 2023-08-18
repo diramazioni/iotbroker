@@ -150,10 +150,10 @@ async def main(interactive=False):
     except Exception as error:
         logging.error(f'message_logger "{error}"..')
         logging.error(traceback.format_exc())
-    # finally:
-    #     await message_logger.client.stop()
-    #     await message_logger.client.wait_started()
-    #     await wss.stop()
+    finally:
+        await message_logger.client.stop()
+        await message_logger.client.wait_started()
+        await wss.stop()
 
 
 logging.basicConfig()
