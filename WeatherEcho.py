@@ -1,12 +1,9 @@
 """
 WELASER - by GV July 2023
-Capture messages from  Ardesia MQTT (insecure)
-and publish them to WeLASER MQTTS (over TLS)
-then parse MQTT message, extract FTP file name and copy
-the files from  Ardesia to Local and to WeLASER
-Further on capture messages from MQTTS and
-append them to device.txt
-Finally publish a TEST message on MQTTS 
+Capture MQTT messages from  WeLASER MQTTS
+and append them locally with the name of topic.
+Also access weather service, build a FIWARE
+compliant message and publish it on WeLASER MQTTS
 """
 import os
 import threading
@@ -50,7 +47,7 @@ remotePath = ""
 #  ==========================================
 prefix = "https://api.openweathermap.org/data/2.5"
 appid = "e85ec932235b56d4c778fe9d45e817b6"  # GV
-# appid      = "82dbbc0ae53998f4fa25897ecc3670c2" # EM
+# appid  = "82dbbc0ae53998f4fa25897ecc3670c2" # EM
 " List of virtual-stations - vs "
 vs_name = [
     "Arganda",
@@ -60,9 +57,31 @@ vs_name = [
     "CAAB",
     "OrtoBotanico",
     "Ozzano",
+    "Tastrup",
+    "Reusel",
 ]
-vs_lon = [3.480833, 12.851667, 10.809061, 11.40969, 11.405170, 11.35339, 11.47373]
-vs_lat = [40.312500, 43.686944, 44.881420, 44.54938, 44.514330, 44.50046, 44.41341]
+vs_lon = [
+    -3.481010,
+    12.851667,
+    10.809061,
+    11.40969,
+    11.405170,
+    11.35339,
+    11.47373,
+    12.29216,
+    5.17290,
+]
+vs_lat = [
+    40.312878,
+    43.686944,
+    44.881420,
+    44.54938,
+    44.514330,
+    44.50046,
+    44.41341,
+    55.65173,
+    51.36600,
+]
 vs_area = [
     "6991ac61-8db8-4a32-8fef-c462e2369055",
     "001",
@@ -71,6 +90,9 @@ vs_area = [
     "004",
     "005",
     "006",
+    "006",
+    "6991ac61-8db8-4a32-8fef-c462e2369055",
+    "6991ac61-8db8-4a32-8fef-c462e2369055",
 ]
 
 
@@ -238,7 +260,7 @@ def retrieve_daily(i):
     print(my_json)
     parsed = json.loads(my_json)
     # print(json.dumps(parsed, indent=4))
-    # hr = parsed["hourly"]
+    hr = parsed["hourly"]
     dy = parsed["daily"]
     # print(dy)
     # n = range(len(dy))
@@ -293,7 +315,7 @@ def retrieve_hourly(i):
     vars = ["temperature", "humidity", "pressure", "wind_speed", "wind_deg", "rain"]
     meas = ["degC", "%", "mBar", "m/s", "degNcw", "mm"]
 
-    vs_loc = "lat=" + str(round(vs_lat[i], 7)) + "&lon=" + str(round(vs_lon[i], 7))
+    vs_loc = "lat=" + str(vs_lat[i]) + "&lon=" + str(vs_lon[i])
     # vs_loc  =  "lat=40.3125&lon=3.480833"
 
     #
@@ -327,7 +349,7 @@ def retrieve_hourly(i):
         # datetime_obj=datetime.fromtimestamp(epoch)
         # print("Local datetime:")
         # print(datetime_obj)
-        epoch_micro = epoch * 1000  #   FIWARE epoch in microsec
+        epoch_micro = epoch * 1000   # FIWARE epoch in microsec
 
         props = []
         value = []
@@ -364,8 +386,8 @@ def retrieve_hourly(i):
 # ==========================================================
 def main(mqtts_client):
     "aggiornamento HOURLY"
-    delay = 300  # 5min
-    # delay = 3600 # 1h
+    # delay = 900  # 15min
+    delay = 3600  # 1h
 
     # mi connetto a 'MQTTS WeLASER
     if not mqtts_connect(
@@ -386,13 +408,13 @@ def main(mqtts_client):
     while True:
         for i in n:
             result = retrieve_hourly(i)
-            # pubblico il messaggio TEST su MQTTS
+            # pubblico il messaggio su MQTTS
             lon = round(vs_lon[i], 7)  #  3.480833
             lat = round(vs_lat[i], 7)  # 40.312500
             device = "WeatherStation_v" + str(i)
-            ptopic = "{}{}{}{}{}".format(FIWARE, ENTITY, "device:", device, "/attrs")
+            ptopic = "{}{}{}{}{}".format(FIWARE, ENTITY, "Device:", device, "/attrs")
             print("ptopic=" + ptopic)
-            ID = "{}{}{}".format(ENTITY, "device:", device)
+            ID = "{}{}{}".format(ENTITY, "Device:", device)
             payload = json.dumps(
                 {
                     "id": ID,
