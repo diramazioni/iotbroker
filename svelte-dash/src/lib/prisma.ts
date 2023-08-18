@@ -40,9 +40,6 @@ export async function get_wsv_range(url: URL, device:string ) {
   const start = startParam ? BigInt(startParam) : defaultStart;
   const end = endParam ? BigInt(endParam) : defaultEnd;
 
-  console.log(start)
-  console.log(end)
-
   if (start > end) {
     throw error(400, 'Invalid start/end parameters.');
   }
