@@ -21,16 +21,9 @@ venv.bak/
 .vscode
 
 
-dash/data
-data/ETRometer_2_.json
-data/1/ETRometer_2.json
-data/1/WeatherStation_n1.json
 www/WeatherStation_n1.json
-www/ETRometer_2.json
+www/*
 svelte-dash/prisma/schema.prisma
-data/2/ETRometer_2_.json
-data/2/ETRometer_2.json
-data/2/WeatherStation_n1_.json
-data/ETRometer_2.json
-data/2/WeatherStation_n1.json
+data/2*
+data/1/*
 doc/dashboard_test.ogv
