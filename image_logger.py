@@ -44,9 +44,10 @@ class ImageListener(MessageLogger):
             asyncio.create_task(self.ftp_copy(device_name, picture))
             
             # Publish to MQTTS broker
-            ptopic = f"{self.FIWARE}{self.ENTITY}camera:{device}/attrs"
             timestamp = time.time()
-            id = f"{self.ENTITY}camera:{device}"
+            dev_ = "Camera:"
+            ptopic = f"{self.FIWARE}{self.ENTITY}{dev_}{device}/attrs"
+            id = f"{self.ENTITY}{dev_}{device}"
             payload = {
                 "id": id,
                 "name": device_name,
