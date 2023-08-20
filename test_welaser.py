@@ -402,6 +402,7 @@ def test_Canera():
 def test_ARDESIA():
     print("=" * 80 + "\ntest_ARDESIA")
     # send image to origin (ardesia) ftp for simulating camera real sending
+    PATH_FIELD = "/field_images"
     client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
     sendFile(client_from, PATH_FIELD, "test.jpg")
     client_from.close()
@@ -447,7 +448,7 @@ if __name__ == "__main__":
                     "2" test_WeatherStation \n\
                     "3" test_WeatherStationVirtual\n\
                     "4" test_ETRometer\n\
-                    "5" test ftp\n'
+                    "5" test Camera sending to Ardesia\n'
             )
             print("\/" * 40)
             if in_ in ["1"]:
@@ -459,6 +460,8 @@ if __name__ == "__main__":
             elif in_ in ["4"]:
                 test_ETRometer()
             elif in_ in ["5"]:
+                test_ARDESIA()
+            elif in_ in ["6"]:
                 print("test ftp connections")
                 client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
                 client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)

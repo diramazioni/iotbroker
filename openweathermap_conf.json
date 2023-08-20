@@ -1,0 +1,52 @@
+{
+  "prefix": "https://api.openweathermap.org/data/2.5",
+  "appid": "e85ec932235b56d4c778fe9d45e817b6",
+  "vs_name": [
+      "Arganda",
+      "Ghilardino",
+      "Fabbrico",
+      "Cadriano",
+      "CAAB",
+      "OrtoBotanico",
+      "Ozzano",
+      "Tastrup",
+      "Reusel"
+  ],
+  "vs_lon": [
+      -3.481010,
+      12.851667,
+      10.809061,
+      11.40969,
+      11.405170,
+      11.35339,
+      11.47373,
+      12.29216,
+      5.17290
+  ],
+  "vs_lat": [
+      40.312878,
+      43.686944,
+      44.881420,
+      44.54938,
+      44.514330,
+      44.50046,
+      44.41341,
+      55.65173,
+      51.36600
+  ],
+  "vs_area": [
+      "6991ac61-8db8-4a32-8fef-c462e2369055",
+      "001",
+      "002",
+      "003",
+      "004",
+      "005",
+      "006",
+      "006",
+      "6991ac61-8db8-4a32-8fef-c462e2369055",
+      "6991ac61-8db8-4a32-8fef-c462e2369055"
+  ],
+  "keys": ["temp", "humidity", "pressure", "wind_speed", "wind_deg", "rain"],
+  "vars": ["temperature", "humidity", "pressure", "wind_speed", "wind_deg", "rain"],
+  "units": ["degC", "%", "mBar", "m/s", "degNcw", "mm"]  
+}

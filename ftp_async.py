@@ -8,11 +8,11 @@ import shutil
 
 
 class AsyncFtpClient:
-    def __init__(self, host, port, user, password, timeout=10):
+    def __init__(self, host, port, username, password, timeout=10):
         self.logger = logging.getLogger(__name__)
         self.host = host
         self.port = port
-        self.user = user
+        self.user = username
         self.password = password
         self.timeout = timeout
         self.ftp = None
@@ -25,7 +25,7 @@ class AsyncFtpClient:
             client_ftp.login(user=self.user, passwd=self.password)
             self.ftp = client_ftp
         except all_errors as e:
-            logging.error(f"Error in Ftp -> {self.host} \n{e}")
+            logging.error(f"Error connecting to -> {self.host} \n{e}")
 
     async def disconnect(self):
         self.ftp.close()

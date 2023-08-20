@@ -15,15 +15,16 @@ Listen to MQTT messages and echo to the WebSocket server
 
 class MessageLogger:
     def __init__(self, websocket=None, log_json=False) -> None:
-        self.logger = logging.getLogger(__name__)
         # self.logger.setLevel(logging.DEBUG)
         self.client = None
         self.websocket = websocket
         self.log_json = log_json
+        self.loop = None
+        
 
     async def listen(
         self,
-        id=None,
+        client_id=None,
         host=None,
         port=None,
         username=None,
@@ -32,12 +33,14 @@ class MessageLogger:
         tls_insecure=True,
         notify_birth=False,
     ):
+        self.logger = logging.getLogger(".".join((__name__, host, str(port))))
+        self.loop = asyncio.get_event_loop() 
         self.client = amqtt(
             host=host,
             port=port,
             username=username,
             password=password,
-            client_id=id if id else __name__,
+            client_id=client_id if id else __name__,
             tls=tls,
             tls_insecure=tls_insecure,
             keepalive=60,
@@ -69,7 +72,7 @@ class MessageLogger:
             logging.error(f'on message Error "{error}"..')
 
     async def publish(self, topic, payload):
-        self.client.publish(topic, payload)
+        await self.client.publish(topic, payload)
         logging.info(f"Published: {payload} to {topic} topic")
 
     async def mess_append(self, device, message):
@@ -97,20 +100,19 @@ class MessageLogger:
     async def main(self):
         try:
             await self.listen()
-            # topic = f"{self.FIWARE}{self.ATTRS}"
+            topic = f"{self.FIWARE}{self.ATTRS}"
             # topic = "ACME_Utility/@json-scada/tags/#"
             await self.subscribe(topic)
             logging.info("subscribed")
-            while True:
-                # logging.debug(".")
-                await asyncio.sleep(1)
+            await asyncio.sleep(1)
+            # exit or loop forever
         except Exception as error:
             logging.error(f'main Error "{error}"..')
         finally:
             await self.client.stop()
             await self.client.wait_started()
 
-
+# Actual main
 async def main(interactive=False):
     load_dotenv()
     FIWARE = os.getenv("FIWARE")

@@ -1,13 +1,16 @@
 import logging
 import os
 import time
+import traceback
 
 from dotenv import load_dotenv
 import asyncio
 import json
 
-from mqtt_logger import MessageLogger  # Import your original MessageLogger class
+from mqtt_logger import MessageLogger
 from ftp_async import AsyncFtpClient
+
+from functools import partial
 
 """
 Listen for image message and re-publish with ImagePublisher
@@ -30,31 +33,36 @@ class ImageListener(MessageLogger):
         self.ENTITY = entity
         self.ftp_from = ftp_from
         self.ftp_to = ftp_to
+        self.counter = 0
 
     def on_message(self, client, userdata, message):
         payload = message.payload.decode("utf-8")
         topic = message.topic
-        logging.info(f"Custom on_message: Topic: {topic}, Payload: {payload}")
+        logging.info(f"MQTT on_message: Topic: {topic}, Payload: {payload}")
         content = json.loads(payload)
         device = content["nodeId"]
         picture = content["data"]
-        device_name = topic.split(":")[-1].split("/")[0]
+        # device_name = topic.split(":")[-1].split("/")[0]
         if content["packetType"] == "picture":
             # FTP copy
-            asyncio.create_task(self.ftp_copy(device_name, picture))
-            
+            asyncio.create_task(self.ftp_copy(device, picture))
+
             # Publish to MQTTS broker
             timestamp = time.time()
             dev_ = "Camera:"
             ptopic = f"{self.FIWARE}{self.ENTITY}{dev_}{device}/attrs"
             id = f"{self.ENTITY}{dev_}{device}"
-            payload = {
+            new_payload = {
                 "id": id,
-                "name": device_name,
+                "name": device,
                 "timestamp": timestamp,
                 "picture": picture,
             }
-            asyncio.create_task(self.publisher.publish(ptopic, payload))
+            logging.debug(repr(self.publisher))
+            d = {"topic": ptopic, "payload": new_payload}
+            self.publisher.messages.append(d)
+            self.counter += 1
+            logging.info(f"Sent {self.counter} messages")
 
     async def ftp_copy(self, device, picture):
         remotePath = ""
@@ -84,8 +92,7 @@ class ImageListener(MessageLogger):
             logging.debug("ftp 2 done")
         except Exception as e:
             logging.error(f"Error in Ftp2 -> {e}")
-            
-            
+
 
 """
 Publish image to MQTTS broker
@@ -95,6 +102,17 @@ Publish image to MQTTS broker
 class ImagePublisher(MessageLogger):
     def __init__(self, log_json=False) -> None:
         super().__init__(log_json=log_json)
+        self.messages = []
+
+    async def process_messages(self):
+        # while True:
+        if len(self.messages):
+            new = self.messages.pop()
+            logging.debug(f"Publishing message on {new['topic']}: {new['payload']}")
+            await self.publish(new["topic"], json.dumps(new["payload"]))
+
+    def __repr__(self):
+        return f"<ImagePublisher messages:{self.messages}>"
 
 
 """ MAIN """
@@ -128,10 +146,11 @@ async def main(interactive=False):
             tls=True,
             tls_insecure=True,
             notify_birth=True,
+            client_id="imagePublisher"
         )
         # ImageListener: Listen for image message and re-publish with ImagePublisher
         imageListener = ImageListener(
-            publisher=ImagePublisher,
+            publisher=imagePublisher,
             ftp_from=ftp_from,
             ftp_to=ftp_to,
             fiware=FIWARE,
@@ -145,18 +164,24 @@ async def main(interactive=False):
             password=os.getenv("MQTT_PASSWORD"),
             tls=False,
             notify_birth=True,
+            client_id="imagePublisher"
         )
-        topic = f"{FIWARE}{ATTRS}"
+        topic = "WeLaser/PublicIntercomm/CameraToDashboard"
         await imageListener.subscribe(topic)
         logging.info("I" * 80)
         logging.info("ImageListener started")
-        if interactive:
-            while True:
-                await asyncio.sleep(1)
+
+        logging.info("ImagePublisher started processing messages")
+        while True:
+            # Here ends the flow, it'll keep watching if new message arrives and publish to MQTTS
+            await imagePublisher.process_messages()
+            await asyncio.sleep(1)
+
     except Exception as error:
         logging.error(f'Error "{error}"..')
+        logging.error(traceback.format_exc())
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
-    asyncio.run(main(interactive=True))
+    asyncio.run(main())
