@@ -47,21 +47,16 @@ class MessageParser:
                 for name, value in unames.items():
                     if name not in unames_:
                         units_db = await self.db.units.find_unique(where={"name": name})
+                        units_obj = {
+                            "name": name,
+                            "value": value,
+                            "type": device_name,
+                        }
                         if not units_db:
                             logging.info(f"Update Units {name}")
-                            units_obj = {
-                                "name": name,
-                                "value": value,
-                                "type": device_name,
-                            }
                             units_db = await self.db.units.create(units_obj)
                             unames_[name] = units_obj
                         else:  # cache the results
-                            units_obj = {
-                                "name": name,
-                                "value": value,
-                                "type": device_name,
-                            }
                             unames_[name] = units_obj
 
             if all(isinstance(item, (int, float)) for item in e["value"]):
@@ -134,11 +129,11 @@ class MessageParser:
 async def main() -> None:
     message_parser = MessageParser()
     await message_parser.connect()
-    #await message_parser.process_data("data/ETRometer_1.json")
-    import glob 
-    for f in glob.glob("data/*.json"):
-        print(f"Processing {f}")
-        await message_parser.process_data(f)
+    await message_parser.process_data("data/ETRometer_2.json")
+    # import glob 
+    # for f in glob.glob("data/*.json"):
+    #     print(f"Processing {f}")
+    #     await message_parser.process_data(f)
     await asyncio.sleep(10)
     await message_parser.disconnect()
 

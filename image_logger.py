@@ -1,5 +1,6 @@
 import logging
 import os
+import shutil
 import time
 import traceback
 
@@ -45,7 +46,19 @@ class ImageListener(MessageLogger):
         # device_name = topic.split(":")[-1].split("/")[0]
         if content["packetType"] == "picture":
             # FTP copy
-            asyncio.create_task(self.ftp_copy(device, picture))
+            remotePath = ""
+            PATH_ROBOT = "/robot_images"
+            PATH_FIELD = "/field_images"
+            if "camera" in device:
+                remotePath = PATH_FIELD
+            elif "robot" in device:
+                remotePath = PATH_ROBOT
+            else:
+                logging.error(f"Unknown device {device}")
+                return
+            # let's disable ftp upload for now!!!
+            # asyncio.create_task(self.ftp_copy(remotePath, picture))
+            asyncio.create_task(self.ftp_retr(remotePath, device, picture))
 
             # Publish to MQTTS broker
             timestamp = time.time()
@@ -64,26 +77,22 @@ class ImageListener(MessageLogger):
             self.counter += 1
             logging.info(f"Sent {self.counter} messages")
 
-    async def ftp_copy(self, device, picture):
-        remotePath = ""
-        PATH_ROBOT = "/robot_images"
-        PATH_FIELD = "/field_images"
-        if "camera" in device:
-            remotePath = PATH_FIELD
-        elif "robot" in device:
-            remotePath = PATH_ROBOT
-        else:
-            logging.error(f"Unknown device {device}")
-            return
-
+    async def ftp_retr(self, remotePath, device, picture):
         try:
             await self.ftp_from.connect()
             logging.debug("connected ftp from")
             await self.ftp_from.retrieveFile(remotePath, picture)
             await self.ftp_from.disconnect()
             logging.debug("ftp 1 done")
+
+            shutil.move(  # server www
+                picture, os.path.join(os.getcwd(), "www", device + ".jpg")
+            )
+
         except Exception as e:
             logging.error(f"Error in Ftp1 -> {e}")
+
+    async def ftp_upload(self, remotePath, picture):
         try:
             await self.ftp_to.connect()
             logging.debug("connected ftp to")
@@ -92,6 +101,10 @@ class ImageListener(MessageLogger):
             logging.debug("ftp 2 done")
         except Exception as e:
             logging.error(f"Error in Ftp2 -> {e}")
+
+    async def ftp_copy(self, remotePath, picture):
+        await self.ftp_retr(remotePath, picture)
+        await self.ftp_upload(remotePath, picture)
 
 
 """
@@ -110,9 +123,6 @@ class ImagePublisher(MessageLogger):
             new = self.messages.pop()
             logging.debug(f"Publishing message on {new['topic']}: {new['payload']}")
             await self.publish(new["topic"], json.dumps(new["payload"]))
-
-    def __repr__(self):
-        return f"<ImagePublisher messages:{self.messages}>"
 
 
 """ MAIN """
@@ -146,7 +156,7 @@ async def main(interactive=False):
             tls=True,
             tls_insecure=True,
             notify_birth=True,
-            client_id="imagePublisher"
+            client_id="imagePublisher",
         )
         # ImageListener: Listen for image message and re-publish with ImagePublisher
         imageListener = ImageListener(
@@ -164,7 +174,7 @@ async def main(interactive=False):
             password=os.getenv("MQTT_PASSWORD"),
             tls=False,
             notify_birth=True,
-            client_id="imagePublisher"
+            client_id="imagePublisher",
         )
         topic = "WeLaser/PublicIntercomm/CameraToDashboard"
         await imageListener.subscribe(topic)
