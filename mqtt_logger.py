@@ -40,7 +40,7 @@ class MessageLogger:
             port=port,
             username=username,
             password=password,
-            client_id=client_id if id else __name__,
+            client_id=client_id if client_id else "mqtt_logger",
             tls=tls,
             tls_insecure=tls_insecure,
             keepalive=60,

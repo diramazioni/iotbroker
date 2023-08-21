@@ -156,7 +156,7 @@ async def main(interactive=False):
             tls=True,
             tls_insecure=True,
             notify_birth=True,
-            client_id="imagePublisher",
+            #client_id="imagePublisher",
         )
         # ImageListener: Listen for image message and re-publish with ImagePublisher
         imageListener = ImageListener(
@@ -174,7 +174,7 @@ async def main(interactive=False):
             password=os.getenv("MQTT_PASSWORD"),
             tls=False,
             notify_birth=True,
-            client_id="imagePublisher",
+            #client_id="imagePublisher",
         )
         topic = "WeLaser/PublicIntercomm/CameraToDashboard"
         await imageListener.subscribe(topic)
