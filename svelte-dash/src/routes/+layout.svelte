@@ -10,6 +10,7 @@
 
   $: device_data = []
 
+
   // Set up a writable store for WebSocket connection
   const websocket = writable(null);
   /*
@@ -74,8 +75,8 @@
 <slot />
 
 <Pre name="export let data" value={data} />
-<Pre name="device_type" value={$page.data.device_type} />
-<Pre name="device_selected" value={$page.data.device_selected} />
+<Pre name="page data" value={$page.data} />
+
 <style>
 			body {
 				--bg-1: hsl(0, 0%, 100%);

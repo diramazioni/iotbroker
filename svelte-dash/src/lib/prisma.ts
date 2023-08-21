@@ -19,7 +19,7 @@ export async function get_wsv_range(url: URL, device:string ) {
   const firstRecord = await prisma.device.findFirst({
     where: {
       name: { 'equals': device },
-      weatherStationVirtual: { 'isNot': null }
+      //weatherStationVirtual: { 'isNot': null }
     },
     select: {timestamp: true,  },
     orderBy:  { timestamp: 'asc' } 
@@ -28,22 +28,22 @@ export async function get_wsv_range(url: URL, device:string ) {
   const lastRecord = await prisma.device.findFirst({
     where: {
       name: { 'equals': device },
-      weatherStationVirtual: { 'isNot': null }
+      //weatherStationVirtual: { 'isNot': null }
     },
     select: {timestamp: true, },
     orderBy:  { timestamp: 'desc' } 
   });
 
-  const defaultStart = firstRecord?.timestamp ?? 0n;
-  const defaultEnd = lastRecord?.timestamp ?? 1n;
+  const defaultStart = Date(firstRecord.timestamp) //?? 0n;
+  const defaultEnd = Date(lastRecord?.timestamp) //?? 1n;
 
-  const start = startParam ? BigInt(startParam) : defaultStart;
-  const end = endParam ? BigInt(endParam) : defaultEnd;
+  const start = startParam ? Date(startParam) : defaultStart;
+  const end = endParam ? Date(endParam) : defaultEnd;
 
   if (start > end) {
     throw error(400, 'Invalid start/end parameters.');
   }
 
-  const range:BigInt[] = [start,end]
+  const range = [start,end]
   return range
 }

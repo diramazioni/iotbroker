@@ -10,6 +10,5 @@ export const load: LayoutServerLoad = async ({ fetch, params }) => {
 	// 	devices: devices_WeatherStation_n,
 	// }
   return {
-    a: 1
   }
 }

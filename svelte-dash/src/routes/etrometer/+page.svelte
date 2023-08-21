@@ -7,7 +7,7 @@
   import options from '$lib/options'
   //import {device_selected} from '$lib/stores'
   import { page } from '$app/stores';
-
+  import Pre from '$lib/pre.svelte'
   import Slider from '@bulatdashiev/svelte-slider';
 	
   //const device_type = 'weatherstation_v'
@@ -21,7 +21,9 @@
 
   export const fetch_data = async () => {
     data.device_selected = device_selected //set and update doesn't work why?
-    extOptions = { ...options,  title: `${device_selected}` }
+    etrometerOptionsCO2 = { ...options,  title: `${device_selected} CO2` }
+    etrometerOptionsTC = { ...options,  title: `${device_selected} TC` }
+    etrometerOptionsRH = { ...options,  title: `${device_selected} RH` }
     const url = `/api/${device_type}/${device_selected}`;
     console.log(url)
     const response = await fetch(url)
@@ -29,7 +31,9 @@
     return device_data
   }
 
-  let extOptions = { ...options }
+  let etrometerOptionsCO2 = { ...options }
+  let etrometerOptionsTC = { ...options }
+  let etrometerOptionsRH = { ...options }
   onMount(() => {
     //device_selected = (device_selected.length === 0 ) ? devices.sort()[0] : device_selected
     fetch_data() 
@@ -49,11 +53,13 @@
 <!--
 {range_slider[0]},{range_slider[1]}    -->
 <Slider step="10" max={Number(max)} bind:value={range_slider} range order />
-<!-- <pre>
-  {JSON.stringify(device_data)}
-</pre> -->
 
-<AreaChart data={device_data} options={extOptions} style="padding:2rem;" />
+<!-- <Pre name="device_data" value={device_data} /> -->
+<div class="devices">
+  <LineChart data={device_data.CO2} options={etrometerOptionsCO2} style="padding:2rem; flex:1;" />
+  <LineChart data={device_data.TC} options={etrometerOptionsTC} style="padding:2rem; flex:1;" />
+  <LineChart data={device_data.RH} options={etrometerOptionsRH} style="padding:2rem; flex:1;" />
+</div> 
 
 <style>
   h2, select, input {

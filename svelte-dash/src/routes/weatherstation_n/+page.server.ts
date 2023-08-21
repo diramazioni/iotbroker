@@ -7,7 +7,7 @@ import { get_wsv_range } from '$lib/prisma';
 
 export const load: PageServerLoad = async ({ fetch, url, params}) => {
   
-  const device_type = 'weatherstation_v'
+  const device_type = 'weatherstation_n'
   const response = await fetch(`/api/devices/${device_type}`)
   const devices = await response.json();
 

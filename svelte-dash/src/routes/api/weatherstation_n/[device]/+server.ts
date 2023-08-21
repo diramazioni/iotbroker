@@ -1,21 +1,25 @@
 import { error, json } from "@sveltejs/kit";
-import { prisma } from '$lib/prisma';
+import { prisma, get_wsv_range } from '$lib/prisma';
 
-export async function GET({ url }) {
-  /*   
-  const start = Number(url.searchParams.get('start') ?? '0');
-  const end = Number(url.searchParams.get('end') ?? '1');
-  const d = end - start;
-  if (isNaN(d) || d < 0) {
-    throw error(400, 'start and end must be numbers, and start must be less than end');
-  }
-   */
+
+export async function GET({ url, params }) {
+
+  const range:Date[] = get_wsv_range(url, params.device)
+
+  //console.log(range[0])
+  
   const db_result = await prisma.device.findMany({
-    where: { weatherStation: { 'isNot': null } },
+    where: {
+      name: { 'equals': params.device },
+      weatherStation: {
+        isNot: null,
+      },
+    },
     include: {
       weatherStation: true
     }
-  })
+  });
+
 
   const transformedData = db_result.map(entry => {
     const { timestamp, weatherStation } = entry;
@@ -24,7 +28,7 @@ export async function GET({ url }) {
     .filter(([key]) => key !== "id" && key !== "timestamp" && key !== "deviceId")
     .map(([group, value]) => ({
       group,
-      date: new Date(Number(timestamp)),
+      date: new Date(timestamp),
       value
     }));
   }).flat();
