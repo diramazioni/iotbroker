@@ -86,7 +86,7 @@ class WeatherLogger(MessageLogger, AsyncHttpClient):
                 }
                 payload.update(result)
                 logging.debug(json.dumps(payload, indent=2))
-                await self.publish(ptopic, payload)
+                await self.publish(ptopic, json.dumps(payload))
             await asyncio.sleep(self.delay)
 
 
