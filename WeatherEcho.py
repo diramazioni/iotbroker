@@ -429,7 +429,7 @@ def main(mqtts_client):
             )
 
             print(payload)
-            mqtt_publish(mqtts_client, ptopic, payload)
+            #mqtt_publish(mqtts_client, ptopic, payload)
 
         time.sleep(delay)
 

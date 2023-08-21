@@ -448,7 +448,8 @@ if __name__ == "__main__":
                     "2" test_WeatherStation \n\
                     "3" test_WeatherStationVirtual\n\
                     "4" test_ETRometer\n\
-                    "5" test Camera sending to Ardesia\n'
+                    "5" test Camera sending to Ardesia\n\
+                    "6" test FTP servers ARDESIA & CESENA\n'
             )
             print("\/" * 40)
             if in_ in ["1"]:
@@ -463,7 +464,9 @@ if __name__ == "__main__":
                 test_ARDESIA()
             elif in_ in ["6"]:
                 print("test ftp connections")
+                print("Testing FTP Ardesia")
                 client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
+                print("Testing FTP Cesena")
                 client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
             elif in_ in ["x", "X"]:
                 sys.exit(0)
