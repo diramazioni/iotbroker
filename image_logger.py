@@ -165,7 +165,7 @@ async def main(interactive=False):
             ftp_to=ftp_to,
             fiware=FIWARE,
             entity=ENTITY,
-            log_json=True,
+            log_json=True
         )
         await imageListener.listen(
             host=os.getenv("MQTT_BROKER"),
@@ -174,7 +174,7 @@ async def main(interactive=False):
             password=os.getenv("MQTT_PASSWORD"),
             tls=False,
             notify_birth=True,
-            client_id="imagePublisher"
+            client_id="imageListener"
         )
         topic = "WeLaser/PublicIntercomm/CameraToDashboard"
         await imageListener.subscribe(topic)

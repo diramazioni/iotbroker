@@ -136,7 +136,7 @@ async def main(interactive=False):
             password=os.getenv("MQTTS_PASSWORD"),
             tls=True,
             tls_insecure=True,
-            notify_birth=True,
+            notify_birth=True
         )
         topic = f"{FIWARE}{ATTRS}"
         await message_logger.subscribe(topic)
