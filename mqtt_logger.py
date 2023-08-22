@@ -4,8 +4,7 @@ from dotenv import load_dotenv
 import os
 import logging
 from async_paho_mqtt_client import AsyncClient as amqtt
-from message_parser import MessageParser
-from websocket_logger import WebSocketServer
+
 import json
 
 """

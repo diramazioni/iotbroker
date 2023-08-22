@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import asyncio
 from aiohttp import ClientSession
 import json
-from mqtt_logger import MessageLogger
+from async_paho_class_test import MessageLogger
 
 
 class AsyncHttpClient:
@@ -19,7 +19,7 @@ class WeatherLogger(MessageLogger, AsyncHttpClient):
     def __init__(
         self, delay=3600, conf=None, fiware=None, entity=None, log_json=False
     ) -> None:
-        super().__init__(log_json=log_json)
+        super().__init__()
 
         self.delay = delay
         self.conf = self.load_conf(conf)
@@ -109,8 +109,7 @@ async def main():
         username=os.getenv("MQTTS_USERNAME"),
         password=os.getenv("MQTTS_PASSWORD"),
         tls=True,
-        tls_insecure=True,
-        notify_birth=True,
+        tls_insecure=True
     )
     await weatherLogger.run()
 

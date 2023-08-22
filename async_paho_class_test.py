@@ -8,26 +8,9 @@ from async_paho_mqtt_client import AsyncClient as amqtt
 class MessageLogger:
     def __init__(
         self,
-        id="dev",
-        host="test.mosquitto.org",
-        port=1883,
-        username=None,
-        password=None,
-        tls=False,
-        tls_insecure=True,
-        notify_birth=False,
     ) -> None:
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
         self.client = None
-        # load env vars
-        load_dotenv()
-        self.MQTTS_ID = os.getenv("MQTTS_ID") if os.getenv("MQTTS_ID") else id
 
-        self.tls = tls
-        self.tls_insecure = tls_insecure if tls else False
-        self.keepalive = 60
-        self.notify_birth = notify_birth
 
     async def listen(
         self,
@@ -40,7 +23,7 @@ class MessageLogger:
         tls_insecure=True,
         notify_birth=False,
     ):
-        client = amqtt(
+        self.client = amqtt(
             host=host,
             port=port,
             username=username,
@@ -52,13 +35,13 @@ class MessageLogger:
             notify_birth=notify_birth,
         )
 
-        await client.start()
-        await client.wait_started()
+        await self.client.start()
+        await self.client.wait_started()
         logging.info("connected")
-        self.client = client
 
     async def subscribe(self, topic):
         await self.client.subscribe(topic)
+        logging.info(f"Subriscribed: {topic} ")
         self.client.message_callback_add(topic, self.on_message)
 
     def on_message(self, client, userdata, message):
@@ -82,10 +65,6 @@ class MessageLogger:
             await self.subscribe(topic)
             logging.info("subscribed")
             while True:
-                # Here to simulate a blocking loop but you can avoid this
-                # if you need to make your program flow continue
-
-                # logging.debug(".")
                 await asyncio.sleep(1)
         except Exception as error:
             logging.error(f'main Error "{error}"..')

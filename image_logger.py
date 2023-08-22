@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import asyncio
 import json
 
-from mqtt_logger import MessageLogger
+from async_paho_class_test import MessageLogger
 from ftp_async import AsyncFtpClient
 
 from functools import partial
@@ -28,7 +28,7 @@ class ImageListener(MessageLogger):
         entity=None,
         log_json=False,
     ) -> None:
-        super().__init__(log_json=log_json)
+        super().__init__()
         self.publisher = publisher
         self.FIWARE = fiware
         self.ENTITY = entity
@@ -114,7 +114,7 @@ Publish image to MQTTS broker
 
 class ImagePublisher(MessageLogger):
     def __init__(self, log_json=False) -> None:
-        super().__init__(log_json=log_json)
+        super().__init__()
         self.messages = []
 
     async def process_messages(self):
@@ -154,9 +154,7 @@ async def main(interactive=False):
             username=os.getenv("MQTTS_USERNAME"),
             password=os.getenv("MQTTS_PASSWORD"),
             tls=True,
-            tls_insecure=True,
-            notify_birth=True,
-            client_id="imagePublisher"
+            tls_insecure=True
         )
         # ImageListener: Listen for image message and re-publish with ImagePublisher
         imageListener = ImageListener(
@@ -172,9 +170,7 @@ async def main(interactive=False):
             port=int(os.getenv("MQTT_PORT")),
             username=os.getenv("MQTT_USERNAME"),
             password=os.getenv("MQTT_PASSWORD"),
-            tls=False,
-            notify_birth=True,
-            client_id="imageListener"
+            tls=False
         )
         topic = "WeLaser/PublicIntercomm/CameraToDashboard"
         await imageListener.subscribe(topic)
