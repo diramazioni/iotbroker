@@ -71,7 +71,7 @@ class ImageListener(MessageLogger):
                 "timestamp": timestamp,
                 "picture": picture,
             }
-            logging.debug(repr(self.publisher))
+            
             d = {"topic": ptopic, "payload": new_payload}
             self.publisher.messages.append(d)
             self.counter += 1

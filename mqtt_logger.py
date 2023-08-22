@@ -154,16 +154,17 @@ async def main(interactive=False):
         await wss.stop()
 
 
-logging.basicConfig()
-file_logger = logging.FileHandler("messages.log", "w")
-formatter = logging.Formatter(
-    fmt="%(asctime)s %(message)s", datefmt="%m/%d/%Y %I:%M:%S "
-)
-file_logger.setFormatter(formatter)
-file_logger.setLevel(logging.INFO)
-logger = logging.getLogger()
-logger.addHandler(file_logger)
-logger.setLevel(logging.INFO)
+# logging.basicConfig()
+# file_logger = logging.FileHandler("messages.log", "w")
+# formatter = logging.Formatter(
+#     fmt="%(asctime)s %(message)s", datefmt="%m/%d/%Y %I:%M:%S "
+# )
+# file_logger.setFormatter(formatter)
+# file_logger.setLevel(logging.INFO)
+# logger = logging.getLogger()
+# logger.addHandler(file_logger)
+# logger.setLevel(logging.DEBUG)
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG)
     asyncio.run(main(interactive=False))
