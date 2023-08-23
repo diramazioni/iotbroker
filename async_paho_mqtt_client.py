@@ -53,15 +53,16 @@ class AsyncClient:
         self.connected = False
         if notify_birth:
             self.on_connect = [self.notify_birth]
+            self.client.will_set(
+                f"{self.client_id}/{state_key}",
+                json.dumps({"connected": False}),
+                retain=True,
+            )            
         else:
             self.on_connect = []
         self.state_key = state_key
         self.on_disconnect = []
-        self.client.will_set(
-            f"{self.client_id}/{state_key}",
-            json.dumps({"connected": False}),
-            retain=True,
-        )
+
         self.client.on_socket_open = self._on_socket_open
         self.client.on_socket_close = self._on_socket_close
         self.client.on_socket_register_write = self._on_socket_register_write

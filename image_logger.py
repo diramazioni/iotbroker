@@ -8,17 +8,15 @@ from dotenv import load_dotenv
 import asyncio
 import json
 
-from async_paho_class_test import MessageLogger
+from mqtt_async import AsyncMqttClient
 from ftp_async import AsyncFtpClient
-
-from functools import partial
 
 """
 Listen for image message and re-publish with ImagePublisher
 """
 
 
-class ImageListener(MessageLogger):
+class ImageListener(AsyncMqttClient):
     def __init__(
         self,
         publisher=None,
@@ -56,31 +54,33 @@ class ImageListener(MessageLogger):
             else:
                 logging.error(f"Unknown device {device}")
                 return
-            # let's disable ftp upload for now!!!
-            # asyncio.create_task(self.ftp_copy(remotePath, picture))
-            asyncio.create_task(self.ftp_retr(remotePath, device, picture))
-
+            # FTP download
+            asyncio.create_task(self.ftp_download(remotePath, device, picture))
             # Publish to MQTTS broker
             timestamp = time.time()
             dev_ = "Camera:"
             ptopic = f"{self.FIWARE}{self.ENTITY}{dev_}{device}/attrs"
+            ptopic = "testone"
             id = f"{self.ENTITY}{dev_}{device}"
             new_payload = {
                 "id": id,
                 "name": device,
                 "timestamp": timestamp,
                 "picture": picture,
+                "type": "Camera"
             }
             
-            d = {"topic": ptopic, "payload": new_payload}
-            self.publisher.messages.append(d)
+            self.publisher.queue.put_nowait((ptopic, json.dumps(new_payload)))
             self.counter += 1
             logging.info(f"Sent {self.counter} messages")
+            # let's disable ftp upload for now!!!
+            # FTP upload
+            #asyncio.create_task(self.ftp_upload(remotePath, picture))
 
-    async def ftp_retr(self, remotePath, device, picture):
+    async def ftp_download(self, remotePath, device, picture):
         try:
             await self.ftp_from.connect()
-            logging.debug("connected ftp from")
+            logging.debug("connected ftp_retr")
             await self.ftp_from.retrieveFile(remotePath, picture)
             await self.ftp_from.disconnect()
             logging.debug("ftp 1 done")
@@ -95,7 +95,7 @@ class ImageListener(MessageLogger):
     async def ftp_upload(self, remotePath, picture):
         try:
             await self.ftp_to.connect()
-            logging.debug("connected ftp to")
+            logging.debug("connected ftp_upload")
             await self.ftp_to.sendFile(remotePath, picture)
             await self.ftp_to.disconnect()
             logging.debug("ftp 2 done")
@@ -103,26 +103,9 @@ class ImageListener(MessageLogger):
             logging.error(f"Error in Ftp2 -> {e}")
 
     async def ftp_copy(self, remotePath, picture):
-        await self.ftp_retr(remotePath, picture)
+        await self.ftp_download(remotePath, picture)
         await self.ftp_upload(remotePath, picture)
 
-
-"""
-Publish image to MQTTS broker
-"""
-
-
-class ImagePublisher(MessageLogger):
-    def __init__(self, log_json=False) -> None:
-        super().__init__()
-        self.messages = []
-
-    async def process_messages(self):
-        # while True:
-        if len(self.messages):
-            new = self.messages.pop()
-            logging.debug(f"Publishing message on {new['topic']}: {new['payload']}")
-            await self.publish(new["topic"], json.dumps(new["payload"]))
 
 
 """ MAIN """
@@ -147,14 +130,16 @@ async def main(interactive=False):
             username=os.getenv("USER_TO"),
             password=os.getenv("PASS_TO"),
         )
-        imagePublisher = ImagePublisher()
+        imagePublisher = AsyncMqttClient()
         await imagePublisher.listen(
             host=os.getenv("MQTTS_BROKER"),
             port=int(os.getenv("MQTTS_PORT")),
             username=os.getenv("MQTTS_USERNAME"),
             password=os.getenv("MQTTS_PASSWORD"),
             tls=True,
-            tls_insecure=True
+            tls_insecure=True,
+            client_id="imagePublisher",
+            notify_birth=True
         )
         # ImageListener: Listen for image message and re-publish with ImagePublisher
         imageListener = ImageListener(
@@ -170,7 +155,9 @@ async def main(interactive=False):
             port=int(os.getenv("MQTT_PORT")),
             username=os.getenv("MQTT_USERNAME"),
             password=os.getenv("MQTT_PASSWORD"),
-            tls=False
+            tls=False,
+            client_id="imageListener",
+            notify_birth=True
         )
         topic = "WeLaser/PublicIntercomm/CameraToDashboard"
         await imageListener.subscribe(topic)
@@ -180,7 +167,7 @@ async def main(interactive=False):
         logging.info("ImagePublisher started processing messages")
         while True:
             # Here ends the flow, it'll keep watching if new message arrives and publish to MQTTS
-            await imagePublisher.process_messages()
+            await imagePublisher.publishQueue()
             await asyncio.sleep(1)
 
     except Exception as error:
