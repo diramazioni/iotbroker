@@ -191,6 +191,9 @@ class AsyncClient:
     async def publish(self, topic, payload, **kwargs):
         self.client.publish(f"{self.client_id}/{topic}", payload, **kwargs)
 
+    async def publish_noid(self, topic, payload, **kwargs):
+        self.client.publish(topic, payload, **kwargs)
+
     @staticmethod
     def timestamp():
         time_format = strftime("%Y-%m-%d %H:%M:%S", localtime(time.time()))

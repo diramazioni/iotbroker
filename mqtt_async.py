@@ -1,9 +1,11 @@
 import asyncio
+import traceback
 from dotenv import load_dotenv
 import os
 import logging
 from async_paho_mqtt_client import AsyncClient 
 import uuid
+import json
 
 class AsyncMqttClient:
     def __init__(self) -> None:
@@ -56,29 +58,23 @@ class AsyncMqttClient:
             logging.error(f'on message Error "{error}"..')
 
     async def publish(self, topic, payload):
-        await self.client.publish(topic, payload)
+        await self.client.publish_noid(topic, payload)
         logging.info(f"Published: \n{payload}\n to topic:\n{topic} ")
 
     async def publishQueue(self):
         while (self.queue.qsize() > 0):
             topic, payload = await self.queue.get()
-            await self.client.publish(topic, payload)
+            await self.client.publish_noid(topic, payload)
             logging.info(f"Queue published: \n{payload}\n to topic:\n{topic} ")
 
     async def main(self):
+        logging.info("Starting main loop")
         try:
-            await self.listen()
-            # example topic
-            topic = "#"
-            await self.subscribe(topic)
-            logging.info("subscribed")
             while True:
+                await self.publishQueue()
                 await asyncio.sleep(1)
         except Exception as error:
             logging.error(f'main Error "{error}"..')
-        finally:
-            await self.client.stop()
-            await self.client.wait_started()
 
 
 async def main():
@@ -98,42 +94,23 @@ async def main():
             tls=True,
             tls_insecure=True,
             notify_birth=True,
+            client_id="message_logger",
         )
+        loop = message_logger.loop
+        loop.create_task(message_logger.main())
 
-        # await message_logger.listen(
-        #     host="test.mosquitto.org",
-        #     port=1883,
-        #     tls=False,
-        #     notify_birth=True,
-        # )
-        # topic = "ACME_Utility/@json-scada/tags/#"
-
-        topic = f"{FIWARE}{ATTRS}"
-
-        logging.info(topic)
-        await asyncio.sleep(1)
-        await message_logger.subscribe(topic)
-        imageListener = AsyncMqttClient()
-        await imageListener.listen(
-            host=os.getenv("MQTT_BROKER"),
-            port=int(os.getenv("MQTT_PORT")),
-            username=os.getenv("MQTT_USERNAME"),
-            password=os.getenv("MQTT_PASSWORD"),
-            tls=False,
-            notify_birth=True,
-            client_id="imageListener",
-        )
-        topic = "WeLaser/PublicIntercomm/CameraToDashboard"
-        await imageListener.subscribe(topic)
-
-        while True:
-            # logging.debug(".")
-            await asyncio.sleep(1)
-
+        topic = "message_logger_test"
+        for i in range(5):
+            payload = {"message": f"Hello World {i}"}
+            await message_logger.queue.put((topic, json.dumps(payload)))
+            await asyncio.sleep(0.1)
+        
     except asyncio.exceptions.CancelledError:
         pass
     except Exception as error:
         logging.error(f'message_logger "{error}"..')
+        logging.error(traceback.format_exc())
+
 
 
 if __name__ == "__main__":
