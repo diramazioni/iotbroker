@@ -46,8 +46,8 @@ remotePath = ""
 #                 WEATHER DATA
 #  ==========================================
 prefix = "https://api.openweathermap.org/data/2.5"
-appid = "e85ec932235b56d4c778fe9d45e817b6"  # GV
-# appid  = "82dbbc0ae53998f4fa25897ecc3670c2" # EM
+# appid = "e85ec932235b56d4c778fe9d45e817b6"  # GV
+appid  = "82dbbc0ae53998f4fa25897ecc3670c2" # EM
 " List of virtual-stations - vs "
 vs_name = [
     "Arganda",
