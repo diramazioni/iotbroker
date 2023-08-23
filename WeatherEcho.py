@@ -390,6 +390,7 @@ def main(mqtts_client):
     delay = 3600  # 1h
 
     # mi connetto a 'MQTTS WeLASER
+    
     if not mqtts_connect(
         mqtts_client, MQTTS_USERNAME, MQTTS_PASSWORD, MQTTS_BROKER, MQTTS_PORT
     ):
@@ -436,5 +437,5 @@ def main(mqtts_client):
 
 # ---------------------------------------------------------
 if __name__ == "__main__":
-    mqtts_client = mqttClient.Client()
+    mqtts_client = mqttClient.Client(client_id="WeatherEcho")
     main(mqtts_client)
