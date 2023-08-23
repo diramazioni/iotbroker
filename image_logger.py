@@ -60,7 +60,6 @@ class ImageListener(AsyncMqttClient):
             timestamp = time.time()
             dev_ = "Camera:"
             ptopic = f"{self.FIWARE}{self.ENTITY}{dev_}{device}/attrs"
-            ptopic = "testone"
             id = f"{self.ENTITY}{dev_}{device}"
             new_payload = {
                 "id": id,
