@@ -45,7 +45,7 @@
       </option>
   {/each}
 </select>
-<input type="checkbox" bind:checked={calibrated}> calibrated
+
 <!--
 {range_slider[0]},{range_slider[1]}    -->
 <Slider step="10" max={Number(max)} bind:value={range_slider} range order />

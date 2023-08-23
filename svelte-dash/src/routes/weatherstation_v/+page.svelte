@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Pre from '$lib/pre.svelte'
+
   import { onMount } from 'svelte';
 	import type { PageData } from './$types'
   import { LineChart, AreaChart } from '@carbon/charts-svelte'
@@ -13,8 +15,8 @@
   //const device_type = 'weatherstation_v'
    
   export let data: PageData
-  $: ({ devices, device_type, device_selected } = data)
-  $: device_data = []
+  $: ({ incoming, devices, device_type, device_selected } = data)
+  $: device_data = incoming[device_selected]
   const max = Number(data.range[1] - data.range[0])
   let range_slider = [0,max]
   let calibrated = true
@@ -45,7 +47,7 @@
       </option>
   {/each}
 </select>
-<input type="checkbox" bind:checked={calibrated}> calibrated
+
 <!--
 {range_slider[0]},{range_slider[1]}    -->
 <Slider step="10" max={Number(max)} bind:value={range_slider} range order />
@@ -54,6 +56,7 @@
 </pre> -->
 
 <AreaChart data={device_data} options={extOptions} style="padding:2rem;" />
+<!-- <Pre name="incoming" value={incoming} /> -->
 
 <style>
   h2, select, input {
