@@ -3,7 +3,9 @@
   
   import Galery from "$lib/Gallery.svelte";
   const imageModules = import.meta.glob("$lib/assets/*.jpg"); 
-  const imagePath = Object.keys(imageModules).map((key) => imageModules[key].name);	
+  //const imagePath = Object.keys(imageModules).map((key) => imageModules[key].name);	
+  const imagePath = Object.keys(imageModules).map((key) => imageModules[key].name.split('/').pop());	
+
   export let interval = 3500;
 </script>
   
