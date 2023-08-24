@@ -60,11 +60,11 @@
 </script>
 
 <nav class="w-full flex p-3 gap-2 justify-center items-center">
-	<a class="hover:bg-blue-500 hover:text-white " href="/{base}/" aria-current={$page.url.pathname === "/{base}/"}>Home</a>
-	<a class="hover:bg-blue-500 hover:text-white " href="/{base}/weatherstation_n" aria-current={$page.url.pathname === "/{base}/weatherstation_n"}>Weather Stations</a>
-  <a class="hover:bg-blue-500 hover:text-white " href="/{base}/weatherstation_v" aria-current={$page.url.pathname === "/{base}/weatherstation_v"}>Virtual Weather Stations</a>
-  <a class="hover:bg-blue-500 hover:text-white " href="/{base}/etrometer" aria-current={$page.url.pathname === "/{base}/etrometer"}>Etrometers</a>
-  <a class="hover:bg-blue-500 hover:text-white " href="/{base}/camera" aria-current={$page.url.pathname === "/{base}/camera"}>Cameras</a>
+	<a class="hover:bg-blue-500 hover:text-white " href="{base}/" aria-current={$page.url.pathname === "/{base}/"}>Home</a>
+	<a class="hover:bg-blue-500 hover:text-white " href="{base}/weatherstation_n" aria-current={$page.url.pathname === "/{base}/weatherstation_n"}>Weather Stations</a>
+  <a class="hover:bg-blue-500 hover:text-white " href="{base}/weatherstation_v" aria-current={$page.url.pathname === "/{base}/weatherstation_v"}>Virtual Weather Stations</a>
+  <a class="hover:bg-blue-500 hover:text-white " href="{base}/etrometer" aria-current={$page.url.pathname === "/{base}/etrometer"}>Etrometers</a>
+  <a class="hover:bg-blue-500 hover:text-white " href="{base}/camera" aria-current={$page.url.pathname === "/{base}/camera"}>Cameras</a>
 </nav>
 
 <slot />
