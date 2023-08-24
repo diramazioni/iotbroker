@@ -26,4 +26,7 @@ www/*
 svelte-dash/prisma/schema.prisma
 data/2*
 data/1/*
+data/*
+logs/*
 doc/dashboard_test.ogv
+svelte-dash/ecosystem.config.js
