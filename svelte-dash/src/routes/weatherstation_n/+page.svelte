@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from "$app/paths"
   import { onMount } from 'svelte';
 	import type { PageData } from './$types'
   import { LineChart, AreaChart } from '@carbon/charts-svelte'
@@ -22,7 +23,7 @@
   export const fetch_data = async () => {
     data.device_selected = device_selected //set and update doesn't work why?
     extOptions = { ...options,  title: `${device_selected}` }
-    const url = `/api/${device_type}/${device_selected}`;
+    const url = `${base}/api/${device_type}/${device_selected}`;
     console.log(url)
     const response = await fetch(url)
     device_data = await response.json();

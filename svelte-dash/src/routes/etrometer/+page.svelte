@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from "$app/paths"
   import { onMount } from 'svelte';
 	import type { PageData } from './$types'
   import { LineChart, AreaChart } from '@carbon/charts-svelte'
@@ -24,7 +25,7 @@
     etrometerOptionsCO2 = { ...options,  title: `${device_selected} CO2` }
     etrometerOptionsTC = { ...options,  title: `${device_selected} TC` }
     etrometerOptionsRH = { ...options,  title: `${device_selected} RH` }
-    const url = `/api/${device_type}/${device_selected}`;
+    const url = `${base}/api/${device_type}/${device_selected}`;
     console.log(url)
     const response = await fetch(url)
     device_data = await response.json();

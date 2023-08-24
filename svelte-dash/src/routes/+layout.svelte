@@ -41,7 +41,7 @@
 
   const refresh_data = async (device_type: String, device_selected: String) => {
       console.log(`refresh_data /api/${device_type}/${device_selected}`)
-      const url = `/api/${device_type}/${device_selected}`;
+      const url = `${base}/api/${device_type}/${device_selected}`;
       const res = await fetch(url);
       const inc = await res.json();
       incoming.push({[device_selected]: inc})

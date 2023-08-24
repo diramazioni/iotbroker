@@ -7,7 +7,7 @@ export async function GET({ url, params }) {
   //const range:BigInt[] = get_wsv_range(url, params.device)
 
   //console.log(range[0])
-  
+
   const db_result = await prisma.device.findMany({
     where: {
       name: { 'equals': params.device },
