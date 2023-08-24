@@ -15,11 +15,11 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter(),
 		files: {
-			assets: dev ? '' : 'src/lib/assets' 
+			assets: dev ? '' : './src/lib/assets' 
 		},
 		paths: {
 			base: dev ? '' : '/iot',
-			assets: dev ? '' : '/home/gv/python3/iotbroker/svelte-dash/src/lib/assets'
+			//assets: dev ? '' : '/home/gv/python3/iotbroker/svelte-dash/src/lib/assets'
 		},		
 	}
 };
