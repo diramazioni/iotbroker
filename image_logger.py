@@ -79,27 +79,27 @@ class ImageListener(AsyncMqttClient):
     async def ftp_download(self, remotePath, device, picture):
         try:
             await self.ftp_from.connect()
-            logging.debug("connected ftp_retr")
+            logging.debug(f"connected ftp_retr {remotePath}")
             await self.ftp_from.retrieveFile(remotePath, picture)
             await self.ftp_from.disconnect()
-            logging.debug("ftp 1 done")
+            logging.debug("ftp_download done")
 
             shutil.move(  # server www
                 picture, os.path.join(os.getcwd(), "www", device + ".jpg")
             )
 
         except Exception as e:
-            logging.error(f"Error in Ftp1 -> {e}")
+            logging.error(f"Error ftp_download -> {e}")
 
     async def ftp_upload(self, remotePath, picture):
         try:
             await self.ftp_to.connect()
-            logging.debug("connected ftp_upload")
+            logging.debug(f"connected ftp_upload {remotePath}")
             await self.ftp_to.sendFile(remotePath, picture)
             await self.ftp_to.disconnect()
-            logging.debug("ftp 2 done")
+            logging.debug("ftp_upload done")
         except Exception as e:
-            logging.error(f"Error in Ftp2 -> {e}")
+            logging.error(f"Error ftp_upload -> {e}")
 
     async def ftp_copy(self, remotePath, picture):
         await self.ftp_download(remotePath, picture)

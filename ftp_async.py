@@ -49,12 +49,10 @@ class AsyncFtpClient:
         try:
             fileName = os.path.basename(localFile)
             logging.info("retrieving:" + localFile)
-            if os.path.exists(localFile):
-                with open(localFile, "wb") as file:
-                    self.ftp.cwd(remotePath)
-                    self.ftp.retrbinary("RETR " + fileName, file.write, 1024)
-                    file.close()
-            else:
-                logging.error("ftp retrieveFile: file not found")
+            with open(localFile, "wb") as file:
+                self.ftp.cwd(remotePath)
+                self.ftp.retrbinary("RETR " + fileName, file.write, 1024)
+                file.close()
+
         except all_errors as e:
             logging.error(f"Error in retrieveFile -> {self.host} \n{e}")
