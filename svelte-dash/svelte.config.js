@@ -15,7 +15,7 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter(),
 		files: {
-			assets: dev ? '' : './src/lib/assets' 
+			assets: dev ? './src/lib/assets' : './src/lib/assets' 
 		},
 		paths: {
 			base: dev ? '' : '/iot',
