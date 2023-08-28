@@ -115,7 +115,7 @@ async def main(interactive=False):
     FIWARE = os.getenv("FIWARE")
     ATTRS = os.getenv("ATTRS")
     ENTITY = os.getenv("ENTITY")
-
+    CLIENT_ID = os.getenv("CLIENT_ID") 
     try:
         ftp_from = AsyncFtpClient(
             host=os.getenv("HOST_FROM"),
@@ -137,7 +137,7 @@ async def main(interactive=False):
             password=os.getenv("MQTTS_PASSWORD"),
             tls=True,
             tls_insecure=True,
-            client_id="imagePublisher",
+            client_id=CLIENT_ID+"_imagePublisher",
             notify_birth=True
         )
         # ImageListener: Listen for image message and re-publish with ImagePublisher
@@ -155,7 +155,7 @@ async def main(interactive=False):
             username=os.getenv("MQTT_USERNAME"),
             password=os.getenv("MQTT_PASSWORD"),
             tls=False,
-            client_id="imageListener",
+            client_id=CLIENT_ID+"_imageListener",
             notify_birth=True
         )
         topic = "WeLaser/PublicIntercomm/CameraToDashboard"

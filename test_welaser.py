@@ -1,13 +1,3 @@
-"""
-WELASER - by GV June 2023
-Capture messages from  Ardesia MQTT (insecure)
-and publish them to WeLASER MQTTS (over TLS)
-then parse MQTT message, extract FTP file name and copy
-the files from  Ardesia to Local and to WeLASER
-Further on capture messages from MQTTS and
-append them to device.txt
-Finally publish a TEST message on MQTTS 
-"""
 import os
 import sys
 
@@ -233,10 +223,13 @@ def mess_append(device, message):
     except all_errors as e:
         logging.error(f"Error in append -> {e}")
 
-
+count = 1
+import random
 # =========================================================
 def test_WeatherStation():
-    print("=" * 80 + "\ntest_WeatherStation")
+    global count
+    count += 1
+    print("=" * 80 + f"\ntest_WeatherStation {count}")
     device = "Device:WeatherStation_n_test"
     ptopic = f"{FIWARE}{ENTITY}{device}{ATTRS}"
     print("ptopic=" + ptopic)
@@ -250,21 +243,21 @@ def test_WeatherStation():
                     "name": "WeatherStation_n_test_BAT",
                     "id": "urn:ngsi-ld:Device:WeatherStation_n_test_BAT",
                     "controlledProperty": ["Battery_Voltage"],
-                    "value": [4.130879741],
+                    "value": [random.uniform(4.130879741, 5.0) ], #4.130879741
                     "units": ["volts"],
                 },
                 {
                     "name": "WeatherStation_n_test_PV",
                     "id": "urn:ngsi-ld:Device:WeatherStation_n_test_PV",
                     "controlledProperty": ["Solar_Panel_Voltage"],
-                    "value": [0],
+                    "value": [random.uniform(0, 12.0)],
                     "units": ["volts"],
                 },
                 {
                     "name": "WeatherStation_n_test_WIND",
                     "id": "urn:ngsi-ld:Device:WeatherStation_n_test_WIND",
                     "controlledProperty": ["W_vel", "W_dir"],
-                    "value": [88.63938536, 134.9650667],
+                    "value": [random.uniform(78.63938536, 88.63938536), random.uniform(100.0, 134.9650667)],
                     "units": ["m/s", "deg-N-cw"],
                 },
                 {
@@ -277,7 +270,7 @@ def test_WeatherStation():
                         "GasResistance",
                         "Altitude",
                     ],
-                    "value": [29.62742615, 1005.58, 50.22343063, 834.359, 103.4343262],
+                    "value": [random.uniform(20.0, 29.62742615), random.uniform(800.0, 1005.58), random.uniform(20.0, 50.22343063), random.uniform(400.0, 834.359), random.uniform(80.0, 103.4343262)],
                     "units": ["degC", "hPa", "%", "KOhms", "m"],
                 },
                 {
@@ -302,9 +295,10 @@ def test_WeatherStation():
                     "units": ["degC", "degC", "degC", "%", "%", "%"],
                 },
             ],
-            "timestamp": 1690740135000,
+            "timestamp": time.time()*count, 
         }
     )
+    #1690740135000
     mqtt_publish(mqtts_client, ptopic, payload)
 
 

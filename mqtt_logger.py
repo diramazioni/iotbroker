@@ -82,6 +82,8 @@ async def main(interactive=False):
     FIWARE = os.getenv("FIWARE")
     ATTRS = os.getenv("ATTRS")
     ENTITY = os.getenv("ENTITY")
+    CLIENT_ID = os.getenv("CLIENT_ID") + "_mqtt_logger"
+    
 
     try:
         message_parser = MessageParser()
@@ -100,7 +102,7 @@ async def main(interactive=False):
             password=os.getenv("MQTTS_PASSWORD"),
             tls=True,
             tls_insecure=True,
-            client_id="mqtt_logger",
+            client_id=CLIENT_ID,
             notify_birth=True
         )
         topic = f"{FIWARE}{ATTRS}"

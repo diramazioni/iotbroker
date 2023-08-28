@@ -94,7 +94,7 @@ async def main():
     load_dotenv()
     FIWARE = os.getenv("FIWARE")
     ENTITY = os.getenv("ENTITY")
-
+    CLIENT_ID = os.getenv("CLIENT_ID") + "_weatherLogger"
     weatherLogger = WeatherLogger(
         delay=3600,
         conf="openweathermap_conf.json",
@@ -110,7 +110,7 @@ async def main():
         password=os.getenv("MQTTS_PASSWORD"),
         tls=True,
         tls_insecure=True,
-        client_id="weatherLogger",
+        client_id=CLIENT_ID,
         notify_birth=True
     )
     await weatherLogger.run()
