@@ -17,6 +17,7 @@
 
   const socketStore = writable(null);
   const device_data = writable(null);
+  const device_opt = writable(null);
   
   export const fetch_data = async (device_type: string, device_selected: string) => {
     data.device_selected = device_selected //set and update doesn't work why?
@@ -31,33 +32,24 @@
 
   function handleWebSocketMessage(event) {
     const edata = JSON.parse(event.data);
-    let device_type = ""
-    if (edata.device.includes('WeatherStation_n')) {
-      device_type = "weatherstation_n"
-      console.log('WeatherStation_n')
-    } else if (edata.device.includes('WeatherStation_v')) {
-      device_type = "weatherstation_v"
-      console.log('WeatherStation_v')
-    } else if (edata.device.includes('ETRometer')) {
-      device_type = "etrometer"
-      console.log('etrometer')
-    } else if (edata.device.includes('Camera')) {
-      device_type = "camera"
-      console.log('Camera')
+    let device_type = $page.url.pathname.slice(1)
+    if (edata.device === data.device_selected) {
+      console.log("WS: Update " + data.device_selected)
+      fetch_data(device_type, device_selected);
     } else {
-      console.log('Unknown device')
+      console.log("WS: Ignoring message " + edata.device )
     }
-    //refresh_data(device_type, edata.device)
-    fetch_data(device_type, device_selected);
   }
   setContext('socket-context', {
     subscribe: socketStore,
     device_data: device_data,
+    device_opt: device_opt,
     fetch_data
   });
 
 
   onMount(() => {
+    console.log()
     const ws = new WebSocket('ws://localhost:8765');
     ws.addEventListener('message', handleWebSocketMessage);
     // Update the socket store in the context with WebSocket connection
