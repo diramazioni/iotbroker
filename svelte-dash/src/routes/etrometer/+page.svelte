@@ -9,7 +9,7 @@
   //import {device_selected} from '$lib/stores'
   import { page } from '$app/stores';
   import Pre from '$lib/pre.svelte'
-  import Slider from '@bulatdashiev/svelte-slider';
+  //import Slider from '@bulatdashiev/svelte-slider';
 	
   //const device_type = 'weatherstation_v'
    
@@ -19,8 +19,8 @@
   $: device_data = socketContext.device_data
   
   
-  const max = Number(data.range[1] - data.range[0])
-  let range_slider = [0,max]
+  //const max = Number(data.range[1] - data.range[0])
+  //let range_slider = [0,max]
   let calibrated = true
 
 
