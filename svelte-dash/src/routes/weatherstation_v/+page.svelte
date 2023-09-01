@@ -1,47 +1,45 @@
 <script lang="ts">
   import { base } from "$app/paths"
-  import Pre from '$lib/pre.svelte'
-
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
 	import type { PageData } from './$types'
+  import { invalidate, invalidateAll } from '$app/navigation';
   import { LineChart, AreaChart } from '@carbon/charts-svelte'
   import '@carbon/styles/css/styles.css'
   import '@carbon/charts-svelte/styles.css'
   import options from '$lib/options'
   //import {device_selected} from '$lib/stores'
   import { page } from '$app/stores';
+  import { writable } from 'svelte/store';
 
   import Slider from '@bulatdashiev/svelte-slider';
-	
-  //const device_type = 'weatherstation_v'
-   
+  
+
   export let data: PageData
-  $: ({ incoming, devices, device_type, device_selected } = data)
-  $: device_data = incoming[device_selected]
+  $: ({ devices, device_type, device_selected } = data) //, device_data 
+  const socketContext = getContext('socket-context');
+  $: device_data = socketContext.device_data
+  
   const max = Number(data.range[1] - data.range[0])
   let range_slider = [0,max]
-  let calibrated = true
-
-  export const fetch_data = async () => {
-    data.device_selected = device_selected //set and update doesn't work why?
-    extOptions = { ...options,  title: `${device_selected}` }
-    const url = `${base}/api/${device_type}/${device_selected}`;
-    console.log(url)
-    const response = await fetch(url)
-    device_data = await response.json();
-    return device_data
-  }
+  let calibrated = true 
 
   let extOptions = { ...options }
+  const update_data = async () => {
+    data.device_selected = device_selected
+    await socketContext.fetch_data(device_type, device_selected)
+    extOptions = { ...options,  title: `${device_selected}` }
+  }
+
+  
   onMount(() => {
-    //device_selected = (device_selected.length === 0 ) ? devices.sort()[0] : device_selected
-    fetch_data() 
+  $device_data = null
+  update_data()
     
   });
 </script>
-
 <h2>Devices</h2>
-<select bind:value={device_selected} on:change={() => (fetch_data())} >
+
+<select bind:value={device_selected} on:change={() => (update_data())} >
   {#each devices as device, index}
       <option value={device}>
         {device}
@@ -49,15 +47,15 @@
   {/each}
 </select>
 
-<!--
-{range_slider[0]},{range_slider[1]}    -->
-<Slider step="10" max={Number(max)} bind:value={range_slider} range order />
-<!-- <pre>
-  {JSON.stringify(device_data)}
-</pre> -->
+<!-- <Slider step="10" max={Number(max)} bind:value={range_slider} range order /> -->
+  {#if $device_data} 
+  <!-- <pre>
+    {JSON.stringify($device_data.length/15)}
+  </pre>   -->
+  <AreaChart data={$device_data} options={extOptions} style="padding:2rem;" />
+  {/if}
 
-<AreaChart data={device_data} options={extOptions} style="padding:2rem;" />
-<!-- <Pre name="incoming" value={incoming} /> -->
+
 
 <style>
   h2, select, input {

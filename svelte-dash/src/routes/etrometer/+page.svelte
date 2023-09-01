@@ -1,6 +1,6 @@
 <script lang="ts">
   import { base } from "$app/paths"
-  import { onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
 	import type { PageData } from './$types'
   import { LineChart, AreaChart } from '@carbon/charts-svelte'
   import '@carbon/styles/css/styles.css'
@@ -14,17 +14,30 @@
   //const device_type = 'weatherstation_v'
    
   export let data: PageData
-  $: ({ devices, device_type, device_selected } = data)
-  $: device_data = []
+  $: ({ devices, device_type, device_selected } = data) //, device_data 
+  const socketContext = getContext('socket-context');
+  $: device_data = socketContext.device_data
+  
+  
   const max = Number(data.range[1] - data.range[0])
   let range_slider = [0,max]
   let calibrated = true
 
-  export const fetch_data = async () => {
-    data.device_selected = device_selected //set and update doesn't work why?
+
+  let etrometerOptionsCO2 = { ...options }
+  let etrometerOptionsTC = { ...options }
+  let etrometerOptionsRH = { ...options }
+
+  const update_data = async () => {
+    data.device_selected = device_selected
+    await socketContext.fetch_data(device_type, device_selected)
     etrometerOptionsCO2 = { ...options,  title: `${device_selected} CO2` }
     etrometerOptionsTC = { ...options,  title: `${device_selected} TC` }
     etrometerOptionsRH = { ...options,  title: `${device_selected} RH` }
+  }  
+  export const fetch_data = async () => {
+    data.device_selected = device_selected //set and update doesn't work why?
+
     const url = `${base}/api/${device_type}/${device_selected}`;
     console.log(url)
     const response = await fetch(url)
@@ -32,13 +45,10 @@
     return device_data
   }
 
-  let etrometerOptionsCO2 = { ...options }
-  let etrometerOptionsTC = { ...options }
-  let etrometerOptionsRH = { ...options }
+
   onMount(() => {
-    //device_selected = (device_selected.length === 0 ) ? devices.sort()[0] : device_selected
-    fetch_data() 
-    
+    $device_data = null
+    update_data()
   });
 </script>
 
@@ -51,16 +61,17 @@
   {/each}
 </select>
 <input type="checkbox" bind:checked={calibrated}> calibrated
-<!--
-{range_slider[0]},{range_slider[1]}    -->
-<Slider step="10" max={Number(max)} bind:value={range_slider} range order />
 
-<!-- <Pre name="device_data" value={device_data} /> -->
-<div class="devices">
-  <LineChart data={device_data.CO2} options={etrometerOptionsCO2} style="padding:2rem; flex:1;" />
-  <LineChart data={device_data.TC} options={etrometerOptionsTC} style="padding:2rem; flex:1;" />
-  <LineChart data={device_data.RH} options={etrometerOptionsRH} style="padding:2rem; flex:1;" />
-</div> 
+<!-- <Slider step="10" max={Number(max)} bind:value={range_slider} range order /> -->
+
+{#if $device_data} 
+
+  <LineChart data={$device_data.CO2} options={etrometerOptionsCO2} style="padding:2rem; flex:1;" />
+  <LineChart data={$device_data.TC} options={etrometerOptionsTC} style="padding:2rem; flex:1;" />
+  <LineChart data={$device_data.RH} options={etrometerOptionsRH} style="padding:2rem; flex:1;" />
+
+{/if}
+
 
 <style>
   h2, select, input {
