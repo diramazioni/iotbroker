@@ -10,24 +10,23 @@
   //import {device_selected} from '$lib/stores'
   import { page } from '$app/stores';
   import { writable } from 'svelte/store';
-
-  import Slider from '@bulatdashiev/svelte-slider';
   
 
   export let data: PageData
   $: ({ devices, device_type, device_selected } = data) //, device_data 
   const socketContext = getContext('socket-context');
   $: device_data = socketContext.device_data
-  
-  const max = Number(data.range[1] - data.range[0])
-  let range_slider = [0,max]
- 
+  $: device_opt = socketContext.device_opt
 
-  let extOptions = { ...options }
+  const max = Number(data.range[1] - data.range[0])
+
+  let calibrated = true 
+
+  $: extOptions = {...options }
   const update_data = async () => {
     data.device_selected = device_selected
     await socketContext.fetch_data(device_type, device_selected)
-    extOptions = { ...options,  title: `${device_selected}` }
+    await socketContext.fetch_opt(device_selected)
   }
 
   
@@ -47,14 +46,11 @@
   {/each}
 </select>
 
-<!--
-{range_slider[0]},{range_slider[1]}    -->
-<!-- <Slider step="10" max={Number(max)} bind:value={range_slider} range order /> -->
   {#if $device_data} 
-  <!-- <pre>
-    {JSON.stringify($device_data.length/15)}
-  </pre>   -->
-  <AreaChart data={$device_data} options={extOptions} style="padding:2rem;" />
+  <pre>
+    {JSON.stringify(extOptions)}
+  </pre>  
+  <AreaChart data={$device_data} options={$device_opt} style="padding:2rem;" />
   {/if}
 
 

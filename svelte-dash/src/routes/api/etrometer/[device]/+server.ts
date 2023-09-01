@@ -21,10 +21,6 @@ export async function GET({ url, params }) {
     }
   });
 
-  // timestamp: {
-  //   gte: range[0], // start
-  //   lte: range[1]  // end
-  // }
 
   const transformedData = {};
 

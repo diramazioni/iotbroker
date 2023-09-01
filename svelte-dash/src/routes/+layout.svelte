@@ -19,23 +19,34 @@
   const device_data = writable(null);
   const device_opt = writable(null);
   
-  export const fetch_data = async (device_type: string, device_selected: string) => {
+  const fetch_data = async (device_type: string, device_selected: string) => {
     data.device_selected = device_selected //set and update doesn't work why?
-    //extOptions = { ...options,  title: `${device_selected}` }
     const url = `${base}/api/${device_type}/${device_selected}`;
-    console.log(`fetch_data_L ${url}`)
+    console.log(`fetch_data ${url}`)
     const response = await fetch(url)
     let json = await response.json()
     $device_data = json
     return json
   }
 
+  const fetch_opt = async (device_selected: string, extra_title?:string) => {
+    let url = `${base}/api/options/${device_selected}`;
+    if (extra_title) {
+      url = `${device_selected}?extra_title=${extra_title}`
+    }
+    console.log(`fetch_opt ${url}`)
+    const response = await fetch(url)
+    let json = await response.json()
+    $device_opt = json
+    return json
+  }
   function handleWebSocketMessage(event) {
     const edata = JSON.parse(event.data);
     let device_type = $page.url.pathname.slice(1)
     if (edata.device === data.device_selected) {
       console.log("WS: Update " + data.device_selected)
       fetch_data(device_type, device_selected);
+      fetch_opt(device_selected);
     } else {
       console.log("WS: Ignoring message " + edata.device )
     }
@@ -44,7 +55,8 @@
     subscribe: socketStore,
     device_data: device_data,
     device_opt: device_opt,
-    fetch_data
+    fetch_data,
+    fetch_opt
   });
 
 
