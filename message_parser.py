@@ -124,17 +124,25 @@ class MessageParser:
 
             for e in data_json:
                 await self.db_entry(e)
+                await asyncio.sleep(0.1)
 
 
 async def main() -> None:
     message_parser = MessageParser()
     await message_parser.connect()
-    await message_parser.process_data("data/ETRometer_2.json")
-    # import glob 
-    # for f in glob.glob("data/*.json"):
-    #     print(f"Processing {f}")
-    #     await message_parser.process_data(f)
-    await asyncio.sleep(10)
+    # await message_parser.process_data("data/ETRometer_2.json")
+    import glob 
+    loop=asyncio.get_event_loop()
+    background_tasks = set()
+    for f in glob.glob("data/*.json"):
+        print(f"Processing {f}")
+        await asyncio.sleep(1)
+        task = loop.create_task(message_parser.process_data(f))
+        background_tasks.add(task)
+        task.add_done_callback(background_tasks.discard)
+        # await message_parser.process_data(f)
+    await asyncio.wait(background_tasks)
+    await asyncio.sleep(1)
     await message_parser.disconnect()
 
 

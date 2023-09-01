@@ -1,3 +1,4 @@
+import datetime
 import os
 import sys
 
@@ -228,12 +229,15 @@ import random
 # =========================================================
 def test_WeatherStation():
     global count
-    count += 1
-    print("=" * 80 + f"\ntest_WeatherStation {count}")
+    count += 3600
+    
     device = "Device:WeatherStation_n_test"
     ptopic = f"{FIWARE}{ENTITY}{device}{ATTRS}"
     print("ptopic=" + ptopic)
     ID = f"{ENTITY}{device}"
+    TS = time.time() + count 
+    format_TS = datetime.datetime.fromtimestamp(TS).strftime("%Y-%m-%dT%H:%M:%SZ")
+    print("=" * 80 + f"\ntest_WeatherStation {format_TS}")
     payload = json.dumps(
         {
             "name": "WeatherStation_n_test",
@@ -295,7 +299,7 @@ def test_WeatherStation():
                     "units": ["degC", "degC", "degC", "%", "%", "%"],
                 },
             ],
-            "timestamp": time.time()*count, 
+            "timestamp": TS*1000, 
         }
     )
     #1690740135000
