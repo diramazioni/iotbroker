@@ -1,7 +1,7 @@
 
 import type { LayoutServerLoad } from './$types';
 //import {device_selected} from '$lib/stores'
-export const prerender = false;
+//export const prerender = false;
 export const load: LayoutServerLoad = async ({ fetch, params }) => {
   //console.log("")
 	// let response = await fetch('/api/devices/WeatherStation_n')
