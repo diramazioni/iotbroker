@@ -16,8 +16,8 @@
   $: ({ device_selected } = data)
 
   const socketStore = writable(null);
-  const device_data = writable(null);
-  const device_opt = writable(null);
+  const device_data = writable([]);
+  const device_opt = writable([]);
   
   const fetch_data = async (device_type: string, device_selected: string) => {
     data.device_selected = device_selected //set and update doesn't work why?
@@ -32,7 +32,7 @@
   const fetch_opt = async (device_selected: string, extra_title?:string) => {
     let url = `${base}/api/options/${device_selected}`;
     if (extra_title) {
-      url = `${device_selected}?extra_title=${extra_title}`
+      url = `?extra_title=${extra_title}`
     }
     console.log(`fetch_opt ${url}`)
     const response = await fetch(url)

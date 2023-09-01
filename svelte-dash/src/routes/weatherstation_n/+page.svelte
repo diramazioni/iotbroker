@@ -47,9 +47,9 @@
 </select>
 
   {#if $device_data} 
-  <pre>
+  <!-- <pre>
     {JSON.stringify(extOptions)}
-  </pre>  
+  </pre>   -->
   <AreaChart data={$device_data} options={$device_opt} style="padding:2rem;" />
   {/if}
 
