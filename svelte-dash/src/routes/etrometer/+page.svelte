@@ -40,7 +40,7 @@
 
 
   onMount(() => {
-    $device_data = null
+    $device_data = []
     update_data()
   });
 </script>
@@ -55,7 +55,7 @@
 </select>
 <input type="checkbox" bind:checked={calibrated}> calibrated
 
-{#if $device_data} 
+{#if $device_data.length} 
 
   <LineChart data={$device_data.CO2} options={etrometerOptionsCO2} style="padding:2rem; flex:1;" />
   <LineChart data={$device_data.TC} options={etrometerOptionsTC} style="padding:2rem; flex:1;" />

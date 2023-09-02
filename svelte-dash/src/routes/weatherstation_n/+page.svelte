@@ -29,7 +29,7 @@
 
   
   onMount(() => {
-  $device_data = null
+  $device_data = []
   update_data()
     
   });
@@ -44,7 +44,7 @@
   {/each}
 </select>
 
-  {#if $device_data} 
+  {#if $device_data.length} 
   <!-- <pre>
     {JSON.stringify(extOptions)}
   </pre>   -->
