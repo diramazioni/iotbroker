@@ -1,10 +1,8 @@
 import { error, json } from "@sveltejs/kit";
-import { prisma, get_wsv_range } from '$lib/prisma';
+import { prisma } from '$lib/prisma';
 
 
 export async function GET({ url, params }) {
-
-  const range:BigInt[] = get_wsv_range(url, params.device)
 
   //console.log(range[0])
   
@@ -14,10 +12,10 @@ export async function GET({ url, params }) {
       weatherStationVirtual: {
         isNot: null,
       },
-      timestamp: {
-        gte: range[0], // start
-        lte: range[1]  // end
-      }
+      // timestamp: {
+      //   gte: range[0], // start
+      //   lte: range[1]  // end
+      // }
     },
     include: {
       weatherStationVirtual: true

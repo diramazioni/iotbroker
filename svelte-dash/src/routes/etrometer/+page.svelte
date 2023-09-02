@@ -6,23 +6,16 @@
   import '@carbon/styles/css/styles.css'
   import '@carbon/charts-svelte/styles.css'
   import options from '$lib/options'
-  //import {device_selected} from '$lib/stores'
   import { page } from '$app/stores';
   import Pre from '$lib/pre.svelte'
-  //import Slider from '@bulatdashiev/svelte-slider';
-	
-  //const device_type = 'weatherstation_v'
-   
+
   export let data: PageData
   $: ({ devices, device_type, device_selected } = data) //, device_data 
   const socketContext = getContext('socket-context');
   $: device_data = socketContext.device_data
   
-  
-  //const max = Number(data.range[1] - data.range[0])
-  //let range_slider = [0,max]
-  let calibrated = true
 
+  let calibrated = true
 
   let etrometerOptionsCO2 = { ...options }
   let etrometerOptionsTC = { ...options }
@@ -61,8 +54,6 @@
   {/each}
 </select>
 <input type="checkbox" bind:checked={calibrated}> calibrated
-
-<!-- <Slider step="10" max={Number(max)} bind:value={range_slider} range order /> -->
 
 {#if $device_data} 
 

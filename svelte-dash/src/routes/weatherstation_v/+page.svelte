@@ -18,8 +18,6 @@
   $: device_data = socketContext.device_data
   $: device_opt = socketContext.device_opt
 
-  //const max = Number(data.range[1] - data.range[0])
-
   let calibrated = true 
 
   $: extOptions = {...options }
