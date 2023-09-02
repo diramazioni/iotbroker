@@ -35,15 +35,15 @@
     etrometerOptionsTC = { ...options,  title: `${device_selected} TC` }
     etrometerOptionsRH = { ...options,  title: `${device_selected} RH` }
   }  
-  export const fetch_data = async () => {
-    data.device_selected = device_selected //set and update doesn't work why?
+  // export const fetch_data = async () => {
+  //   data.device_selected = device_selected //set and update doesn't work why?
 
-    const url = `${base}/api/${device_type}/${device_selected}`;
-    console.log(url)
-    const response = await fetch(url)
-    device_data = await response.json();
-    return device_data
-  }
+  //   const url = `${base}/api/${device_type}/${device_selected}`;
+  //   console.log(url)
+  //   const response = await fetch(url)
+  //   device_data = await response.json();
+  //   return device_data
+  // }
 
 
   onMount(() => {
@@ -53,7 +53,7 @@
 </script>
 
 <h2>Devices</h2>
-<select bind:value={device_selected} on:change={() => (fetch_data())} >
+<select bind:value={device_selected} on:change={() => (update_data())} >
   {#each devices as device, index}
       <option value={device}>
         {device}

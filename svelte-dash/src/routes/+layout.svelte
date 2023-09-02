@@ -29,11 +29,8 @@
     return json
   }
 
-  const fetch_opt = async (device_selected: string, extra_title?:string) => {
+  const fetch_opt = async (device_selected: string) => {
     let url = `${base}/api/options/${device_selected}`;
-    if (extra_title) {
-      url = `?extra_title=${extra_title}`
-    }
     console.log(`fetch_opt ${url}`)
     const response = await fetch(url)
     let json = await response.json()
