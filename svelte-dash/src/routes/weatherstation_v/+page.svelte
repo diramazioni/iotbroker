@@ -56,7 +56,7 @@
 
 
 <style>
-  h2, select, input {
+  h2, select {
     margin-left: 1rem;
   }
 
