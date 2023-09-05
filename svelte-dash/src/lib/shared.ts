@@ -8,28 +8,29 @@ import { base } from "$app/paths";
 //   return dataArray.map(item => item.weatherStation[property]);
 // }
 
+type Fetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
 
-export async function fetch_data(fetch, device_type:string , device_selected:string) {
+export async function fetch_data(fetch:Fetch, device_type:string , device_selected:string) {
     const url = `${base}/api/${device_type}/${device_selected}`;
     console.log(`fetch_data ${url}`)
     const response = await fetch(url)
-    let json = await response.json()
+    const json = await response.json()
     //console.log(JSON.stringify(json))
     return json
 }
 
-export async function fetch_opt(fetch, device_type:string, device_selected:string) {
+export async function fetch_opt(fetch:Fetch, device_type:string, device_selected:string) {
     const url = `${base}/api/options/${device_type}/${device_selected}`;
     console.log(`fetch_opt ${url}`)
     const response = await fetch(url)
-    let json = await response.json()
+    const json = await response.json()
     return json
 } 
 
-export async function fetch_dev(fetch, device_type:string) {
-  let url = `${base}/api/devices/${device_type}`;
+export async function fetch_dev(fetch:Fetch, device_type:string) {
+  const url = `${base}/api/devices/${device_type}`;
   console.log(`fetch_dev ${url}`)
   const response = await fetch(url)
-  let json = await response.json()
+  const json = await response.json()
   return json
 }

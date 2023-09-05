@@ -19,10 +19,10 @@ export default {
   experimental : true,
   zoomBar : {
     top : {
-    enabled : true
+      enabled : true
     }
   },  
   height: '600px',
-  "resizable": true,
+  //"resizable": true,
   // width: '200px'
 }
