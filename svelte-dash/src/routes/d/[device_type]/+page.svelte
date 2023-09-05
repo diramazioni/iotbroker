@@ -5,18 +5,14 @@
   import { LineChart, AreaChart } from '@carbon/charts-svelte'
   import '@carbon/styles/css/styles.css'
   import '@carbon/charts-svelte/styles.css'
-  import options from '$lib/options'
-  //import {device_selected} from '$lib/stores'
-  import { page } from '$app/stores';
+  //import { page } from '$app/stores';
   import { writable } from 'svelte/store';
   import { fetch_data, fetch_opt } from '$lib/shared';
 
 
   export let data: PageData
-  $: ({ devices, device_type, device_selected, device_data, device_opt } = data) //, device_data 
-  //const socketContext = getContext('socket-context');
-
-
+  $: ({ devices, device_type, device_selected, device_data, device_opt } = data) 
+  
   let calibrated = true 
   const socketStore = writable(null);
   
@@ -24,8 +20,8 @@
     data.device_selected = device_selected
     device_data = await fetch_data(fetch, device_type, device_selected);
     device_opt = await fetch_opt(fetch, device_type, device_selected);
-
   }
+  
   async function handleWebSocketMessage(event) {
     const edata = JSON.parse(event.data);
     if (edata.device === device_selected) {
