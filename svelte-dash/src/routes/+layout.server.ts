@@ -11,6 +11,6 @@ export const load: LayoutServerLoad = async ({ fetch, params }) => {
 	// }
 
   return {
-    device_selected:""
+    //device_selected:""
   }
 }

@@ -20,7 +20,7 @@ class MQTTLogger(AsyncMqttClient):
         self.client = None
         self.websocket = websocket
         self.log_json = log_json
-        
+
     def on_message(self, client, userdata, message):
         try:
             device_name = message.topic.split(":")[-1].split("/")[0]
@@ -37,7 +37,6 @@ class MQTTLogger(AsyncMqttClient):
                     asyncio.create_task(self.mess_append(device_name, message_))
         except Exception as error:
             logging.error(f'on message Error "{error}"..')
-
 
     async def mess_append(self, device, message):
         try:
@@ -76,6 +75,7 @@ class MQTTLogger(AsyncMqttClient):
             await self.client.stop()
             await self.client.wait_started()
 
+
 # Actual main
 async def main(interactive=False):
     load_dotenv()
@@ -83,7 +83,6 @@ async def main(interactive=False):
     ATTRS = os.getenv("ATTRS")
     ENTITY = os.getenv("ENTITY")
     CLIENT_ID = os.getenv("CLIENT_ID") + "_mqtt_logger"
-    
 
     try:
         message_parser = MessageParser()
@@ -91,7 +90,7 @@ async def main(interactive=False):
         asyncio.create_task(wss.start())
         mqtt_logger = MQTTLogger(
             websocket=wss,
-            log_json=True,
+            log_json=False,
         )
         logging.info("WebSocketServer started...")
 
@@ -103,7 +102,7 @@ async def main(interactive=False):
             tls=True,
             tls_insecure=True,
             client_id=CLIENT_ID,
-            notify_birth=True
+            notify_birth=True,
         )
         topic = f"{FIWARE}{ATTRS}"
         await mqtt_logger.subscribe(topic)

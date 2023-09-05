@@ -30,7 +30,7 @@ export async function GET({ url, params }) {
     .filter(([key]) => key !== "id" && key !== "timestamp" && key !== "deviceId")
     .map(([group, value]) => ({
       group,
-      date: new Date(Number(timestamp)),
+      date: new Date(timestamp),
       value
     }));
   }).flat();

@@ -13,67 +13,13 @@
 
   export let data: LayoutData
 
-  $: ({ device_selected } = data)
-
-  const socketStore = writable(null);
-  const device_data = writable([]);
-  const device_opt = writable([]);
-  
-  const fetch_data = async (device_type: string, device_selected: string) => {
-    data.device_selected = device_selected //set and update doesn't work why?
-    const url = `${base}/api/${device_type}/${device_selected}`;
-    console.log(`fetch_data ${url}`)
-    const response = await fetch(url)
-    let json = await response.json()
-    $device_data = json
-    return json
-  }
-
-  const fetch_opt = async (device_selected: string) => {
-    let url = `${base}/api/options/${device_selected}`;
-    console.log(`fetch_opt ${url}`)
-    const response = await fetch(url)
-    let json = await response.json()
-    $device_opt = json
-    return json
-  }
-  function handleWebSocketMessage(event) {
-    const edata = JSON.parse(event.data);
-    let device_type = $page.url.pathname.slice(1)
-    if (edata.device === data.device_selected) {
-      console.log("WS: Update " + data.device_selected)
-      fetch_data(device_type, device_selected);
-      fetch_opt(device_selected);
-    } else {
-      console.log("WS: Ignoring message " + edata.device )
-    }
-  }
-  setContext('socket-context', {
-    subscribe: socketStore,
-    device_data: device_data,
-    device_opt: device_opt,
-    fetch_data,
-    fetch_opt
-  });
-
-
-  onMount(() => {
-    console.log()
-    const ws = new WebSocket('ws://localhost:8765');
-    ws.addEventListener('message', handleWebSocketMessage);
-    // Update the socket store in the context with WebSocket connection
-    $socketStore = ws;
-
-  });
-    
-
 </script>
 
 <nav class="w-full flex p-3 gap-2 justify-center items-center">
 	<a class="hover:bg-blue-500 hover:text-white " href="{base}/" aria-current={$page.url.pathname === "/{base}/"}>Home</a>
-	<a class="hover:bg-blue-500 hover:text-white " href="{base}/weatherstation_n" aria-current={$page.url.pathname === "/{base}/weatherstation_n"}>Weather Stations</a>
-  <a class="hover:bg-blue-500 hover:text-white " href="{base}/weatherstation_v" aria-current={$page.url.pathname === "/{base}/weatherstation_v"}>Virtual Weather Stations</a>
-  <a class="hover:bg-blue-500 hover:text-white " href="{base}/etrometer" aria-current={$page.url.pathname === "/{base}/etrometer"}>Etrometers</a>
+	<a class="hover:bg-blue-500 hover:text-white " href="{base}/d/weatherstation_n" aria-current={$page.url.pathname === "/{base}/weatherstation_n"}>Weather Stations</a>
+  <a class="hover:bg-blue-500 hover:text-white " href="{base}/d/weatherstation_v" aria-current={$page.url.pathname === "/{base}/weatherstation_v"}>Virtual Weather Stations</a>
+  <a class="hover:bg-blue-500 hover:text-white " href="{base}/d/etrometer" aria-current={$page.url.pathname === "/{base}/etrometer"}>Etrometers</a>
   <a class="hover:bg-blue-500 hover:text-white " href="{base}/camera" aria-current={$page.url.pathname === "/{base}/camera"}>Cameras</a>
 </nav>
 
