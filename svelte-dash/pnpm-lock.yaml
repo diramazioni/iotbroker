@@ -26,6 +26,9 @@ dependencies:
   d3-sankey:
     specifier: ^0.12.3
     version: 0.12.3
+  dotenv:
+    specifier: ^16.3.1
+    version: 16.3.1
   pm2:
     specifier: ^5.3.0
     version: 5.3.0
@@ -1713,6 +1716,11 @@ packages:
     dependencies:
       esutils: 2.0.3
     dev: true
+
+  /dotenv@16.3.1:
+    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /electron-to-chromium@1.4.508:
     resolution: {integrity: sha512-FFa8QKjQK/A5QuFr2167myhMesGrhlOBD+3cYNxO9/S4XzHEXesyTD/1/xF644gC8buFPz3ca6G1LOQD0tZrrg==}
