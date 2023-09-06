@@ -1,18 +1,24 @@
 <script lang="ts">
 	import { base } from "$app/paths"
-  import { onMount, getContext } from 'svelte';
+  import { onMount, afterUpdate, getContext } from 'svelte';
 	import type { PageData } from './$types'
   import { LineChart, AreaChart } from '@carbon/charts-svelte'
   import '@carbon/styles/css/styles.css'
   import '@carbon/charts-svelte/styles.css'
-  //import { page } from '$app/stores';
+  // import { page } from '$app/stores';
   import { writable } from 'svelte/store';
   import { fetch_data, fetch_opt } from '$lib/shared';
-
+	// import { browser } from "$app/environment"
 
   export let data: PageData
+
+  let chart: null | LineChart | AreaChart = null
+
   $: ({ devices, device_type, device_selected, device_data, device_opt } = data) 
   
+  let domain_range:[] = []
+  let category_on:[] = []
+
   let calibrated = true 
   const socketStore = writable(null);
   
@@ -20,26 +26,52 @@
     data.device_selected = device_selected
     device_data = await fetch_data(fetch, device_type, device_selected);
     device_opt = await fetch_opt(fetch, device_type, device_selected);
+    if (domain_range.length) { // Change to selected zoom
+      device_opt.zoomBar.top.initialZoomDomain = domain_range
+    }
   }
   
   async function handleWebSocketMessage(event) {
     const edata = JSON.parse(event.data);
     if (edata.device === device_selected) {
-      console.log("WS: Update " + device_type +"/"+ device_selected)
+      // console.log("WS: Update " + device_type +"/"+ device_selected)
       update_data()
     } else {
-      console.log("WS: Ignoring message " + edata.device )
+      // console.log("WS: Ignoring message " + edata.device )
     }
   }
+
+  function legendOnclick(e: MouseEvent) {
+    category_on = e.detail.dataGroups
+    .filter(element => element.status === 1)
+    .map(element => element.name);
+    // console.log(category_on);
+  }
+  function zoomDomainChange(e: MouseEvent) {
+    domain_range = e.detail.newDomain
+    // console.log(domain_range);
+  }
   
+  afterUpdate(() => {
+    domain_range = []
+    if (chart) category_on = chart.model.allDataGroups // init the category_on on first update
+  })
+
   onMount(() => {
-  
     const ws = new WebSocket('ws://localhost:8765');
     ws.addEventListener('message', handleWebSocketMessage);
     // Update the socket store in the context with WebSocket connection
     $socketStore = ws;
-
+    return () => {
+      if (chart) chart.services.events.removeEventListener("legend-items-update", legendOnclick);
+      if (chart) chart.services.events.removeEventListener("zoom-domain-change", zoomDomainChange);
+    };
   });
+
+
+  $: if (chart) chart.services.events.addEventListener("legend-items-update", legendOnclick);
+  $: if (chart) chart.services.events.addEventListener("zoom-domain-change", zoomDomainChange);
+
 </script>
 <h2>Devices</h2>
 
@@ -52,7 +84,7 @@
 </select>
 
   {#if device_type !== 'etrometer'} 
-    <AreaChart data={device_data} options={device_opt} style="padding:2rem;" />
+    <AreaChart bind:chart data={device_data} options={device_opt} style="padding:2rem;" />
   {:else}
     <input type="checkbox" bind:checked={calibrated}> calibrated
     <LineChart data={device_data.CO2} options={device_opt.CO2} style="padding:2rem; flex:1;" />
