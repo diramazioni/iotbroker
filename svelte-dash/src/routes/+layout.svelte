@@ -1,52 +1,54 @@
-<script lang="ts">
-  import { base } from "$app/paths";
-	// import { onMount } from 'svelte';
-  // import { writable } from 'svelte/store';
-  // import { setContext } from 'svelte';
-  import type { LayoutData } from './$types'
-  import { page } from '$app/stores';
+	<script>
+		import ThemeSwitch from '$lib/ThemeSwitch.svelte';
+		
+		import { afterNavigate } from '$app/navigation';
+		import { page } from '$app/stores'
+		import { base } from '$app/paths'
+		
+		import { menu } from '$lib/constant'
+		// Carbon charts
+		import '../app.postcss';
+		import "carbon-components-svelte/css/all.css";
+		// import "carbon-components-svelte/css/white.css";
+		// import "carbon-components-svelte/css/g90.css";
 
-  import "carbon-components-svelte/css/white.css";
-  import '../app.css'
+	// Scroll to top
+	afterNavigate((params) => {
+	});
 
-  //  import Pre from '$lib/pre.svelte'
 
-  export let data: LayoutData
 
+	
 </script>
 
-<nav class="w-full flex p-3 gap-2 justify-center items-center">
-	<a class="hover:bg-blue-500 hover:text-white " href="{base}/" aria-current={$page.url.pathname === `${base}/`}>Home</a>
-	<a class="hover:bg-blue-500 hover:text-white " href="{base}/d/weatherstation_n" aria-current={$page.url.pathname === `${base}/d/weatherstation_n`}>Weather Stations</a>
-  <a class="hover:bg-blue-500 hover:text-white " href="{base}/d/weatherstation_v" aria-current={$page.url.pathname === `${base}/d/weatherstation_v`}>Virtual Weather Stations</a>
-  <a class="hover:bg-blue-500 hover:text-white " href="{base}/d/etrometer" aria-current={$page.url.pathname === `${base}/d/etrometer`}>Etrometers</a>
-  <a class="hover:bg-blue-500 hover:text-white " href="{base}/camera" aria-current={$page.url.pathname === "/{base}/camera"}>Cameras</a>
-</nav>
+
+<div class="grid items-center grid-flow-col auto-cols-auto gap-4 space-y-4 p-4">
+	<div class="flex justify-between items-center place-self-start max-w-0">
+		<div class="flex-none">
+			<h3 class="h3">WeLaser</h3>
+			<h4 class="h4">iot dashboard</h4>
+		</div>
+	</div> 
+	<nav class="flex-auto place-self-center">
+		{#each menu as {name, href}}
+		<a
+		href={href}					
+		class="button"
+		aria-current={$page.url.pathname === href ? 'page' : null}>
+			{name}
+		</a>					
+		{/each}
+	</nav>
+	<div class="flex-none flex "> 
+		<ThemeSwitch />
+	</div>
+</div> 
 
 <slot />
-<!-- 
-<Pre name="export let data" value={data} />
-<Pre name="page data" value={$page.data} /> -->
-<!-- <Pre name="incoming" value={incoming.length} /> -->
+<style lang="postcss">
 
 
-
-<style>
-  			/* nav {
-				position: relative;
-				display: flex;
-				gap: 1em;
-				padding: 1em;
-				background: var(--bg-2);
-				z-index: 2;
-				margin: 0 0 1em 0;
-				border-radius: var(--border-radius);
-			} */
-			nav a {
-				text-decoration: none;
-			}
-
-			nav a[aria-current='true'] {
-				border-bottom: 2px solid;
-			}      
+	/* :global(div.legend-item.active p){
+		color: red;
+	} */
 </style>

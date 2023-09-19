@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+body {
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    @apply bg-white dark:bg-black text-black dark:text-white;
+}
+
+select {
+    @apply bg-white dark:bg-black text-black dark:text-white;
+}
+
+div.legend-item.active p, p[role="heading"], text.axis-title {
+    @apply  text-black dark:text-white;
+}
+
+	.button {
+		background-color: #1c87c9;
+		border: none;
+		color: white;
+		padding: 10px 24px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 20px;
+		margin: 4px 2px;
+		cursor: pointer;
+	}	
+	.button:hover {
+		color: #030a0f;
+		background-color: #3abfa4;
+		border: 2px;
+	}
+	.button[aria-current="page"], .button[aria-current="page"]:hover {
+		color: #1c87c9;
+		background-color: #aed0e6;
+		cursor: auto;
+	}
+	nav a {
+		transition: background-color 0.5s ease-in-out, color 0.2s ease-in-out;
+	}

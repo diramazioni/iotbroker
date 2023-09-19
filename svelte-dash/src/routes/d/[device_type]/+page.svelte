@@ -91,8 +91,11 @@
     <LineChart data={device_data.TC} options={device_opt.TC} style="padding:2rem; flex:1;" />
     <LineChart data={device_data.RH} options={device_opt.RH} style="padding:2rem; flex:1;" />
   {/if}
-
-
+	<div style="margin-left: 1rem; ">
+		<a href={`${base}/api/csv/${device_type}/${device_selected}`} class="button" style="background-color: #ccc;"> 
+		  get CSV
+		</a>	
+	</div>
 
 <style>
   h2, select {
