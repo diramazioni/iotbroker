@@ -83,9 +83,10 @@ class ImageListener(AsyncMqttClient):
             await self.ftp_from.retrieveFile(remotePath, picture)
             await self.ftp_from.disconnect()
             logging.debug("ftp_download done")
+            deviceType = remotePath[1:].replace("images", "")
 
             shutil.move(  # server www
-                picture, os.path.join(os.getcwd(), "www", device + ".jpg")
+                picture, os.path.join(os.getcwd(), "www", deviceType + device + ".jpg")
             )
 
         except Exception as e:

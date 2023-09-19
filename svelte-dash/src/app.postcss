@@ -9,13 +9,15 @@ body {
 }
 
 select {
-    @apply bg-white dark:bg-black text-black dark:text-white;
+    @apply text-2xl bg-white dark:bg-black text-amber-800 dark:text-amber-300; 
 }
 
 div.legend-item.active p, p[role="heading"], text.axis-title {
     @apply  text-black dark:text-white;
 }
-
+div.legend-item.active p {
+	font-size: 20px;
+}
 	.button {
 		background-color: #1c87c9;
 		border: none;

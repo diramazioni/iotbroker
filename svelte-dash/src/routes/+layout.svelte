@@ -40,7 +40,7 @@
 		{/each}
 	</nav>
 	<div class="flex-none flex "> 
-		<ThemeSwitch />
+		<!-- <ThemeSwitch /> -->
 	</div>
 </div> 
 

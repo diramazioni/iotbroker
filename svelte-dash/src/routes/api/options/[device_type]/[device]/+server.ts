@@ -28,7 +28,7 @@ export async function GET({ url, params }) {
     zoomBar: {
       top : {
         enabled : true,
-        initialZoomDomain: [firstRecord?.timestamp, lastRecord?.timestamp],
+        initialZoomDomain: [new Date(firstRecord?.timestamp), new Date(lastRecord?.timestamp)],
       }
     }
   }
