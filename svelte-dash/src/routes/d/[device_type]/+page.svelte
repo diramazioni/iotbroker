@@ -2,12 +2,12 @@
 	import { base } from "$app/paths"
   import { onMount, afterUpdate, getContext } from 'svelte';
 	import type { PageData } from './$types'
-  import { LineChart, AreaChart } from '@carbon/charts-svelte'
-  import '@carbon/styles/css/styles.css'
-  import '@carbon/charts-svelte/styles.css'
-  // import { page } from '$app/stores';
-  import { writable } from 'svelte/store';
-  import { fetch_data, fetch_opt } from '$lib/shared';
+	import { LineChart, AreaChart } from '@carbon/charts-svelte'
+	import '@carbon/styles/css/styles.css'
+	import '@carbon/charts-svelte/styles.css'
+	import { writable } from 'svelte/store'
+	import { fetch_data, fetch_opt } from '$lib/shared'
+
 	// import { browser } from "$app/environment"
 
   export let data: PageData
