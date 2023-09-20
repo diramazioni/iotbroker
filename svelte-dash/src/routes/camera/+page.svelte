@@ -3,7 +3,7 @@
   // const imagePath = Object.keys(imageModules).map((key) => imageModules[key].name.split('/').pop());	
   let field_images:string[] = []
   let robot_images:string[] = []
-  const baseUrl = "/" // https://greenlab.unibo.it/data
+  const baseUrl =  process.env.NODE_ENV === 'production' ? "/data/" : "/" // https://greenlab.unibo.it/data
   const imageUrl = baseUrl + "images.json"
 
   $: fetch(imageUrl)
@@ -12,6 +12,7 @@
     field_images = data.field;
     robot_images = data.robot;
   })
+  $: console.log(field_images)
 </script>
 
 <!-- <pre>{JSON.stringify(imagePath)}</pre> -->
@@ -22,7 +23,7 @@
         <img src={baseUrl + src} class="w-full h-auto" alt="{src}"/>
         <p class="text-center">{src.replace(/\.[^/.]+$/, '')}</p>
     </div>
-    {/each}
+  {/each}
 
 </div>
 <h1>Robot images</h1>
