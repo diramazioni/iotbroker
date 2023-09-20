@@ -35,12 +35,12 @@ export async function fetch_dev(fetch: Fetch, device_type: string) {
 	return json
 }
 
-export async function fetch_CSV(fetch: Fetch, device_key: string, device_selected: string, category_on:string[]) {
+export async function fetch_CSV(fetch: Fetch, device_type: string, device_selected: string, category_on:string[]) {
 	const url = `${base}/api/csv/${device_selected}`
-	console.log(`fetch_CSV ${url} ${device_key} ${category_on}`)
+	console.log(`fetch_CSV ${url} ${device_type} ${category_on}`)
 	const response = await fetch(url, {
 		method: 'POST',
-		body: JSON.stringify({ device_key, category_on }),
+		body: JSON.stringify({ device_type, category_on }),
 		headers: {
 			'Content-Type': 'application/json'
 		}

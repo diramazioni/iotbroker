@@ -20,7 +20,6 @@ export async function POST({ request, params, setHeaders }) {
 			weatherStationVirtual: true
 		}
 	})
-
 	if (device_key == 'etrometers') {
 		return new Response("etrometers csv export not supported")	
 	}
@@ -33,8 +32,8 @@ export async function POST({ request, params, setHeaders }) {
 		})
 		return new Response(csvContent)	
 	} else {
-		console.log("No data found for device " + params.device)
+		console.log("CSV POST No data found for device " + params.device)
 		console.log(device_key )
-		throw error(505, `No data found for device ${params.device}`)
+		throw error(505, `CSV POST No data found for device ${params.device}`)
 	}
 }
