@@ -21,7 +21,6 @@ export async function GET({ request, params, setHeaders }) {
 	const keysToExclude = ['id', 'deviceId']
 	const device_key = deviceKeys[params.device_type]
 	const filteredData = filterDeviceKey(db_result, device_key, keysToInclude, keysToExclude)
-	console.log(db_result)
 	if(filteredData[0]) {
 		const csvContent = jsonToCsv(filteredData)
 		setHeaders({

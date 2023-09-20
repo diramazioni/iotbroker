@@ -17,9 +17,6 @@
 	$: ({ devices, device_type, device_selected, device_data, device_opt } = data)
 
 	$: domain_range = [new Date(), new Date()]
-	$: console.log(JSON.stringify(domain_range[0]))
-	$: date_range_start = new Date(domain_range[0])
-	$: date_range_end = new Date(domain_range[1])
 
 	let category_on: [] = []
 
@@ -57,7 +54,6 @@
 	}
 
 	afterUpdate(() => {
-		//console.log(domain_range)
 		if (chart) category_on = chart.model.allDataGroups // init the category_on on first update
 	})
 
@@ -87,15 +83,15 @@
 		</option>
 	{/each}
 </select>
-<div class="w-100 place-items-center justify-center text-center">
-<label class="ml-3">
-	start
-	<input type="text" bind:value={domain_range[0]} class="range text-2xl" />
-</label>
-<label class="ml-3">
-	end
-	<input type="text" bind:value={domain_range[1]} class="range text-2xl" />
-</label>
+<div class="w-100 text-center">
+	<label class="ml-3">
+		start
+		<input type="text" bind:value={domain_range[0]} class="range text-2xl" />
+	</label>
+	<label class="ml-3">
+		end
+		<input type="text" bind:value={domain_range[1]} class="range text-2xl" />
+	</label>
 </div>
 
 

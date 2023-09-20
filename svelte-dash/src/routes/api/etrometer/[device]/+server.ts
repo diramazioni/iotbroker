@@ -14,7 +14,7 @@ export async function GET({ url, params }) {
     },
     include: {
       etrometers: true,
-    }
+    },
   });
 
 
