@@ -36,7 +36,7 @@
 
 
 	const csv = d3.csvParse(csv_data, d3.autoType) 
-	$: console.log(csv)
+	//$: console.log(csv)
 	const total = csv.length
 	const categories = csv.columns.filter((item) => item !== 'timestamp')
 	const timestamps_ = [...new Set(csv.map((d) => d.timestamp))]

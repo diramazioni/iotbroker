@@ -25,7 +25,9 @@
 
 	const update_data = async () => {
 		//data.device_selected = device_selected
-		
+		console.log("device_selected " + device_selected)
+		console.log("device_type " + device_type)
+		console.log("category_on " + category_on)
 		device_csv = await fetch_CSV(fetch, device_type, device_selected, category_on)		// data.device_selected = device_selected		
 		sliced_csv = sliceCsv(device_csv, max_data)
 		device_csv = sliced_csv
