@@ -14,16 +14,18 @@
 
 	export let data: PageData
 
-	$: ({ devices, device_type, device_selected, device_csv, categories, max_lines } = data)
+	$: ({ devices, device_type, device_csv, categories, max_lines } = data)
 	
 	$: category_on = []
+	let device_selected = ""
 	let max_data = 30
 	// $: sliced_csv = sliceCsv(device_csv, max_data)
 	let sliced_csv = ""
 	// let csv_data = []
 
 	const update_data = async () => {
-		data.device_selected = device_selected
+		//data.device_selected = device_selected
+		
 		device_csv = await fetch_CSV(fetch, device_type, device_selected, category_on)		// data.device_selected = device_selected		
 		sliced_csv = sliceCsv(device_csv, max_data)
 		device_csv = sliced_csv
@@ -45,6 +47,7 @@
 		// Update the socket store in the context with WebSocket connection
 		$socketStore = ws
 		category_on = categories
+		device_selected = data.device_selected 
 	})
 
 </script>
