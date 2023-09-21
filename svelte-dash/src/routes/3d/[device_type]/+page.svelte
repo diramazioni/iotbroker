@@ -49,7 +49,7 @@
 		// Update the socket store in the context with WebSocket connection
 		$socketStore = ws
 		category_on = categories
-		device_selected = data.device_selected 
+		device_selected = devices[0]
 	})
 
 </script>
