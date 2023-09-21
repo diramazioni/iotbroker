@@ -18,7 +18,8 @@
 	import Line from './Line.svelte'
 	import Area from './Area.svelte'
 	import Floor from './Floor.svelte'
-	import Camera from './Camera.svelte'
+	import CameraPerpective from './CameraPerpective.svelte'
+	import CameraOrto from './CameraOrto.svelte'
 	import Light from './Light.svelte'
 	import XLabels from './XLabels.svelte'
 	import CatLabels from './CatLabels.svelte'
@@ -178,7 +179,8 @@
 			theme: 'dark',
 			bgColor: '#2b665b',
 			fgColor: '#000000',
-			shape: 'lines'
+			shape: localStorage.shape ? localStorage.shape : 'lines',
+			camera: localStorage.camera ? localStorage.camera : 'Perpective'
 			// rotation: [x:0, y:0, z:0]
 		}
 		// console.log(JSON.stringify($PAR))
@@ -225,8 +227,15 @@
 			options: {Points: 'points', Lines: 'lines', Bar: 'bar', Cone: 'cone' }
 		}).on('change', ({value}) => {
 			$PAR.shape = value
+			localStorage.setItem('shape', value)
+		});
+		panel.addBinding( $PAR, 'camera', {
+			options: {Perpective: 'Perpective', Ortographic: 'Orto'}
+		}).on('change', ({value}) => {
+			$PAR.camera = value
+			localStorage.setItem('camera', value)
 		});	
-
+		
 		panel.addBinding($PAR, 'bgColor').on('change', ({value}) => {
 			$PAR.bgColor = value
 		});
@@ -257,7 +266,11 @@
 <!-- <T.AxesHelper args={[10]} position.x={$PAR.position.x} position.y={$PAR.position.y} position.z={$PAR.position.z}/>  -->
 
 <!-- <Floor /> -->
-<Camera />
+{#if $PAR.camera === 'Perpective'}
+	<CameraPerpective />
+{:else if $PAR.camera === 'Orto'}
+	<CameraOrto />
+{/if}
 <Light />
 
 {#each csv as d, t}

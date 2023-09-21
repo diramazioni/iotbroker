@@ -43,7 +43,7 @@
 	-->
 
 	<T.ConeGeometry args={[0.3, 1, 4]} />
-	<T.MeshStandardMaterial {color} />
+	<T.MeshStandardMaterial {color} transparent={true} opacity={0.4} />
 </T.Mesh>
 <!-- 
 <Text
