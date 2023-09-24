@@ -37,8 +37,7 @@ export async function POST({ request, params, setHeaders }) {
 		})
 		return new Response(csvContent)	
 	} else {
-		console.log("CSV POST No data found for device " + params.device)
-		console.log(device_key )
-		throw error(505, `CSV POST No data found for device ${params.device}`)
+		console.log(`CSV POST No filtered data found  device_key ${device_key} device: ${params.device} ${keysToExclude} ${keysToInclude} category_on ${category_on}` )
+		throw error(505, `CSV POST No filtered data found  device_key ${device_key} device: ${params.device} ${keysToExclude} ${keysToInclude} category_on ${category_on}` )
 	}
 }
