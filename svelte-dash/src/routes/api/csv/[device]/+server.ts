@@ -5,17 +5,20 @@ import { deviceKeys } from '$lib/constant'
 import { jsonToCsv, filterDeviceKey, sliceCsv } from '$lib/shared'
 
 export async function POST({ request, params, setHeaders }) {
-	const { device_type, category_on } = await request.json()
-	console.log(`CSV device_type ${device_type}`)
+	const { device_type, category_on, range } = await request.json()
 	const device_key = deviceKeys[device_type]
 	console.log(`CSV device_key ${device_key}`)
 	const keysToInclude = ['timestamp', ...category_on]
 	const keysToExclude = ['id', 'deviceId']
-
+	const where = {	name: { equals: params.device } }
+	if (range && range.length == 2) {
+		where['timestamp'] = {
+			gte: range[0], // start
+			lte: range[1]  // end
+		}
+	}
 	const db_result = await prisma.device.findMany({
-		where: {
-			name: { equals: params.device }
-		},
+		where: where,
 		include: {
 			weatherStation: true,
 			etrometers: true,
