@@ -20,6 +20,11 @@ export async function POST({ request, params, setHeaders }) {
 			weatherStationVirtual: true
 		}
 	})
+	if (db_result.length == 0) {
+		console.log(`CSV POST No db data found  device_key ${device_key} device: ${params.device} ${keysToExclude} ${keysToInclude} category_on ${category_on}` )
+		throw error(505, `CSV POST No db data found  device_key ${device_key} device: ${params.device} ${keysToExclude} ${keysToInclude} category_on ${category_on}` )
+	}
+	
 	if (device_key == 'etrometers') {
 		return new Response("etrometers csv export not supported")	
 	}
