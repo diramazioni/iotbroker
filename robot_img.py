@@ -15,7 +15,7 @@ from ftplib import FTP, all_errors
 import time
 from time import strftime, localtime
 
-
+import glob
 from dotenv import load_dotenv  # legge codici di accesso
 import shutil
 import paho.mqtt.client as mqttClient
@@ -23,6 +23,7 @@ import paho.mqtt.client as mqttClient
 #  ==========================================
 #          LOADS ENVIROMENT VARIABLES
 load_dotenv()
+
 HOST_TO = os.getenv("HOST_TO")
 PORT_TO = int(os.getenv("PORT_TO"))
 USER_TO = os.getenv("USER_TO")
@@ -33,6 +34,7 @@ PORT_FROM = int(os.getenv("PORT_FROM"))
 USER_FROM = os.getenv("USER_FROM")
 PASS_FROM = os.getenv("PASS_FROM")
 
+MQTT_CLIENT_ID = os.getenv("MQTT_CLIENT_ID")
 MQTT_BROKER = os.getenv("MQTT_BROKER")
 MQTT_PORT = os.getenv("MQTT_PORT")
 MQTT_USERNAME = os.getenv("MQTT_USERNAME")
@@ -70,7 +72,7 @@ def ftp_connect(host, port, user, password):
     except all_errors as e:
         print("Error in Ftp ->" + host + "\n" + e)
 
-
+# ==========================================================
 #                        MQTT
 
 
@@ -98,17 +100,17 @@ def mqtt_publish(client, topic, payload):
         client.publish(topic, payload)
     except Exception as e:
         print("[ERROR] Could not publish data:" + e)
+# ==========================================================
 
 
 def read_images(directory):
     image_list = []
     for filename in os.listdir(directory):
         if filename.lower().endswith(".jpg"):
-            image_list.append(os.path.abspath(filename))
+            image_list.append(os.path.join(directory, filename))
     return image_list
 
 
-# MAIN PROG
 def ftp_Ardesia():
     image_list = read_images(PATH_LOCAL)
     try:
@@ -142,7 +144,7 @@ def ftp_Cesena():
 
 
 def publish_Ardesia():
-    mqtt_client = mqtt_connect(MQTT_USERNAME, MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT)
+    mqtt_client = mqtt_connect(MQTT_CLIENT_ID, MQTT_USERNAME, MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT)
     image_list = read_images(PATH_LOCAL)
     for picture in image_list:
         message = {
@@ -168,7 +170,7 @@ def moveToBackuo():
 
 def main():
     ftp_Ardesia()
-    publish_Ardesia()
+    #publish_Ardesia()
 
     # ftp_Cesena()
     # moveToBackuo()
