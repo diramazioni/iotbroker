@@ -1,4 +1,4 @@
-'''
+"""
 WELASER - by GV June 2023
 Capture messages from  Ardesia MQTT (insecure)
 and publish them to WeLASER MQTTS (over TLS)
@@ -7,104 +7,173 @@ the files from  Ardesia to Local and to WeLASER
 Further on capture messages from MQTTS and
 append them to device.txt
 Finally publish a TEST message on MQTTS 
-'''
+"""
 import os
-#import ast # to convert string into dictionary
+
 import ssl
 from ftplib import FTP, all_errors
 import time
 from time import strftime, localtime
-#from datetime import datetime  # datetime data type
 
-from dotenv import load_dotenv # legge codici di accesso
+
+from dotenv import load_dotenv  # legge codici di accesso
 import shutil
-
+import paho.mqtt.client as mqttClient
 
 #  ==========================================
 #          LOADS ENVIROMENT VARIABLES
 load_dotenv()
-# FTPs
-HOST_TO = os.getenv('HOST_TO')
-PORT_TO = int(os.getenv('PORT_TO'))
-USER_TO = os.getenv('USER_TO')
-PASS_TO = os.getenv('PASS_TO')
+HOST_TO = os.getenv("HOST_TO")
+PORT_TO = int(os.getenv("PORT_TO"))
+USER_TO = os.getenv("USER_TO")
+PASS_TO = os.getenv("PASS_TO")
 
-PATH_LOCAL = os.getenv('PATH_LOCAL')
-PATH_REMOTE = os.getenv('PATH_REMOTE')
+HOST_FROM = os.getenv("HOST_FROM")
+PORT_FROM = int(os.getenv("PORT_FROM"))
+USER_FROM = os.getenv("USER_FROM")
+PASS_FROM = os.getenv("PASS_FROM")
 
-# PATH_DATA = os.path.join(PATH_LOCAL, "dash", "data")
-'''
-ssh welaser@192.168.1.100 pw<welaser   <<<<  admin
-/home/welaser
+MQTT_BROKER = os.getenv("MQTT_BROKER")
+MQTT_PORT = os.getenv("MQTT_PORT")
+MQTT_USERNAME = os.getenv("MQTT_USERNAME")
+MQTT_PASSWORD = os.getenv("MQTT_PASSWORD")
 
-ssh testuser@192.168.1.100 pw<testuser
-/home/testuser/Images
-'''
-
+PATH_LOCAL = os.getenv("ROBOT_LOCAL")
+PATH_REMOTE = os.getenv("ROBOT_REMOTE")
+ARDESIA_TOPIC = os.getenv("ARDESIA_TOPIC")
 
 # ==========================================================
 #                     FTP
 
-# -------------------------------------------------
+
 def sendFile(ftp, remotePath, fileName):
-    localFile = os.path.join(PATH_LOCAL,  fileName)
+    localFile = os.path.join(PATH_LOCAL, fileName)
     print("sending:" + localFile)
     if os.path.exists(localFile):
-        with open(localFile, 'rb') as file:
-        #file = open(localFile, 'rb')
+        with open(localFile, "rb") as file:
+            # file = open(localFile, 'rb')
             ftp.cwd(remotePath)
-            ftp.storbinary('STOR '+ fileName , file)
+            ftp.storbinary("STOR " + fileName, file)
             file.close()
     else:
         print("ftp file not found")
 
+
 # -------------------------------------------------
-def ftp_connect(host,port,user,password):
+def ftp_connect(host, port, user, password):
     try:
         client_ftp = FTP()
         client_ftp.debugging = 5
         client_ftp.connect(host=host, port=port)
         client_ftp.login(user=user, passwd=password)
-        return  client_ftp
+        return client_ftp
     except all_errors as e:
-        print(f"Error in Ftp -> {host} \n{e}")
+        print("Error in Ftp ->" + host + "\n" + e)
+
+
+#                        MQTT
+
+
+def mqtt_connect(client_id, mqtt_username, mqtt_password, broker_endpoint, port):
+    mqtt_client = mqttClient.Client(client_id=client_id)
+    mqtt_client.username_pw_set(mqtt_username, password=mqtt_password)
+    mqtt_client.connect(broker_endpoint, port=port)
+    mqtt_client.loop_start()
+    # mqtt_client.loop_forever()
+    attempts = 0
+    while not mqtt_client.is_connected() and attempts < 5:  # Wait for connection
+        print("mqtt waiting to connect...")
+        time.sleep(1)
+        attempts += 1
+
+    if not mqtt_client.is_connected():
+        print("[ERROR] Could not connect to broker")
+        return None
+
+    return mqtt_client
+
+
+def mqtt_publish(client, topic, payload):
+    try:
+        client.publish(topic, payload)
+    except Exception as e:
+        print("[ERROR] Could not publish data:" + e)
+
 
 def read_images(directory):
     image_list = []
     for filename in os.listdir(directory):
-        if filename.lower().endswith('.jpg'):
+        if filename.lower().endswith(".jpg"):
             image_list.append(os.path.abspath(filename))
     return image_list
 
+
 # MAIN PROG
-def ftp_copy(src,dst):
-    image_list = read_images(src)            
+def ftp_Ardesia():
+    image_list = read_images(PATH_LOCAL)
     try:
-        client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
-        print("connected ftp")
+        client_to = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
+        print("connected ftp Ardesia")
         for picture in image_list:
-            sendFile(client_to, dst, picture)
+            sendFile(client_to, PATH_REMOTE, picture)
         print("ftp done")
     except all_errors as e:
-        print(f'Error in Ftp -> {e}')
+        print("Error in Ftp Ardesia ->" + e)
     finally:
         client_to.close
-        sendFile(client_to, dst, picture)
-        print("ftp done")
+        sendFile(client_to, PATH_REMOTE, picture)
+        print("ftp Ardesia done")
 
+
+def ftp_Cesena():
+    image_list = read_images(PATH_LOCAL)
+    try:
+        client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
+        print("connected ftp Cesena")
+        for picture in image_list:
+            sendFile(client_to, PATH_REMOTE, picture)
+        print("ftp done")
+    except all_errors as e:
+        print("Error in Ftp Cesena ->" + e)
+    finally:
+        client_to.close
+        sendFile(client_to, PATH_REMOTE, picture)
+        print("ftp Cesena done")
+
+
+def publish_Ardesia():
+    mqtt_client = mqtt_connect(MQTT_USERNAME, MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT)
+    image_list = read_images(PATH_LOCAL)
+    for picture in image_list:
+        message = {
+            "nodeId": "robot_" + picture,
+            "packetType": "picture",
+            "data": picture,
+        }
+        mqtt_publish(mqtt_client, ARDESIA_TOPIC, message)
+
+
+def moveToBackuo():
     # move into backup
-    backup_dir = os.path.join(src,"backup") # backup dir
+    image_list = read_images(PATH_LOCAL)
+    backup_dir = os.path.join(PATH_LOCAL, "backup")  # backup dir
     for picture in image_list:
         if os.path.exists(picture):
             picture_base_name = os.path.basename(picture)
             newFile = os.path.join(backup_dir, picture_base_name)
-            shutil.move(picture, newFile) # local copy
+            shutil.move(picture, newFile)  # local copy
         else:
-            print(f"{picture} DOES NOT EXIST")   
+            print(picture + " DOES NOT EXIST")
+
 
 def main():
-    ftp_copy(PATH_LOCAL, PATH_REMOTE)
+    ftp_Ardesia()
+    publish_Ardesia()
+
+    # ftp_Cesena()
+    # moveToBackuo()
     print("ftp done")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
