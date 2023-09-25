@@ -77,7 +77,7 @@ class ImageListener(AsyncMqttClient):
             logging.info(f"Sent {self.counter} messages")
             # let's disable ftp upload for now!!!
             # FTP upload
-            #asyncio.create_task(self.ftp_upload(remotePath, picture))
+            asyncio.create_task(self.ftp_upload(remotePath, picture))
 
     async def ftp_download(self, remotePath, device, picture):
         try:
