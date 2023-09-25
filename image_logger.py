@@ -116,14 +116,28 @@ class ImageListener(AsyncMqttClient):
             deviceType = p[1:].replace("images", "")
             pattern = deviceType + '*.jpg'
             files = glob.glob(os.path.join("www", pattern))
-            files.sort(key=lambda x: os.path.getctime(x), reverse=True)
-            files = [file.replace('www/', '') for file in files]
-            images[deviceType[:-1]] = files
+            files.sort()
+            # files.sort(key=lambda x: os.path.getctime(x), reverse=True)
+            file_d = {file.replace('www/', ''): os.path.getctime(file) for file in files}
+            images[deviceType[:-1]] = file_d
         with open(os.path.join("www", "images.json"), "w") as f:
             f.write(json.dumps(images))  # , indent=2
             f.close()
 
-
+# def updateFileList():
+#     images = {}
+#     for p in [PATH_FIELD, PATH_ROBOT]:
+#         deviceType = p[1:].replace("images", "")
+#         pattern = deviceType + '*.jpg'
+#         files = glob.glob(os.path.join("www", pattern))
+#         files.sort()
+#         # files.sort(key=lambda x: os.path.getctime(x), reverse=True)
+#         # files = [file.replace('www/', '') for file in files]
+#         file_d = {file.replace('www/', ''): os.path.getctime(file) for file in files}
+#         images[deviceType[:-1]] = file_d
+#     with open(os.path.join("www", "images.json"), "w") as f:
+#         f.write(json.dumps(images))  # , indent=2
+#         f.close()
 """ MAIN """
 
 
