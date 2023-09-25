@@ -18,6 +18,7 @@ export async function POST({ request, params, setHeaders }) {
 		}
 	}
 	const db_result = await prisma.device.findMany({
+		distinct: ["name", "timestamp"],
 		where: where,
 		include: {
 			weatherStation: true,
