@@ -21,7 +21,7 @@
 
 <!-- <pre>{JSON.stringify(imagePath)}</pre> -->
 <h1>field images</h1>
-<div class="grid grid-cols-2 gap-4 m-4">
+<div class="grid grid-cols-4 gap-4 m-4">
   {#each Object.keys(field_images) as src}
     <div class="col-span-2 md:col-span-1">
         <img src={baseUrl + src} class="w-full h-auto" alt="{src}"/>
@@ -32,7 +32,7 @@
 
 </div>
 <h1>Robot images</h1>
-<div class="grid grid-cols-2 gap-4 m-4">
+<div class="grid grid-cols-4 gap-4 m-4">
   {#each Object.keys(robot_images) as src}
 	<!-- {#each robot_images as src } -->
     <div class="col-span-2 md:col-span-1">

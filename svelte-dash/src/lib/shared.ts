@@ -66,7 +66,12 @@ export function sliceCsv (csvData:string, maxData:number) {
 
 export function jsonToCsv(jsonData) {
 	const csvHeader = Object.keys(jsonData[0]).join(',')
-	const csvData = jsonData.map((obj) => Object.values(obj).join(',')).join('\n')
+	const csvData_ = jsonData.map((obj) => {
+		if(obj) {
+			return Object.values(obj).join(',');
+		} 
+	} ).join('\n');
+	const csvData = csvData_.split('\n').filter(line => line.trim() !== '').join('\n'); //remove blank lines
 	return `${csvHeader}\n${csvData}`
 }
 
