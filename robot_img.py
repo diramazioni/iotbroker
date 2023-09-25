@@ -103,17 +103,13 @@ def mqtt_publish(client, topic, payload):
 # ==========================================================
 
 
-def read_images(directory):
-    image_list = []
-    for filename in os.listdir(directory):
-        if filename.lower().endswith(".jpg"):
-            image_list.append(filename)
-    return image_list
-
-
-def ftp_Ardesia():
+def read_images():
     image_list_f = glob.glob(os.path.join(PATH_LOCAL, '*.jpg'))
     image_list = [os.path.basename(f) for f in image_list_f]
+    return image_list
+
+def ftp_Ardesia(image_list):
+
     try:
         client_to = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
         print("connected ftp Ardesia")
@@ -128,8 +124,7 @@ def ftp_Ardesia():
         print("ftp Ardesia done")
 
 
-def ftp_Cesena():
-    image_list = read_images(PATH_LOCAL)
+def ftp_Cesena(image_list):
     try:
         client_to = ftp_connect(HOST_TO, PORT_TO, USER_TO, PASS_TO)
         print("connected ftp Cesena")
@@ -144,9 +139,8 @@ def ftp_Cesena():
         print("ftp Cesena done")
 
 
-def publish_Ardesia():
+def publish_Ardesia(image_list):
     mqtt_client = mqtt_connect(MQTT_CLIENT_ID, MQTT_USERNAME, MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT)
-    image_list = read_images(PATH_LOCAL)
     for picture in image_list:
         message = {
             "nodeId": "robot_" + picture,
@@ -156,9 +150,8 @@ def publish_Ardesia():
         mqtt_publish(mqtt_client, ARDESIA_TOPIC, message)
 
 
-def moveToBackuo():
+def moveToBackuo(image_list):
     # move into backup
-    image_list = read_images(PATH_LOCAL)
     backup_dir = os.path.join(PATH_LOCAL, "backup")  # backup dir
     for picture in image_list:
         if os.path.exists(picture):
@@ -170,11 +163,12 @@ def moveToBackuo():
 
 
 def main():
-    ftp_Ardesia()
-    #publish_Ardesia()
+    image_list = read_images(PATH_LOCAL)
+    ftp_Ardesia(image_list)
+    publish_Ardesia(image_list)
 
-    # ftp_Cesena()
-    # moveToBackuo()
+    # ftp_Cesena(image_list)
+    moveToBackuo(image_list)
     print("ftp done")
 
 
