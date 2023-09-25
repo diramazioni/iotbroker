@@ -107,12 +107,13 @@ def read_images(directory):
     image_list = []
     for filename in os.listdir(directory):
         if filename.lower().endswith(".jpg"):
-            image_list.append(os.path.join(directory, filename))
+            image_list.append(filename)
     return image_list
 
 
 def ftp_Ardesia():
-    image_list = glob.glob(os.path.join(PATH_LOCAL, '*.jpg')) 
+    image_list_f = glob.glob(os.path.join(PATH_LOCAL, '*.jpg'))
+    image_list = [os.path.basename(f) for f in image_list_f]
     try:
         client_to = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
         print("connected ftp Ardesia")
