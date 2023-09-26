@@ -72,6 +72,7 @@ def ftp_connect(host, port, user, password):
     except all_errors as e:
         print("Error in Ftp ->" + host + "\n" + e)
 
+
 # ==========================================================
 #                        MQTT
 
@@ -100,16 +101,18 @@ def mqtt_publish(client, topic, payload):
         client.publish(topic, payload)
     except Exception as e:
         print("[ERROR] Could not publish data:" + e)
+
+
 # ==========================================================
 
 
 def read_images():
-    image_list_f = glob.glob(os.path.join(PATH_LOCAL, '*.jpg'))
+    image_list_f = glob.glob(os.path.join(PATH_LOCAL, "*.jpg"))
     image_list = [os.path.basename(f) for f in image_list_f]
     return image_list
 
-def ftp_Ardesia(image_list):
 
+def ftp_Ardesia(image_list):
     try:
         client_to = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
         print("connected ftp Ardesia")
@@ -140,10 +143,13 @@ def ftp_Cesena(image_list):
 
 
 def publish_Ardesia(image_list):
-    mqtt_client = mqtt_connect(MQTT_CLIENT_ID, MQTT_USERNAME, MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT)
+    print("publish_Ardesia")
+    mqtt_client = mqtt_connect(
+        MQTT_CLIENT_ID, MQTT_USERNAME, MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT
+    )
     for picture in image_list:
         message = {
-            "nodeId": "robot_" + picture,
+            "nodeId": picture[picture.find("robot_"):picture.find(".jpg")],
             "packetType": "picture",
             "data": picture,
         }
@@ -157,6 +163,7 @@ def moveToBackuo(image_list):
         if os.path.exists(picture):
             picture_base_name = os.path.basename(picture)
             newFile = os.path.join(backup_dir, picture_base_name)
+            print("move into backup " + newFile)
             shutil.move(picture, newFile)  # local copy
         else:
             print(picture + " DOES NOT EXIST")

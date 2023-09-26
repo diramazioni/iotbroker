@@ -93,6 +93,8 @@ model Units {
   value String
   type  String
 
+}
+
   //ETR     ETRometer[]
   //WeatherStation WeatherStation[]
 
@@ -103,4 +105,3 @@ model Units {
   // One-to-one relationship with ETRometer
   //etrometer ETRometer? @relation(fields: [etrometerId], references: [id])
   //etrometerId Int? @unique // Unique identifier for the associated ETRometer
-}

@@ -43,10 +43,10 @@ class ImageListener(AsyncMqttClient):
         topic = message.topic
         logging.info(f"MQTT on_message: Topic: {topic}, Payload: {payload}")
         content = json.loads(payload)
-        device = content["nodeId"]
-        picture = content["data"]
         # device_name = topic.split(":")[-1].split("/")[0]
         if content["packetType"] == "picture":
+            device = content["nodeId"]
+            picture = content["data"]
             # FTP copy
             remotePath = ""
 
@@ -86,10 +86,10 @@ class ImageListener(AsyncMqttClient):
             await self.ftp_from.retrieveFile(remotePath, picture)
             await self.ftp_from.disconnect()
             logging.debug("ftp_download done")
-            deviceType = remotePath[1:].replace("images", "")
+            # deviceType = remotePath[1:].replace("images", "")
 
             shutil.move(  # server www
-                picture, os.path.join(os.getcwd(), "www", deviceType + device + ".jpg")
+                picture, os.path.join(os.getcwd(), "www", device + ".jpg")
             )
             await self.updateFileList()
             

@@ -4,7 +4,7 @@ Iotbroker is part of the server infrastructure for the WeLaser project,
 
 The data acquisition and brokering is made out of several python programs present in the project's root
 
-The data visualization/web is made in Svelte/Sveltekit and is `svelte-dash/`
+The data visualization/web is made in Svelte/Sveltekit and is in `svelte-dash/`
 
 
 ## Data acquisition and brokering
