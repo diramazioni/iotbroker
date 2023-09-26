@@ -161,13 +161,13 @@ def moveToBackuo(image_list):
     # move into backup
     backup_dir = os.path.join(PATH_LOCAL, "backup")  # backup dir
     for picture in image_list:
-        if os.path.exists(picture):
-            picture_base_name = os.path.basename(picture)
-            newFile = os.path.join(backup_dir, picture_base_name)
+        pictureFull = os.path.join(PATH_LOCAL, picture) 
+        if os.path.exists(pictureFull):
+            newFile = os.path.join(backup_dir, picture)
             print("move into backup " + newFile)
-            shutil.move(picture, newFile)  # local copy
+            shutil.move(pictureFull, newFile)  # local copy
         else:
-            print(picture + " DOES NOT EXIST")
+            print(pictureFull + " DOES NOT EXIST")
 
 
 def main():
