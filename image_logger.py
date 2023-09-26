@@ -58,34 +58,18 @@ class ImageListener(AsyncMqttClient):
             else:
                 logging.error(f"Unknown device {device}")
                 return
-            download_task = asyncio.create_task(
-                self.ftp_download(remotePath, device, picture)
-            )
-            download_task.add_done_callback(self.download_done)
-            # Publish to MQTTS broker
-            while True:
-                if self.ftp_download_done:
-                    break
-                time.sleep(1)
-            self.publishToMqtts(device, picture)
-            # FTP upload
-            upload_task = asyncio.create_task(self.ftp_upload(remotePath, picture))
-            upload_task.add_done_callback(self.upload_done)
-            while True:
-                if self.ftp_upload_done:
-                    break
-                time.sleep(1)
-            shutil.move(  # server www
-                picture, os.path.join(os.getcwd(), "www", device + ".jpg")
-            )
-            asyncio.create_task(self.updateFileList())
+            asyncio.create_task(self.ftp_copy(remotePath, device, picture))
 
-    def download_done(self):
+
+    def download_done(self, future):
+        logging.debug("@@@ download_done")
         self.ftp_download_done = True
-    def upload_done(self):
+
+    def upload_done(self, future):
+        logging.debug("@@@ upload_done")
         self.ftp_upload_done = True
 
-    async def ftp_download(self, remotePath, device, picture):
+    async def ftp_download(self, remotePath, picture):
         self.ftp_download_done = False
         try:
             await self.ftp_from.connect()
@@ -93,6 +77,7 @@ class ImageListener(AsyncMqttClient):
             await self.ftp_from.retrieveFile(remotePath, picture)
             await self.ftp_from.disconnect()
             logging.debug("ftp_download done")
+            self.ftp_download_done = True
             # deviceType = remotePath[1:].replace("images", "")
             # await self.updateFileList()
 
@@ -107,14 +92,28 @@ class ImageListener(AsyncMqttClient):
             await self.ftp_to.sendFile(remotePath, picture)
             await self.ftp_to.disconnect()
             logging.debug("ftp_upload done")
+            self.ftp_upload_done = True
         except Exception as e:
             logging.error(f"Error ftp_upload -> {e}")
 
-    async def ftp_copy(self, remotePath, picture):
-        await self.ftp_download(remotePath, picture)
-        await self.ftp_upload(remotePath, picture)
-
-    def publishToMqtts(self, device, picture):
+    async def ftp_copy(self, remotePath, device, picture):
+        download_task = asyncio.create_task(self.ftp_download(remotePath, picture))
+        download_task.add_done_callback(self.download_done)
+        await download_task
+        upload_task = asyncio.create_task(self.ftp_upload(remotePath, picture))
+        upload_task.add_done_callback(self.upload_done)
+        await upload_task
+        
+        # await self.ftp_upload(remotePath, picture)
+        if self.ftp_upload_done:
+            # Publish to MQTTS broker
+            await self.publishToMqtts(device, picture)
+            shutil.move(  # server www
+                picture, os.path.join(os.getcwd(), "www", device + ".jpg")
+            )
+            await self.updateFileList()
+            
+    async def publishToMqtts(self, device, picture):
         timestamp = time.time()
         dev_ = "Camera:"
         ptopic = f"{self.FIWARE}{self.ENTITY}{dev_}{device}/attrs"
@@ -132,6 +131,7 @@ class ImageListener(AsyncMqttClient):
         logging.info(f"Sent {self.counter} messages")
 
     async def updateFileList(self):
+        logging.debug(f"updateFileList")
         images = {}
         for p in [PATH_FIELD, PATH_ROBOT]:
             deviceType = p[1:].replace("images", "")
