@@ -148,6 +148,7 @@ def publish_Ardesia(image_list):
     mqtt_client = mqtt_connect(
         MQTT_CLIENT_ID, MQTT_USERNAME, MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT
     )
+    time.sleep(2)
     for picture in image_list:
         message = {
             "nodeId": picture[picture.find("robot_"):picture.find(".jpg")],
@@ -155,7 +156,7 @@ def publish_Ardesia(image_list):
             "data": picture,
         }
         mqtt_publish(mqtt_client, ARDESIA_TOPIC, json.dumps(message))
-
+    time.sleep(1)
 
 def moveToBackuo(image_list):
     # move into backup
@@ -173,9 +174,9 @@ def moveToBackuo(image_list):
 def main():
     image_list = read_images(PATH_LOCAL)
     if len(image_list):
-        publish_Ardesia(image_list)
         ftp_Ardesia(image_list)
-
+        publish_Ardesia(image_list)
+        time.sleep(1)
         # ftp_Cesena(image_list)
         moveToBackuo(image_list)
         print("FINISH")
