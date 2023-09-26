@@ -177,7 +177,7 @@ def main():
 
     # ftp_Cesena(image_list)
     moveToBackuo(image_list)
-    print("ftp done")
+    print("FINISH")
 
 
 if __name__ == "__main__":

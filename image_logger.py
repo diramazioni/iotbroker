@@ -78,6 +78,10 @@ class ImageListener(AsyncMqttClient):
             # let's disable ftp upload for now!!!
             # FTP upload
             asyncio.create_task(self.ftp_upload(remotePath, picture))
+            shutil.move(  # server www
+                picture, os.path.join(os.getcwd(), "www", device + ".jpg")
+            )
+            asyncio.create_task(self.updateFileList())
 
     async def ftp_download(self, remotePath, device, picture):
         try:
@@ -87,10 +91,6 @@ class ImageListener(AsyncMqttClient):
             await self.ftp_from.disconnect()
             logging.debug("ftp_download done")
             # deviceType = remotePath[1:].replace("images", "")
-
-            shutil.move(  # server www
-                picture, os.path.join(os.getcwd(), "www", device + ".jpg")
-            )
             await self.updateFileList()
             
         except Exception as e:
