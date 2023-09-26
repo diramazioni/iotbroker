@@ -172,12 +172,13 @@ def moveToBackuo(image_list):
 
 def main():
     image_list = read_images(PATH_LOCAL)
-    ftp_Ardesia(image_list)
-    publish_Ardesia(image_list)
+    if len(image_list):
+        publish_Ardesia(image_list)
+        ftp_Ardesia(image_list)
 
-    # ftp_Cesena(image_list)
-    moveToBackuo(image_list)
-    print("FINISH")
+        # ftp_Cesena(image_list)
+        moveToBackuo(image_list)
+        print("FINISH")
 
 
 if __name__ == "__main__":
