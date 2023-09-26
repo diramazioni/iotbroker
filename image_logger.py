@@ -37,6 +37,8 @@ class ImageListener(AsyncMqttClient):
         self.ftp_from = ftp_from
         self.ftp_to = ftp_to
         self.counter = 0
+        self.ftp_download_done = False
+        self.ftp_upload_done = False
 
     def on_message(self, client, userdata, message):
         payload = message.payload.decode("utf-8")
@@ -47,9 +49,8 @@ class ImageListener(AsyncMqttClient):
         if content["packetType"] == "picture":
             device = content["nodeId"]
             picture = content["data"]
-            # FTP copy
+            # FTP download
             remotePath = ""
-
             if "camera" in device:
                 remotePath = PATH_FIELD
             elif "robot" in device:
@@ -57,33 +58,35 @@ class ImageListener(AsyncMqttClient):
             else:
                 logging.error(f"Unknown device {device}")
                 return
-            # FTP download
-            asyncio.create_task(self.ftp_download(remotePath, device, picture))
+            download_task = asyncio.create_task(
+                self.ftp_download(remotePath, device, picture)
+            )
+            download_task.add_done_callback(self.download_done)
             # Publish to MQTTS broker
-            timestamp = time.time()
-            dev_ = "Camera:"
-            ptopic = f"{self.FIWARE}{self.ENTITY}{dev_}{device}/attrs"
-            id = f"{self.ENTITY}{dev_}{device}"
-            new_payload = {
-                "id": id,
-                "name": device,
-                "timestamp": timestamp,
-                "picture": picture,
-                "type": "Camera"
-            }
-            
-            self.publisher.queue.put_nowait((ptopic, json.dumps(new_payload)))
-            self.counter += 1
-            logging.info(f"Sent {self.counter} messages")
-            # let's disable ftp upload for now!!!
+            while True:
+                if self.ftp_download_done:
+                    break
+                time.sleep(1)
+            self.publishToMqtts(device, picture)
             # FTP upload
-            asyncio.create_task(self.ftp_upload(remotePath, picture))
+            upload_task = asyncio.create_task(self.ftp_upload(remotePath, picture))
+            upload_task.add_done_callback(self.upload_done)
+            while True:
+                if self.ftp_upload_done:
+                    break
+                time.sleep(1)
             shutil.move(  # server www
                 picture, os.path.join(os.getcwd(), "www", device + ".jpg")
             )
             asyncio.create_task(self.updateFileList())
 
+    def download_done(self):
+        self.ftp_download_done = True
+    def upload_done(self):
+        self.ftp_upload_done = True
+
     async def ftp_download(self, remotePath, device, picture):
+        self.ftp_download_done = False
         try:
             await self.ftp_from.connect()
             logging.debug(f"connected ftp_retr {remotePath}")
@@ -91,12 +94,13 @@ class ImageListener(AsyncMqttClient):
             await self.ftp_from.disconnect()
             logging.debug("ftp_download done")
             # deviceType = remotePath[1:].replace("images", "")
-            await self.updateFileList()
-            
+            # await self.updateFileList()
+
         except Exception as e:
             logging.error(f"Error ftp_download -> {e}")
 
     async def ftp_upload(self, remotePath, picture):
+        self.ftp_upload_done = False
         try:
             await self.ftp_to.connect()
             logging.debug(f"connected ftp_upload {remotePath}")
@@ -110,34 +114,56 @@ class ImageListener(AsyncMqttClient):
         await self.ftp_download(remotePath, picture)
         await self.ftp_upload(remotePath, picture)
 
+    def publishToMqtts(self, device, picture):
+        timestamp = time.time()
+        dev_ = "Camera:"
+        ptopic = f"{self.FIWARE}{self.ENTITY}{dev_}{device}/attrs"
+        id = f"{self.ENTITY}{dev_}{device}"
+        new_payload = {
+            "id": id,
+            "name": device,
+            "timestamp": timestamp,
+            "picture": picture,
+            "type": "Camera",
+        }
+
+        self.publisher.queue.put_nowait((ptopic, json.dumps(new_payload)))
+        self.counter += 1
+        logging.info(f"Sent {self.counter} messages")
+
     async def updateFileList(self):
         images = {}
         for p in [PATH_FIELD, PATH_ROBOT]:
             deviceType = p[1:].replace("images", "")
-            pattern = deviceType + '*.jpg'
+            pattern = deviceType + "*.jpg"
             files = glob.glob(os.path.join("www", pattern))
             files.sort()
             # files.sort(key=lambda x: os.path.getctime(x), reverse=True)
-            file_d = {file.replace('www/', ''): os.path.getctime(file) for file in files}
+            file_d = {
+                file.replace("www/", ""): os.path.getctime(file) for file in files
+            }
             images[deviceType[:-1]] = file_d
         with open(os.path.join("www", "images.json"), "w") as f:
             f.write(json.dumps(images))  # , indent=2
             f.close()
 
+
 def updateFileList():
     images = {}
     for p in [PATH_FIELD, PATH_ROBOT]:
         deviceType = p[1:].replace("images", "")
-        pattern = deviceType + '*.jpg'
+        pattern = deviceType + "*.jpg"
         files = glob.glob(os.path.join("www", pattern))
         files.sort()
         # files.sort(key=lambda x: os.path.getctime(x), reverse=True)
         # files = [file.replace('www/', '') for file in files]
-        file_d = {file.replace('www/', ''): os.path.getctime(file) for file in files}
+        file_d = {file.replace("www/", ""): os.path.getctime(file) for file in files}
         images[deviceType[:-1]] = file_d
     with open(os.path.join("www", "images.json"), "w") as f:
         f.write(json.dumps(images))  # , indent=2
         f.close()
+
+
 """ MAIN """
 
 
@@ -146,7 +172,7 @@ async def main(interactive=False):
     FIWARE = os.getenv("FIWARE")
     ATTRS = os.getenv("ATTRS")
     ENTITY = os.getenv("ENTITY")
-    CLIENT_ID = os.getenv("CLIENT_ID") 
+    CLIENT_ID = os.getenv("CLIENT_ID")
     try:
         ftp_from = AsyncFtpClient(
             host=os.getenv("HOST_FROM"),
@@ -168,8 +194,8 @@ async def main(interactive=False):
             password=os.getenv("MQTTS_PASSWORD"),
             tls=True,
             tls_insecure=True,
-            client_id=CLIENT_ID+"_imagePublisher",
-            notify_birth=True
+            client_id=CLIENT_ID + "_imagePublisher",
+            notify_birth=True,
         )
         # ImageListener: Listen for image message and re-publish with ImagePublisher
         imageListener = ImageListener(
@@ -178,7 +204,7 @@ async def main(interactive=False):
             ftp_to=ftp_to,
             fiware=FIWARE,
             entity=ENTITY,
-            log_json=True
+            log_json=True,
         )
         await imageListener.listen(
             host=os.getenv("MQTT_BROKER"),
@@ -186,8 +212,8 @@ async def main(interactive=False):
             username=os.getenv("MQTT_USERNAME"),
             password=os.getenv("MQTT_PASSWORD"),
             tls=False,
-            client_id=CLIENT_ID+"_imageListener",
-            notify_birth=True
+            client_id=CLIENT_ID + "_imageListener",
+            notify_birth=True,
         )
         topic = "WeLaser/PublicIntercomm/CameraToDashboard"
         await imageListener.subscribe(topic)
