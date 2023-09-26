@@ -8,6 +8,7 @@ Further on capture messages from MQTTS and
 append them to device.txt
 Finally publish a TEST message on MQTTS 
 """
+import json
 import os
 
 import ssl
@@ -70,7 +71,7 @@ def ftp_connect(host, port, user, password):
         client_ftp.login(user=user, passwd=password)
         return client_ftp
     except all_errors as e:
-        print("Error in Ftp ->" + host + "\n" + e)
+        print("Error in Ftp ->" + host + "\n", e)
 
 
 # ==========================================================
@@ -100,14 +101,14 @@ def mqtt_publish(client, topic, payload):
     try:
         client.publish(topic, payload)
     except Exception as e:
-        print("[ERROR] Could not publish data:" + e)
+        print("[ERROR] Could not publish data:", e)
 
 
 # ==========================================================
 
 
-def read_images():
-    image_list_f = glob.glob(os.path.join(PATH_LOCAL, "*.jpg"))
+def read_images(directory):
+    image_list_f = glob.glob(os.path.join(directory, "*.jpg"))
     image_list = [os.path.basename(f) for f in image_list_f]
     return image_list
 
@@ -120,7 +121,7 @@ def ftp_Ardesia(image_list):
             sendFile(client_to, PATH_REMOTE, picture)
         print("ftp done")
     except all_errors as e:
-        print("Error in Ftp Ardesia ->" + e)
+        print("Error in Ftp Ardesia ->", e)
     finally:
         client_to.close
         sendFile(client_to, PATH_REMOTE, picture)
@@ -135,7 +136,7 @@ def ftp_Cesena(image_list):
             sendFile(client_to, PATH_REMOTE, picture)
         print("ftp done")
     except all_errors as e:
-        print("Error in Ftp Cesena ->" + e)
+        print("Error in Ftp Cesena ->", e)
     finally:
         client_to.close
         sendFile(client_to, PATH_REMOTE, picture)
@@ -153,7 +154,7 @@ def publish_Ardesia(image_list):
             "packetType": "picture",
             "data": picture,
         }
-        mqtt_publish(mqtt_client, ARDESIA_TOPIC, message)
+        mqtt_publish(mqtt_client, ARDESIA_TOPIC, json.dumps(message))
 
 
 def moveToBackuo(image_list):
