@@ -56,9 +56,9 @@ the db with `message_parser.py` that can also be used to seed the db using the. 
 `@carbon/charts` is used for 2D charts and `threlte` for 3D charts
 Public facing API are available from the `/api` routes, easing the integration of other web app 
 ![carbon_charts](doc/2D_carbon_charts.png)
-![Three.js/Threlte](data/3D_1.png)
-![Three.js/Threlte](data/3D_2.png)
-![Three.js/Threlte](data/3D_3.png)
+![Three.js/Threlte](doc/3D_1.png)
+![Three.js/Threlte](doc/3D_2.png)
+![Three.js/Threlte](doc/3D_3.png)
 
 ## Installing
 Run `pip install -r requirements.txt` for python and `pnpm i ` in the `svelte-dash/` directory
