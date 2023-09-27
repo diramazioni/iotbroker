@@ -60,7 +60,6 @@ class ImageListener(AsyncMqttClient):
                 return
             asyncio.create_task(self.ftp_copy(remotePath, device, picture))
 
-
     def download_done(self, future):
         logging.debug("@@@ download_done")
         self.ftp_download_done = True
@@ -103,7 +102,7 @@ class ImageListener(AsyncMqttClient):
         upload_task = asyncio.create_task(self.ftp_upload(remotePath, picture))
         upload_task.add_done_callback(self.upload_done)
         await upload_task
-        
+
         # await self.ftp_upload(remotePath, picture)
         if self.ftp_upload_done:
             # Publish to MQTTS broker
@@ -114,7 +113,7 @@ class ImageListener(AsyncMqttClient):
                 picture, os.path.join(os.getcwd(), "www", device + ".jpg")
             )
             await self.updateFileList()
-            
+
     async def publishToMqtts(self, device, picture):
         timestamp = time.time()
         dev_ = "Camera:"
@@ -223,9 +222,13 @@ async def main(interactive=False):
         logging.info("ImageListener started")
 
         logging.info("ImagePublisher started processing messages")
+        counter = 0
         while True:
             # Here ends the flow, it'll keep watching if new message arrives and publish to MQTTS
             await imagePublisher.publishQueue()
+            counter += 1
+            if counter > 3600:  # restart the program every hour
+                break
             await asyncio.sleep(1)
 
     except Exception as error:
