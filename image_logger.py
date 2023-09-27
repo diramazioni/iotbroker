@@ -228,6 +228,7 @@ async def main(interactive=False):
             await imagePublisher.publishQueue()
             counter += 1
             if counter > 3600:  # restart the program every hour
+                logging.info("RESTART!")
                 break
             await asyncio.sleep(1)
 
