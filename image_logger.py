@@ -108,6 +108,8 @@ class ImageListener(AsyncMqttClient):
         if self.ftp_upload_done:
             # Publish to MQTTS broker
             await self.publishToMqtts(device, picture)
+            if "field" in remotePath:
+                device = "field_" + device
             shutil.move(  # server www
                 picture, os.path.join(os.getcwd(), "www", device + ".jpg")
             )
