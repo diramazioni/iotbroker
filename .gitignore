@@ -4,7 +4,6 @@ __pycache__/
 *$py.class
 
 *.log
-*.db
 
 # Environments
 old/
@@ -21,11 +20,9 @@ venv.bak/
 .vscode
 
 
-www/WeatherStation_n1.json
+
 www/*
-svelte-dash/prisma/schema.prisma
-data/2*
-data/1/*
+data/1*
 
 logs/*
 doc/dashboard_test.ogv
