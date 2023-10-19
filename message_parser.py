@@ -18,6 +18,7 @@ class MessageParser:
     def __init__(self):
         self.db = Prisma()
         self.logger = logging.getLogger(__name__)
+        self.unames_ = dict()
 
     async def connect(self):
         logging.info("Connecting to DB")
@@ -29,10 +30,9 @@ class MessageParser:
 
     async def db_entry(self, payload) -> None:
         try:
-            unames_ = dict()
             e = payload
-            #TS = strftime("%Y-%m-%d %H:%M:%S", localtime(e["timestamp"]))
-            #timestamp = datetime.fromtimestamp(int(e["timestamp"]/1000)) # .isoformat()
+            # TS = strftime("%Y-%m-%d %H:%M:%S", localtime(e["timestamp"]))
+            # timestamp = datetime.fromtimestamp(int(e["timestamp"]/1000)) # .isoformat()
             timestamp = datetime.utcfromtimestamp(int(e["timestamp"]/1000))
             logging.info(f"Timestamp: {timestamp}")
             if "Camera" in e["id"] or "camera" in e["id"]:
@@ -45,7 +45,7 @@ class MessageParser:
 
             async def insert_units(device_name, unames={}):
                 for name, value in unames.items():
-                    if name not in unames_:
+                    if name not in self.unames_:
                         units_db = await self.db.units.find_unique(where={"name": name})
                         units_obj = {
                             "name": name,
@@ -55,9 +55,9 @@ class MessageParser:
                         if not units_db:
                             logging.info(f"Update Units {name}")
                             units_db = await self.db.units.create(units_obj)
-                            unames_[name] = units_obj
+                            self.unames_[name] = units_obj
                         else:  # cache the results
-                            unames_[name] = units_obj
+                            self.unames_[name] = units_obj
 
             if all(isinstance(item, (int, float)) for item in e["value"]):
                 sens[e["name"]] = dict(zip(e["controlledProperty"], e["value"]))
@@ -65,7 +65,7 @@ class MessageParser:
                 await insert_units(e["name"], units)
             elif all(
                 isinstance(item, dict) for item in e["value"]
-            ):  # gerarchic structure
+            ):  # tree structure
                 for se in e["value"]:
                     sens[se["name"]] = dict(zip(se["controlledProperty"], se["value"]))
                     units = dict(zip(se["controlledProperty"], se["units"]))

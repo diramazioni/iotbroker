@@ -17,25 +17,28 @@ datasource db {
 }
 
 model Device {
-  id                    Int                    @id @default(autoincrement())
-  name                  String
-  calibration           Boolean?
-  location              String?
-  areaServed            String?
-  timestamp             DateTime
+  id          Int      @id @default(autoincrement())
+  name        String
+  calibration Boolean?
+  location    String?
+  areaServed  String?
+  timestamp   DateTime
+
+  // Relation to measurements
   etrometers            ETRometer[]
   weatherStation        WeatherStation?
   weatherStationVirtual WeatherStationVirtual?
+  WeatherStationStd     WeatherStationStd?
 }
 
 model Camera {
-  id        Int      @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   timestamp DateTime
   picture   String
 }
 
 model WeatherStationVirtual {
-  id          Int      @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   timestamp   DateTime
   temperature Float
   pressure    Float
@@ -43,8 +46,8 @@ model WeatherStationVirtual {
   wind_speed  Float
   wind_deg    Float
   rain        Float
-  deviceId    Int      @unique
-  device      Device   @relation(fields: [deviceId], references: [id])
+  device      Device @relation(fields: [deviceId], references: [id])
+  deviceId    Int    @unique
 }
 
 model WeatherStation {
@@ -65,20 +68,33 @@ model WeatherStation {
   Us_3                Float
   W_vel               Float
   W_dir               Float
-  deviceId            Int      @unique
-  device              Device   @relation(fields: [deviceId], references: [id])
+  device              Device @relation(fields: [deviceId], references: [id])
+  deviceId            Int    @unique
 }
-
+model WeatherStationStd {
+  id                  Int    @id @default(autoincrement())
+  timestamp           DateTime
+  Solar_Radiation     Float
+  Atmospheric_Pressure Float
+  Air_Temperature     Float
+  Relative_Humidity   Float
+  Wind_Velocity       Float
+  Wind_Direction      Float
+  Rainfall            Float
+  device      Device @relation(fields: [deviceId], references: [id])
+  deviceId    Int    @unique
+}
 model ETRometer {
-  id        Int      @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   timestamp DateTime
   name      String
   charge    Float
   CO2       Float
   TC        Float
   RH        Float
+  // Relation to Device model
+  device    Device @relation(fields: [deviceId], references: [id])
   deviceId  Int
-  device    Device   @relation(fields: [deviceId], references: [id])
 }
 
 model Units {
@@ -86,4 +102,16 @@ model Units {
   name  String @unique
   value String
   type  String
+
 }
+
+  //ETR     ETRometer[]
+  //WeatherStation WeatherStation[]
+
+  // One-to-one relationship with WeatherStation
+  //weatherStation WeatherStation? @relation(fields: [weatherStationId], references: [id])
+  //weatherStationId Int? //@unique // Unique identifier for the associated WeatherStation
+
+  // One-to-one relationship with ETRometer
+  //etrometer ETRometer? @relation(fields: [etrometerId], references: [id])
+  //etrometerId Int? @unique // Unique identifier for the associated ETRometer
