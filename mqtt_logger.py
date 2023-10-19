@@ -106,8 +106,15 @@ async def main(interactive=False):
         )
         topic = f"{FIWARE}{ATTRS}"
         await mqtt_logger.subscribe(topic)
+        counter = 0
         while True:
-            # logging.debug(".")
+            # Here ends the flow, it'll keep watching if new message arrives and publish to MQTTS
+            counter += 1
+            if counter > 3600:  # restart the program every hour
+                import datetime
+                datetime = datetime.datetime.now()
+                logging.info("RESTART!", datetime)
+                break
             await asyncio.sleep(1)
     except asyncio.exceptions.CancelledError:
         pass
@@ -132,5 +139,8 @@ async def main(interactive=False):
 # logger.setLevel(logging.DEBUG)
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(
+        format='%(asctime)s - %(name)s - %(message)s',
+        level=logging.DEBUG
+    )
     asyncio.run(main(interactive=False))

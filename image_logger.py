@@ -228,7 +228,9 @@ async def main(interactive=False):
             await imagePublisher.publishQueue()
             counter += 1
             if counter > 3600:  # restart the program every hour
-                logging.info("RESTART!")
+                import datetime
+                datetime = datetime.datetime.now()
+                logging.info("RESTART!", datetime)
                 break
             await asyncio.sleep(1)
 
@@ -238,5 +240,9 @@ async def main(interactive=False):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    # logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(
+        format='%(asctime)s - %(name)s - %(message)s',
+        level=logging.DEBUG
+    )
     asyncio.run(main())
