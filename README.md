@@ -65,6 +65,7 @@ Listening to all the messages is `mqtt_logger.py`that sends websocket event to t
 
 `@carbon/charts` is used for 2D charts and `threlte` for 3D charts
 
+### Public facing API
 Public facing API are available from the `/api` routes, easing the integration of other web app:
 
 - To GET the CSV for the selected device `${base}/api/csv/${device_type}/${device_selected}` i.e. `/api/csv/weatherstation_v/WeatherStation_v0` 
