@@ -1,18 +1,15 @@
-// schema.prisma
-
-// js client
-
-// generator client {
-//   provider = "prisma-client-js"
-// }
+generator client {
+  provider = "prisma-client-js"
+}
 
 // python client
 
-generator client {
-  provider             = "prisma-client-py"
-  interface            = "asyncio" // 'sync'
-  recursive_type_depth = 5
-}
+
+// generator client {
+//   provider             = "prisma-client-py"
+//   interface            = "asyncio"
+//   recursive_type_depth = "5"
+// }
 
 datasource db {
   provider = "sqlite"
@@ -20,27 +17,25 @@ datasource db {
 }
 
 model Device {
-  id          Int      @id @default(autoincrement())
-  name        String
-  calibration Boolean?
-  location    String?
-  areaServed  String?
-  timestamp   DateTime
-
-  // Relation to measurements
+  id                    Int                    @id @default(autoincrement())
+  name                  String
+  calibration           Boolean?
+  location              String?
+  areaServed            String?
+  timestamp             DateTime
   etrometers            ETRometer[]
   weatherStation        WeatherStation?
   weatherStationVirtual WeatherStationVirtual?
 }
 
 model Camera {
-  id        Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   timestamp DateTime
   picture   String
 }
 
 model WeatherStationVirtual {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   timestamp   DateTime
   temperature Float
   pressure    Float
@@ -48,12 +43,12 @@ model WeatherStationVirtual {
   wind_speed  Float
   wind_deg    Float
   rain        Float
-  device      Device @relation(fields: [deviceId], references: [id])
-  deviceId    Int    @unique
+  deviceId    Int      @unique
+  device      Device   @relation(fields: [deviceId], references: [id])
 }
 
 model WeatherStation {
-  id                  Int    @id @default(autoincrement())
+  id                  Int      @id @default(autoincrement())
   timestamp           DateTime
   Battery_Voltage     Float
   Solar_Panel_Voltage Float
@@ -70,21 +65,20 @@ model WeatherStation {
   Us_3                Float
   W_vel               Float
   W_dir               Float
-  device              Device @relation(fields: [deviceId], references: [id])
-  deviceId            Int    @unique
+  deviceId            Int      @unique
+  device              Device   @relation(fields: [deviceId], references: [id])
 }
 
 model ETRometer {
-  id        Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   timestamp DateTime
   name      String
   charge    Float
   CO2       Float
   TC        Float
   RH        Float
-  // Relation to Device model
-  device    Device @relation(fields: [deviceId], references: [id])
   deviceId  Int
+  device    Device   @relation(fields: [deviceId], references: [id])
 }
 
 model Units {
@@ -92,16 +86,4 @@ model Units {
   name  String @unique
   value String
   type  String
-
 }
-
-  //ETR     ETRometer[]
-  //WeatherStation WeatherStation[]
-
-  // One-to-one relationship with WeatherStation
-  //weatherStation WeatherStation? @relation(fields: [weatherStationId], references: [id])
-  //weatherStationId Int? //@unique // Unique identifier for the associated WeatherStation
-
-  // One-to-one relationship with ETRometer
-  //etrometer ETRometer? @relation(fields: [etrometerId], references: [id])
-  //etrometerId Int? @unique // Unique identifier for the associated ETRometer

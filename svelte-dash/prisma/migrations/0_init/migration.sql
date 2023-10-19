@@ -81,3 +81,4 @@ CREATE UNIQUE INDEX "WeatherStation_deviceId_key" ON "WeatherStation"("deviceId"
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Units_name_key" ON "Units"("name");
+
