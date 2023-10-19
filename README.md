@@ -65,7 +65,53 @@ Listening to all the messages is `mqtt_logger.py`that sends websocket event to t
 
 `@carbon/charts` is used for 2D charts and `threlte` for 3D charts
 
-Public facing API are available from the `/api` routes, easing the integration of other web app 
+Public facing API are available from the `/api` routes, easing the integration of other web app:
+
+- To GET the CSV for the selected device `${base}/api/csv/${device_type}/${device_selected}` i.e. `/api/csv/weatherstation_v/WeatherStation_v0` 
+
+- By using POST to get the CSV it's possible to select also the categories and start/end date
+```
+    category_on = ["temperature", "wind"]
+    const start = new Date();
+    start.setDate(start.getDate() - 5); // 5 days before now
+    const range = [start, new Date()]
+    csv_p = await post_CSV(range, device_type, device_selected, category_on )
+
+async function post_CSV(range, device_type, device_selected, category_on ) {
+    const url = `/iot/api/csv/${device_selected}`
+    const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({ 
+        'device_type': device_type, 
+        'category_on': category_on, 
+        'range':range,
+    }),
+    headers: {
+    'Content-Type': 'application/json; charset=UTF-8'
+    }
+    });
+    const text = await response.text()
+    if (response.ok) {
+        return text
+    } else {
+        throw new Error(text)
+    }
+}
+```
+
+- carbon chart's data are with GET request `${base}/api/${device_type}/${device_selected}${params}` where params are the start and end date i.e. `/api/weatherstation_n/WeatherStation_n1?start=2023-09-16T13:12:43.108Z&end=2023-09-25T07:00:00.000Z`
+
+- Likewise for carbon chart's options i.e. `/api/options/weatherstation_n/WeatherStation_n1?start=2023-09-16T13:12:43.108Z&end=2023-09-25T07:00:00.000Z shared.ts:34:9`
+
+- To GET the list of the devices for a certain device_type `${base}/api/devices/${device_type}` like `/api/devices/weatherstation_v`
+
+- To GET the timestamp ranges for a certain device `${base}/api/range/${device_selected}`  like `/api/range/WeatherStation_n1` this will return an array with `[firstDate, viewDate, lastDate]` with the firstDate being the first available record, viewDate being the selected start date, and  lastDate the selected end date, defaults to last records.
+
+
+
+
+
+
 ![carbon_charts](doc/2D_carbon_charts.png)
 ![Three.js/Threlte](doc/3D_1.png)
 ![Three.js/Threlte](doc/3D_2.png)
