@@ -25,12 +25,11 @@
 
 	const update_data = async () => {
 		data.device_selected = device_selected
-		device_data = await fetch_data(fetch, device_type, device_selected)
-		device_opt = await fetch_opt(fetch, device_type, device_selected)
-		if (domain_range.length) {
-			// Change to selected zoom
-			device_opt.zoomBar.top.initialZoomDomain = domain_range
-		}
+		domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
+		device_data = await fetch_data(fetch, device_type, device_selected, domain_range)
+		device_opt = await fetch_opt(fetch, device_type, device_selected, domain_range)
+		//device_opt.zoomBar.top.initialZoomDomain = domain_range
+		
 	}
 
 	async function handleWebSocketMessage(event) {
@@ -86,11 +85,11 @@
 <div class="w-100 text-center">
 	<label class="ml-3">
 		start
-		<input type="text" bind:value={domain_range[0]} class="range text-2xl" />
+		<input type="text" bind:value={domain_range[0]} class="range text-2xl" on:change={() => update_data()}/>
 	</label>
 	<label class="ml-3">
 		end
-		<input type="text" bind:value={domain_range[1]} class="range text-2xl" />
+		<input type="text" bind:value={domain_range[1]} class="range text-2xl" on:change={() => update_data()}/>
 	</label>
 </div>
 

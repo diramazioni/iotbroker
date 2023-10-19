@@ -3,20 +3,18 @@ import { prisma } from '$lib/prisma';
 
 
 export async function GET({ url, params }) {
-
-  //console.log(range[0])
-  
+  const startParam = url.searchParams.get('start');
+  const endParam = url.searchParams.get('end');
+	const where = {	name: { equals: params.device } }
+	if (startParam && endParam) {
+		where['timestamp'] = {
+			gte: startParam, // start
+			lte: endParam  // end
+		}
+	}
   const db_result = await prisma.device.findMany({
-    where: {
-      name: { 'equals': params.device },
-      weatherStationVirtual: {
-        isNot: null,
-      },
-      // timestamp: {
-      //   gte: range[0], // start
-      //   lte: range[1]  // end
-      // }
-    },
+    where:  where,
+
     include: {
       weatherStationVirtual: true
     }

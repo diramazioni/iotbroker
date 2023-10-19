@@ -123,35 +123,35 @@
 			})
 		});		
 		
-		// //categories.forEach((cat, i) => {
-		// const cat = "Temperature"
-		// const vertices = geometry.getAttribute('position').array
-		// // Iterate through each line segment
-		// const np = points3d[cat].length;
-		// for (let i = 0, v = 0, n = np; i < np - 1; i++, v += 3, n-= 3) {
-		// 	const point1 = points3d[cat][i];
-		// 	const point2 = points3d[cat][i + 1];
-		// 	// Interpolate additional points between point1 and point2
-		// 	const numInterpolatedPoints = 10; // Adjust as needed
-		// 	// for (let j = 0; j < numInterpolatedPoints; j++) {
-		// 	// 	const alpha = j / numInterpolatedPoints;
-		// 	// 	const interpolatedPoint = {
-		// 	// 		x: point1.x + alpha * (point2.x - point1.x),
-		// 	// 		y: point1.y + alpha * (point2.y - point1.y),
-		// 	// 		z: point1.z + alpha * (point2.z - point1.z),
-		// 	// 	};
+		//categories.forEach((cat, i) => {
+		const cat = "Temperature"
+		const vertices = geometry.getAttribute('position').array
+		// Iterate through each line segment
+		const np = points3d[cat].length;
+		for (let i = 0, v = 0, n = np; i < np - 1; i++, v += 3, n-= 3) {
+			const point1 = points3d[cat][i];
+			const point2 = points3d[cat][i + 1];
+			// Interpolate additional points between point1 and point2
+			const numInterpolatedPoints = 10; // Adjust as needed
+			// for (let j = 0; j < numInterpolatedPoints; j++) {
+			// 	const alpha = j / numInterpolatedPoints;
+			// 	const interpolatedPoint = {
+			// 		x: point1.x + alpha * (point2.x - point1.x),
+			// 		y: point1.y + alpha * (point2.y - point1.y),
+			// 		z: point1.z + alpha * (point2.z - point1.z),
+			// 	};
 
-		// 	// 	// Assign interpolated point values to the vertices array by index
-		// 	// 	vertices[v] = interpolatedPoint.x;
-		// 	// 	vertices[v + 1] = interpolatedPoint.y;
-		// 	// 	vertices[v + 2] = interpolatedPoint.z;
-		// 	// }
-		// 	const p = points3d[cat][i];
-		// 	vertices[n] = p.x;
-		// 	vertices[n+1] = p.y;
-		// 	vertices[n+2] = p.z;
-		// }
-		//});	
+			// 	// Assign interpolated point values to the vertices array by index
+			// 	vertices[v] = interpolatedPoint.x;
+			// 	vertices[v + 1] = interpolatedPoint.y;
+			// 	vertices[v + 2] = interpolatedPoint.z;
+			// }
+			const p = points3d[cat][i];
+			vertices[n] = p.x;
+			vertices[n+1] = p.y;
+			vertices[n+2] = p.z;
+		}
+		// });	
 		geometry.computeVertexNormals()
 	}
 
@@ -224,7 +224,7 @@
 		// 	$PAR.theme = value
 		// });	
 		panel.addBinding( $PAR, 'shape', { //Area: 'area',
-			options: {Points: 'points', Lines: 'lines', Bar: 'bar', Cone: 'cone' }
+			options: {Points: 'points', Lines: 'lines', Area: 'area', Bar: 'bar', Cone: 'cone' }
 		}).on('change', ({value}) => {
 			$PAR.shape = value
 			localStorage.setItem('shape', value)

@@ -3,15 +3,21 @@ import { prisma } from '$lib/prisma';
 
 
 export async function GET({ url, params }) {
-
+  const startParam = url.searchParams.get('start');
+  const endParam = url.searchParams.get('end');
+	const where = {	name: { equals: params.device } }
+	if (startParam && endParam) {
+		where['timestamp'] = {
+			gte: startParam, // start
+			lte: endParam  // end
+		}
+	}
   const db_result = await prisma.device.findMany({
-    where: {
-      name: { 'equals': params.device },
-      etrometers: {
-        some: {} // This condition ensures at least one ETRometer is associated
-      },
+    where: where,
+      // etrometers: {
+      //   some: {} // This condition ensures at least one ETRometer is associated
+      // },
 
-    },
     include: {
       etrometers: true,
     },

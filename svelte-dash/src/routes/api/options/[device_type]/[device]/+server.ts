@@ -7,28 +7,15 @@ export async function GET({ url, params }) {
 
   const device_type = params.device_type
   const device_selected = params.device
-  const firstRecord = await prisma.device.findFirst({
-    where: {
-      name: { 'equals': device_selected },
-    },
-    select: {timestamp: true, id:true },
-    orderBy:  { timestamp: 'asc' } 
-  });
-
-  const lastRecord = await prisma.device.findFirst({
-    where: {
-      name: { 'equals': device_selected },
-    },
-    select: {timestamp: true, id:true },
-    orderBy:  { timestamp: 'desc' } 
-  });
+  const startParam = url.searchParams.get('start');
+  const endParam = url.searchParams.get('end');
   let extOptions = { 
     ...options,  
     title: device_selected,
     zoomBar: {
       top : {
         enabled : true,
-        initialZoomDomain: [new Date(firstRecord?.timestamp), new Date(lastRecord?.timestamp)],
+        initialZoomDomain: [startParam, endParam],
       }
     }
   }

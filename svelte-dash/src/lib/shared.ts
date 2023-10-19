@@ -10,8 +10,13 @@ import { base } from '$app/paths'
 
 type Fetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
 
-export async function fetch_data(fetch: Fetch, device_type: string, device_selected: string) {
-	const url = `${base}/api/${device_type}/${device_selected}`
+export async function fetch_data(fetch: Fetch, device_type: string, device_selected: string, range?: Date[]) {
+	let params = ""
+	if (range && range.length == 2) {
+		const [start, end] = range;
+		params = `?start=${start.toISOString()}&end=${end.toISOString()}`
+	}	
+	const url = `${base}/api/${device_type}/${device_selected}${params}`
 	console.log(`fetch_data ${url}`)
 	const response = await fetch(url)
 	const json = await response.json()
@@ -19,8 +24,13 @@ export async function fetch_data(fetch: Fetch, device_type: string, device_selec
 	return json
 }
 
-export async function fetch_opt(fetch: Fetch, device_type: string, device_selected: string) {
-	const url = `${base}/api/options/${device_type}/${device_selected}`
+export async function fetch_opt(fetch: Fetch, device_type: string, device_selected: string, range?: Date[]) {
+	let params = ""
+	if (range && range.length == 2) {
+		const [start, end] = range;
+		params = `?start=${start.toISOString()}&end=${end.toISOString()}`
+	}		
+	const url = `${base}/api/options/${device_type}/${device_selected}${params}`
 	console.log(`fetch_opt ${url}`)
 	const response = await fetch(url)
 	const json = await response.json()
@@ -52,7 +62,18 @@ export async function fetch_CSV(fetch: Fetch, device_type: string, device_select
 		throw new Error(text)
 	}
 }
+export async function fetch_range(fetch: Fetch, device_selected: string) {
+	const url = `${base}/api/range/${device_selected}`
+	console.log(`fetch_range ${url} ${device_selected}`)
+	const response = await fetch(url)
+	const json = await response.json()
+	if (response.ok) {
+		return json
+	} else {
+		throw new Error(json)
+	}
 
+}
 export function sliceCsv (csvData:string, maxData:number) {
 	const lines = csvData.split('\n')
 	const back = maxData < lines.length ? lines.length - maxData : 1
@@ -74,6 +95,8 @@ export function jsonToCsv(jsonData) {
 	const csvData = csvData_.split('\n').filter(line => line.trim() !== '').join('\n'); //remove blank lines
 	return `${csvHeader}\n${csvData}`
 }
+
+
 
 export function filterDeviceKey(
 	array: [],
