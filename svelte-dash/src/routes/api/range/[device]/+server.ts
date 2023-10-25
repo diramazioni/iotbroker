@@ -12,7 +12,6 @@ export async function GET({ request, params }) {
 		select: {timestamp: true, id:true },
 		orderBy:  { timestamp: 'asc' } 
 	});
-
 	const lastRecord = await prisma.device.findFirst({
 		where: {
 			name: { 'equals': device_selected },

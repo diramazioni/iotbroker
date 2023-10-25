@@ -10,6 +10,7 @@ export const load: PageServerLoad = async ({ fetch, url, params}) => {
   const device_type = params.device_type
   //const response = await fetch(`${base}/api/devices/${device_type}`)
   const devices = await fetch_dev(fetch, device_type);
+  console.log(devices)
   const device_selected = devices.sort()[0]
   let ranges =  await fetch_range(fetch, device_selected);
   ranges = ranges.slice(1)

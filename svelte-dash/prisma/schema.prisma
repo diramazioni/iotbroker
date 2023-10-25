@@ -11,8 +11,9 @@ generator client {
 //   recursive_type_depth = "5"
 // }
 
+// provider = "sqlite"
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -28,7 +29,7 @@ model Device {
   etrometers            ETRometer[]
   weatherStation        WeatherStation?
   weatherStationVirtual WeatherStationVirtual?
-  WeatherStationStd     WeatherStationStd?
+  weatherStationStd     WeatherStationStd?
 }
 
 model Camera {
