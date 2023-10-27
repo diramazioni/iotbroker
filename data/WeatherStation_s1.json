@@ -1,0 +1,103 @@
+{
+    "id": 2,
+    "device": "WeatherStation_s1",
+    "content": {
+        "name": "WeatherStation_s1",
+        "id": "urn:ngsi-ld:Device:WeatherStation_s1",
+        "wlan": "SPEEDY",
+        "timestamp": 1698254987193,
+        "value": [
+            {
+                "name": "WeatherStation_s1_RS",
+                "id": "urn:ngsi-ld:Device:_RS",
+                "controlledProperty": [
+                    "Solar_Radiation"
+                ],
+                "value": [
+                    2.396604061
+                ],
+                "units": [
+                    "W/m2"
+                ]
+            },
+            {
+                "name": "WeatherStation_s1_PA",
+                "id": "urn:ngsi-ld:Device:_PA",
+                "controlledProperty": [
+                    "Atmospheric_Pressure"
+                ],
+                "value": [
+                    985.0028687
+                ],
+                "units": [
+                    "hPa"
+                ]
+            },
+            {
+                "name": "WeatherStation_s1_TA",
+                "id": "urn:ngsi-ld:Device:_TA",
+                "controlledProperty": [
+                    "Air_Temperature"
+                ],
+                "value": [
+                    18.07849693
+                ],
+                "units": [
+                    "decC"
+                ]
+            },
+            {
+                "name": "WeatherStation_s1_RH",
+                "id": "urn:ngsi-ld:Device:_RH",
+                "controlledProperty": [
+                    "Relative_Humidity"
+                ],
+                "value": [
+                    73.73090363
+                ],
+                "units": [
+                    "%"
+                ]
+            },
+            {
+                "name": "WeatherStation_s1_WV",
+                "id": "urn:ngsi-ld:Device:_WV",
+                "controlledProperty": [
+                    "Wind_Velocity"
+                ],
+                "value": [
+                    0.050000001
+                ],
+                "units": [
+                    "km/h"
+                ]
+            },
+            {
+                "name": "WeatherStation_s1_WD",
+                "id": "urn:ngsi-ld:Device:_WD",
+                "controlledProperty": [
+                    "Wind_Direction"
+                ],
+                "value": [
+                    203.321106
+                ],
+                "units": [
+                    "degNcw"
+                ]
+            },
+            {
+                "name": "WeatherStation_s1_PR",
+                "id": "urn:ngsi-ld:Device:_PR",
+                "controlledProperty": [
+                    "Rainfall"
+                ],
+                "value": [
+                    0
+                ],
+                "units": [
+                    "mm"
+                ]
+            }
+        ]
+    }
+}

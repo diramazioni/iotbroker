@@ -1,0 +1,104 @@
+[
+    {
+        "name": "WeatherStation_n_test",
+        "id": "urn:ngsi-ld:Device:WeatherStation_n_test",
+        "value": [
+            {
+                "name": "WeatherStation_n_test_BAT",
+                "id": "urn:ngsi-ld:Device:WeatherStation_n_test_BAT",
+                "controlledProperty": [
+                    "Battery_Voltage"
+                ],
+                "value": [
+                    4.130879741
+                ],
+                "units": [
+                    "volts"
+                ]
+            },
+            {
+                "name": "WeatherStation_n_test_PV",
+                "id": "urn:ngsi-ld:Device:WeatherStation_n_test_PV",
+                "controlledProperty": [
+                    "Solar_Panel_Voltage"
+                ],
+                "value": [
+                    0
+                ],
+                "units": [
+                    "volts"
+                ]
+            },
+            {
+                "name": "WeatherStation_n_test_WIND",
+                "id": "urn:ngsi-ld:Device:WeatherStation_n_test_WIND",
+                "controlledProperty": [
+                    "W_vel",
+                    "W_dir"
+                ],
+                "value": [
+                    88.63938536,
+                    134.9650667
+                ],
+                "units": [
+                    "m/s",
+                    "deg-N-cw"
+                ]
+            },
+            {
+                "name": "WeatherStation_n_test_BME680",
+                "id": "urn:ngsi-ld:Device:WeatherStation_n_test_BME680",
+                "controlledProperty": [
+                    "Temperature",
+                    "Pressure",
+                    "Humidity",
+                    "GasResistance",
+                    "Altitude"
+                ],
+                "value": [
+                    29.62742615,
+                    1005.58,
+                    50.22343063,
+                    834.359,
+                    103.4343262
+                ],
+                "units": [
+                    "degC",
+                    "hPa",
+                    "%",
+                    "KOhms",
+                    "m"
+                ]
+            },
+            {
+                "name": "WeatherStation_n_test_SENTEK",
+                "id": "urn:ngsi-ld:Device:WeatherStation_n_test_SENTEK",
+                "controlledProperty": [
+                    "Ts_1",
+                    "Ts_2",
+                    "Ts_3",
+                    "Us_1",
+                    "Us_2",
+                    "Us_3"
+                ],
+                "value": [
+                    28.4299202,
+                    28.02635002,
+                    28.65796089,
+                    0.000338,
+                    0.004462,
+                    0.002557
+                ],
+                "units": [
+                    "degC",
+                    "degC",
+                    "degC",
+                    "%",
+                    "%",
+                    "%"
+                ]
+            }
+        ],
+        "timestamp": 1690740135000
+    }
+]

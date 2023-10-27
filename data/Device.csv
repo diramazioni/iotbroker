@@ -1,0 +1,1766 @@
+id,name,calibration,location,areaServed,timestamp
+1,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692352800
+2,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692356400
+3,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692360000
+4,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692363600
+5,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692367200
+6,ETRometer_1,0,,,1690740040
+7,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692370800
+8,ETRometer_2,0,,,1689442663
+9,ETRometer_1,0,,,1690740054
+10,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692374400
+11,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692352800
+12,ETRometer_2,0,,,1689442676
+13,ETRometer_1,0,,,1690740121
+14,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692352800
+15,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692352800
+16,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692378000
+17,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692356400
+18,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692352800
+19,ETRometer_2,0,,,1689442688
+20,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692352800
+21,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692352800
+22,ETRometer_1,0,,,1690740136
+23,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692352800
+24,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692352800
+25,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692356400
+26,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692356400
+27,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692381600
+28,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692360000
+29,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692356400
+30,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692356400
+31,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692356400
+32,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692356400
+33,ETRometer_1,0,,,1690740150
+34,ETRometer_2,0,,,1689442700
+35,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692356400
+36,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692360000
+37,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692360000
+38,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692385200
+39,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692363600
+40,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692360000
+41,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692360000
+42,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692360000
+43,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692360000
+44,ETRometer_1,0,,,1690740164
+45,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692360000
+46,ETRometer_2,0,,,1689442713
+47,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692363600
+48,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692363600
+49,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692388800
+50,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692367200
+51,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692363600
+52,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692363600
+53,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692363600
+54,WeatherStation_n1,,,,1690740135
+55,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692363600
+56,ETRometer_1,0,,,1690740164
+57,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692363600
+58,ETRometer_2,0,,,1689442725
+59,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692367200
+60,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692367200
+61,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692370800
+62,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692392400
+63,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692367200
+64,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692367200
+65,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692367200
+66,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692367200
+67,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692367200
+68,ETRometer_1,0,,,1690740193
+69,ETRometer_2,0,,,1689442737
+70,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692370800
+71,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692370800
+72,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692374400
+73,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692392400
+74,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692370800
+75,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692370800
+76,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692370800
+77,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692370800
+78,WeatherStation_n1,,,,1690740183
+79,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692370800
+80,ETRometer_1,0,,,1690740207
+81,ETRometer_2,0,,,1689442750
+82,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692374400
+83,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692374400
+84,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692378000
+85,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692396000
+86,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692374400
+87,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692374400
+88,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692374400
+89,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692374400
+90,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692374400
+91,ETRometer_1,0,,,1690740225
+92,ETRometer_2,0,,,1689442762
+93,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692378000
+94,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692378000
+95,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692399600
+96,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692381600
+97,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692378000
+98,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692378000
+99,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692378000
+100,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692378000
+101,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692378000
+102,ETRometer_2,0,,,1689442774
+103,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692381600
+104,WeatherStation_n1,,,,1690740240
+105,ETRometer_1,0,,,1690740225
+106,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692385200
+107,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692381600
+108,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692403200
+109,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692381600
+110,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692381600
+111,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692381600
+112,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692381600
+113,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692381600
+114,ETRometer_2,0,,,1689442787
+115,ETRometer_1,0,,,1690740254
+116,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692385200
+117,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692388800
+118,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692385200
+119,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692406800
+120,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692385200
+121,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692385200
+122,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692385200
+123,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692385200
+124,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692385200
+125,ETRometer_2,0,,,1689442799
+126,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692388800
+127,ETRometer_1,0,,,1690740268
+128,WeatherStation_n1,,,,1690740296
+129,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692392400
+130,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692388800
+131,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692608400
+132,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692388800
+133,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692388800
+134,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692388800
+135,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692388800
+136,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692388800
+137,ETRometer_2,0,,,1689442811
+138,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692392400
+139,ETRometer_1,0,,,1690740282
+140,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692392400
+141,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692392400
+142,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692612000
+143,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692392400
+144,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692392400
+145,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692392400
+146,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692392400
+147,ETRometer_2,0,,,1689442823
+148,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692392400
+149,ETRometer_1,0,,,1690740296
+150,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692392400
+151,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692396000
+152,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692392400
+153,WeatherStation_n1,,,,1690740355
+154,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692392400
+155,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692392400
+156,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692615600
+157,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692392400
+158,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692392400
+159,ETRometer_2,0,,,1689442836
+160,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692396000
+161,ETRometer_1,0,,,1690740311
+162,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692392400
+163,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692396000
+164,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692399600
+165,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692396000
+166,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692396000
+167,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692619200
+168,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692396000
+169,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692396000
+170,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692399600
+171,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692396000
+172,ETRometer_2,0,,,1689442848
+173,ETRometer_1,0,,,1690740326
+174,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692399600
+175,WeatherStation_n1,,,,1690740411
+176,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692403200
+177,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692399600
+178,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692399600
+179,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692622800
+180,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692399600
+181,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692399600
+182,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692399600
+183,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692403200
+184,ETRometer_2,0,,,1689442860
+185,ETRometer_1,0,,,1690740340
+186,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692403200
+187,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692406800
+188,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692403200
+189,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1692626400
+190,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692403200
+191,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692403200
+192,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692403200
+193,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692403200
+194,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692406800
+195,ETRometer_2,0,,,1689442873
+196,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692406800
+197,ETRometer_1,0,,,1690740340
+198,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692608400
+199,WeatherStation_n1,,,,1690740458
+200,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692406800
+201,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692406800
+202,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693202400
+203,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692406800
+204,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692406800
+205,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692406800
+206,ETRometer_2,0,,,1689442885
+207,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692608400
+208,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692608400
+209,ETRometer_1,0,,,1690740367
+210,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692612000
+211,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693202400
+212,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692608400
+213,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692608400
+214,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692608400
+215,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692608400
+216,ETRometer_2,0,,,1689442897
+217,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692608400
+218,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692612000
+219,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692612000
+220,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692615600
+221,ETRometer_1,0,,,1690740382
+222,WeatherStation_n1,,,,1690740514
+223,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693206000
+224,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692612000
+225,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692612000
+226,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692612000
+227,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692612000
+228,ETRometer_2,0,,,1689442910
+229,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692612000
+230,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692615600
+231,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692615600
+232,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692619200
+233,ETRometer_1,0,,,1690740396
+234,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692615600
+235,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693209600
+236,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692615600
+237,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692615600
+238,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692615600
+239,ETRometer_2,0,,,1689442922
+240,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692615600
+241,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692619200
+242,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692622800
+243,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692619200
+244,ETRometer_1,0,,,1690740411
+245,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692619200
+246,WeatherStation_n1,,,,1690740573
+247,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693213200
+248,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692619200
+249,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692619200
+250,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692619200
+251,ETRometer_2,0,,,1689442934
+252,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692619200
+253,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1692626400
+254,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692622800
+255,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692622800
+256,ETRometer_1,0,,,1690740411
+257,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692622800
+258,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693216800
+259,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692622800
+260,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692622800
+261,ETRometer_2,0,,,1689442947
+262,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692622800
+263,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692622800
+264,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693202400
+265,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1692626400
+266,ETRometer_1,0,,,1690740439
+267,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1692626400
+268,WeatherStation_n1,,,,1690740620
+269,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1692626400
+270,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693220400
+271,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1692626400
+272,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692626400
+273,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1692626400
+274,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1692626400
+275,ETRometer_2,0,,,1689442959
+276,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693202400
+277,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693202400
+278,ETRometer_1,0,,,1690740453
+279,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693202400
+280,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693202400
+281,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693224000
+282,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693202400
+283,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693202400
+284,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693202400
+285,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693202400
+286,ETRometer_2,0,,,1689442971
+287,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693206000
+288,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693202400
+289,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693202400
+290,ETRometer_1,0,,,1690740466
+291,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693202400
+292,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693227600
+293,WeatherStation_n1,,,,1690740677
+294,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693202400
+295,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693202400
+296,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693209600
+297,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693202400
+298,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693202400
+299,ETRometer_2,0,,,1689442984
+300,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693206000
+301,ETRometer_1,0,,,1690740480
+302,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693206000
+303,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693206000
+304,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693231200
+305,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693206000
+306,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693206000
+307,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693213200
+308,ETRometer_1,0,,,1690740495
+309,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693206000
+310,ETRometer_2,0,,,1689442996
+311,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693206000
+312,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693209600
+313,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693209600
+314,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693209600
+315,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693234800
+316,WeatherStation_n1,,,,1690740724
+317,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693209600
+318,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693209600
+319,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693216800
+320,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693209600
+321,ETRometer_1,0,,,1690740495
+322,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693213200
+323,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693213200
+324,ETRometer_2,0,,,1689443008
+325,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693209600
+326,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693213200
+327,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693238400
+328,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693213200
+329,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693213200
+330,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693213200
+331,ETRometer_1,0,,,1690740522
+332,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693216800
+333,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693220400
+334,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693216800
+335,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693213200
+336,ETRometer_2,0,,,1689443021
+337,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693216800
+338,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693242000
+339,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693216800
+340,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693216800
+341,WeatherStation_n1,,,,1690740779
+342,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693220400
+343,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693224000
+344,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693216800
+345,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693220400
+346,ETRometer_1,0,,,1690740537
+347,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693216800
+348,ETRometer_2,0,,,1689443033
+349,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693220400
+350,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693245600
+351,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693220400
+352,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693220400
+353,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693224000
+354,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693220400
+355,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693227600
+356,ETRometer_1,0,,,1690740551
+357,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693224000
+358,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693220400
+359,ETRometer_2,0,,,1689443045
+360,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693224000
+361,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693249200
+362,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693224000
+363,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693224000
+364,WeatherStation_n1,,,,1690740835
+365,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693227600
+366,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693224000
+367,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693231200
+368,ETRometer_1,0,,,1690740563
+369,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693227600
+370,ETRometer_2,0,,,1689443058
+371,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693224000
+372,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693227600
+373,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693252800
+374,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693227600
+375,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693231200
+376,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693227600
+377,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693227600
+378,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693234800
+379,ETRometer_1,0,,,1690740576
+380,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693231200
+381,ETRometer_2,0,,,1689443070
+382,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693227600
+383,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693231200
+384,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693256400
+385,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693231200
+386,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693231200
+387,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693234800
+388,WeatherStation_n1,,,,1690740891
+389,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693231200
+390,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693238400
+391,ETRometer_1,0,,,1690740588
+392,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693234800
+393,ETRometer_2,0,,,1689443082
+394,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693231200
+395,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693234800
+396,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693260000
+397,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693234800
+398,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693238400
+399,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693234800
+400,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693234800
+401,ETRometer_1,0,,,1690740606
+402,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693242000
+403,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693238400
+404,ETRometer_2,0,,,1689443094
+405,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693238400
+406,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693234800
+407,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693263600
+408,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693238400
+409,WeatherStation_n1,,,,1690740938
+410,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693242000
+411,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693238400
+412,ETRometer_1,0,,,1690740620
+413,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693238400
+414,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693245600
+415,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693242000
+416,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693242000
+417,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693238400
+418,ETRometer_2,0,,,1689443107
+419,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693267200
+420,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693242000
+421,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693245600
+422,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693242000
+423,ETRometer_1,0,,,1690740635
+424,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693242000
+425,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693249200
+426,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693245600
+427,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693245600
+428,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693242000
+429,ETRometer_2,0,,,1689443119
+430,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693270800
+431,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693245600
+432,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693249200
+433,WeatherStation_n1,,,,1690741003
+434,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693245600
+435,ETRometer_1,0,,,1690740649
+436,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693245600
+437,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693252800
+438,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693249200
+439,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693249200
+440,ETRometer_2,0,,,1689443131
+441,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693245600
+442,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693274400
+443,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693252800
+444,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693249200
+445,ETRometer_1,0,,,1690740663
+446,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693249200
+447,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693249200
+448,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693256400
+449,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693252800
+450,ETRometer_2,0,,,1689443144
+451,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693252800
+452,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693249200
+453,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693278000
+454,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693256400
+455,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693252800
+456,WeatherStation_n1,,,,1690741050
+457,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693252800
+458,ETRometer_1,0,,,1690740664
+459,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693252800
+460,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693260000
+461,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693256400
+462,ETRometer_2,0,,,1689443156
+463,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693256400
+464,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693252800
+465,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693281600
+466,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693260000
+467,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693256400
+468,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693256400
+469,ETRometer_1,0,,,1690740691
+470,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693256400
+471,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693263600
+472,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693260000
+473,ETRometer_2,0,,,1689443168
+474,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693285200
+475,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693260000
+476,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693256400
+477,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693263600
+478,WeatherStation_n1,,,,1690741108
+479,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693260000
+480,ETRometer_1,0,,,1690740705
+481,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693260000
+482,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693260000
+483,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693267200
+484,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693263600
+485,ETRometer_2,0,,,1689443180
+486,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693288800
+487,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693263600
+488,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693260000
+489,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693267200
+490,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693263600
+491,ETRometer_1,0,,,1690740719
+492,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693263600
+493,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693270800
+494,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693263600
+495,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693267200
+496,ETRometer_2,0,,,1689443193
+497,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693292400
+498,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693267200
+499,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693263600
+500,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693270800
+501,WeatherStation_n1,,,,1690741163
+502,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693267200
+503,ETRometer_1,0,,,1690740719
+504,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693267200
+505,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693274400
+506,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693267200
+507,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693270800
+508,ETRometer_2,0,,,1689443205
+509,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693296000
+510,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693267200
+511,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693270800
+512,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693274400
+513,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693270800
+514,ETRometer_1,0,,,1690740736
+515,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693270800
+516,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693278000
+517,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693270800
+518,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693274400
+519,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693270800
+520,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693299600
+521,ETRometer_2,0,,,1689443218
+522,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693274400
+523,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693278000
+524,WeatherStation_n1,,,,1690741218
+525,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693274400
+526,ETRometer_1,0,,,1690740765
+527,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693274400
+528,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693281600
+529,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693274400
+530,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693278000
+531,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693274400
+532,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693303200
+533,ETRometer_2,0,,,1689443230
+534,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693278000
+535,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693281600
+536,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693278000
+537,ETRometer_1,0,,,1690740778
+538,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693278000
+539,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693278000
+540,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693285200
+541,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693281600
+542,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693278000
+543,ETRometer_2,0,,,1689443242
+544,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693306800
+545,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693285200
+546,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693281600
+547,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693281600
+548,WeatherStation_n1,,,,1690741265
+549,ETRometer_1,0,,,1690740792
+550,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693281600
+551,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693288800
+552,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693281600
+553,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693285200
+554,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693281600
+555,ETRometer_2,0,,,1689443255
+556,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693310400
+557,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693288800
+558,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693285200
+559,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693285200
+560,ETRometer_1,0,,,1690740807
+561,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693285200
+562,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693292400
+563,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693285200
+564,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693288800
+565,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693285200
+566,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693389600
+567,ETRometer_2,0,,,1689443267
+568,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693292400
+569,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693288800
+570,ETRometer_1,0,,,1690740821
+571,WeatherStation_n1,,,,1690741322
+572,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693288800
+573,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693288800
+574,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693296000
+575,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693288800
+576,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693292400
+577,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693288800
+578,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693393200
+579,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693296000
+580,ETRometer_2,0,,,1689443279
+581,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693292400
+582,ETRometer_1,0,,,1690740821
+583,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693292400
+584,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693292400
+585,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693299600
+586,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693292400
+587,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693296000
+588,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693292400
+589,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693299600
+590,ETRometer_2,0,,,1689443292
+591,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693296000
+592,ETRometer_1,0,,,1690740850
+593,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693296000
+594,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693296000
+595,WeatherStation_n1,,,,1690741392
+596,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693303200
+597,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693299600
+598,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693296000
+599,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693296000
+600,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693303200
+601,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693299600
+602,ETRometer_2,0,,,1689443304
+603,ETRometer_1,0,,,1690740864
+604,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693299600
+605,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693299600
+606,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693306800
+607,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693303200
+608,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693299600
+609,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693299600
+610,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693303200
+611,ETRometer_2,0,,,1689443316
+612,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693306800
+613,ETRometer_1,0,,,1690740878
+614,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693303200
+615,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693303200
+616,WeatherStation_n1,,,,1690741439
+617,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693310400
+618,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693306800
+619,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693303200
+620,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693303200
+621,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693306800
+622,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693310400
+623,ETRometer_2,0,,,1689443328
+624,ETRometer_1,0,,,1690740878
+625,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693306800
+626,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693306800
+627,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693389600
+628,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693310400
+629,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693306800
+630,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693306800
+631,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693310400
+632,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693389600
+633,ETRometer_2,0,,,1689443341
+634,ETRometer_1,0,,,1690740905
+635,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693310400
+636,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693310400
+637,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693393200
+638,WeatherStation_n1,,,,1690741497
+639,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693389600
+640,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693310400
+641,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693310400
+642,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693389600
+643,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693393200
+644,ETRometer_2,0,,,1689443353
+645,ETRometer_1,0,,,1690740905
+646,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693389600
+647,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693389600
+648,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693393200
+649,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693389600
+650,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693389600
+651,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693393200
+652,ETRometer_2,0,,,1689443365
+653,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693393200
+654,ETRometer_1,0,,,1690740919
+655,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693393200
+656,WeatherStation_n1,,,,1690741545
+657,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693393200
+658,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693393200
+659,ETRometer_2,0,,,1689443378
+660,ETRometer_1,0,,,1690740933
+661,ETRometer_2,0,,,1689443390
+662,WeatherStation_n1,,,,1690741602
+663,ETRometer_1,0,,,1690740962
+664,ETRometer_2,0,,,1689443402
+665,ETRometer_1,0,,,1690740975
+666,ETRometer_2,0,,,1689443415
+667,WeatherStation_n1,,,,1690741655
+668,ETRometer_1,0,,,1690740989
+669,ETRometer_2,0,,,1689443427
+670,ETRometer_1,0,,,1690741002
+671,WeatherStation_n1,,,,1690741710
+672,ETRometer_2,0,,,1689443439
+673,ETRometer_1,0,,,1690741017
+674,ETRometer_2,0,,,1689443452
+675,ETRometer_1,0,,,1690741031
+676,WeatherStation_n1,,,,1690741757
+677,ETRometer_2,0,,,1689443464
+678,ETRometer_1,0,,,1690741046
+679,ETRometer_2,0,,,1689443476
+680,ETRometer_1,0,,,1690741060
+681,WeatherStation_n1,,,,1690741812
+682,ETRometer_2,0,,,1689443488
+683,ETRometer_1,0,,,1690741074
+684,ETRometer_2,0,,,1689443501
+685,ETRometer_1,0,,,1690741088
+686,WeatherStation_n1,,,,1690741867
+687,ETRometer_2,0,,,1689443513
+688,ETRometer_1,0,,,1690741103
+689,ETRometer_2,0,,,1689443525
+690,WeatherStation_n1,,,,1690741922
+691,ETRometer_1,0,,,1690741121
+692,ETRometer_2,0,,,1689443537
+693,ETRometer_1,0,,,1690741149
+694,ETRometer_2,0,,,1689443550
+695,WeatherStation_n1,,,,1690741970
+696,ETRometer_1,0,,,1690741162
+697,ETRometer_2,0,,,1689443562
+698,ETRometer_1,0,,,1690741177
+699,WeatherStation_n1,,,,1690742026
+700,ETRometer_2,0,,,1689443574
+701,ETRometer_1,0,,,1690741191
+702,ETRometer_2,0,,,1689443586
+703,ETRometer_1,0,,,1690741206
+704,WeatherStation_n1,,,,1690742082
+705,ETRometer_2,0,,,1689443599
+706,ETRometer_1,0,,,1690741218
+707,ETRometer_2,0,,,1689443611
+708,ETRometer_1,0,,,1690741234
+709,WeatherStation_n1,,,,1690742130
+710,ETRometer_2,0,,,1689443623
+711,ETRometer_1,0,,,1690741248
+712,ETRometer_2,0,,,1689443636
+713,WeatherStation_n1,,,,1690742184
+714,ETRometer_1,0,,,1690741262
+715,ETRometer_2,0,,,1689443648
+716,ETRometer_1,0,,,1690741279
+717,ETRometer_2,0,,,1689443661
+718,WeatherStation_n1,,,,1690742237
+719,ETRometer_1,0,,,1690741293
+720,ETRometer_2,0,,,1689443673
+721,ETRometer_1,0,,,1690741307
+722,WeatherStation_n1,,,,1690742292
+723,ETRometer_2,0,,,1689443685
+724,ETRometer_1,0,,,1690741321
+725,ETRometer_2,0,,,1689443697
+726,WeatherStation_n1,,,,1690742372
+727,ETRometer_1,0,,,1690741336
+728,ETRometer_2,0,,,1689443710
+729,ETRometer_1,0,,,1690741350
+730,ETRometer_2,0,,,1689443722
+731,ETRometer_1,0,,,1690741364
+732,WeatherStation_n1,,,,1690742429
+733,ETRometer_2,0,,,1689443734
+734,ETRometer_1,0,,,1690741407
+735,ETRometer_2,0,,,1689443747
+736,WeatherStation_n1,,,,1690742477
+737,ETRometer_1,0,,,1690741422
+738,ETRometer_2,0,,,1689443759
+739,ETRometer_1,0,,,1690741435
+740,WeatherStation_n1,,,,1690742532
+741,ETRometer_2,0,,,1689443771
+742,ETRometer_1,0,,,1690741452
+743,ETRometer_2,0,,,1689443784
+744,ETRometer_1,0,,,1690741466
+745,WeatherStation_n1,,,,1690742585
+746,ETRometer_2,0,,,1689443796
+747,ETRometer_1,0,,,1690741481
+748,ETRometer_2,0,,,1689443809
+749,WeatherStation_n1,,,,1690742634
+750,ETRometer_1,0,,,1690741481
+751,ETRometer_2,0,,,1689443821
+752,ETRometer_1,0,,,1690741511
+753,ETRometer_2,0,,,1689443833
+754,WeatherStation_n1,,,,1690742689
+755,ETRometer_1,0,,,1690741526
+756,ETRometer_2,0,,,1689443846
+757,ETRometer_1,0,,,1690741540
+758,WeatherStation_n1,,,,1690742744
+759,ETRometer_2,0,,,1689443858
+760,ETRometer_1,0,,,1690741540
+761,ETRometer_2,0,,,1689443870
+762,ETRometer_1,0,,,1690741568
+763,WeatherStation_n1,,,,1690742801
+764,ETRometer_2,0,,,1689443883
+765,ETRometer_1,0,,,1690741583
+766,ETRometer_2,0,,,1689443895
+767,ETRometer_1,0,,,1690741597
+768,WeatherStation_n1,,,,1690742855
+769,ETRometer_2,0,,,1689443907
+770,ETRometer_1,0,,,1690741615
+771,ETRometer_2,0,,,1689443919
+772,WeatherStation_n1,,,,1690742902
+773,ETRometer_1,0,,,1690741628
+774,ETRometer_2,0,,,1689443932
+775,ETRometer_1,0,,,1690741642
+776,WeatherStation_n1,,,,1690742951
+777,ETRometer_2,0,,,1689443944
+778,ETRometer_1,0,,,1690741642
+779,ETRometer_2,0,,,1689443956
+780,ETRometer_1,0,,,1690741669
+781,WeatherStation_n1,,,,1690742998
+782,ETRometer_2,0,,,1689443969
+783,ETRometer_1,0,,,1690741669
+784,ETRometer_2,0,,,1689443981
+785,WeatherStation_n1,,,,1690743054
+786,ETRometer_1,0,,,1690741683
+787,ETRometer_2,0,,,1689443993
+788,ETRometer_1,0,,,1690741710
+789,WeatherStation_n1,,,,1690743110
+790,ETRometer_2,0,,,1689444006
+791,ETRometer_1,0,,,1690741724
+792,ETRometer_2,0,,,1689444018
+793,ETRometer_1,0,,,1690741737
+794,WeatherStation_n1,,,,1690743157
+795,ETRometer_2,0,,,1689444030
+796,ETRometer_1,0,,,1690741737
+797,ETRometer_2,0,,,1689444042
+798,ETRometer_1,0,,,1690741765
+799,WeatherStation_n1,,,,1690743235
+800,ETRometer_2,0,,,1689444055
+801,ETRometer_1,0,,,1690741779
+802,ETRometer_2,0,,,1689444067
+803,ETRometer_1,0,,,1690741793
+804,WeatherStation_n1,,,,1690743353
+805,ETRometer_2,0,,,1689444079
+806,ETRometer_1,0,,,1690741808
+807,ETRometer_2,0,,,1689444092
+808,WeatherStation_n1,,,,1690743409
+809,ETRometer_1,0,,,1690741824
+810,ETRometer_2,0,,,1689444104
+811,ETRometer_1,0,,,1690741839
+812,WeatherStation_n1,,,,1690743467
+813,ETRometer_2,0,,,1689444116
+814,ETRometer_1,0,,,1690741853
+815,ETRometer_2,0,,,1689444129
+816,ETRometer_1,0,,,1690741866
+817,WeatherStation_n1,,,,1690743514
+818,ETRometer_2,0,,,1689444141
+819,ETRometer_1,0,,,1690741880
+820,ETRometer_2,0,,,1689444153
+821,ETRometer_1,0,,,1690741894
+822,WeatherStation_n1,,,,1690743564
+823,ETRometer_2,0,,,1689444166
+824,ETRometer_1,0,,,1690741908
+825,ETRometer_2,0,,,1689444178
+826,ETRometer_1,0,,,1690741908
+827,WeatherStation_n1,,,,1690743612
+828,ETRometer_2,0,,,1689444190
+829,ETRometer_1,0,,,1690741939
+830,ETRometer_2,0,,,1689444203
+831,WeatherStation_n1,,,,1690743660
+832,ETRometer_1,0,,,1690741954
+833,ETRometer_2,0,,,1689444215
+834,ETRometer_1,0,,,1690741968
+835,ETRometer_2,0,,,1689444227
+836,WeatherStation_n1,,,,1690743716
+837,ETRometer_1,0,,,1690741983
+838,ETRometer_2,0,,,1689444240
+839,ETRometer_1,0,,,1690742012
+840,ETRometer_2,0,,,1689444252
+841,WeatherStation_n1,,,,1690743772
+842,ETRometer_1,0,,,1690742024
+843,ETRometer_2,0,,,1689444264
+844,ETRometer_1,0,,,1690742038
+845,WeatherStation_n1,,,,1690743820
+846,ETRometer_2,0,,,1689444277
+847,ETRometer_1,0,,,1690742053
+848,ETRometer_2,0,,,1689444289
+849,ETRometer_1,0,,,1690742068
+850,WeatherStation_n1,,,,1690743883
+851,ETRometer_2,0,,,1689444302
+852,ETRometer_1,0,,,1690742081
+853,ETRometer_2,0,,,1689444314
+854,ETRometer_1,0,,,1690742097
+855,WeatherStation_n1,,,,1690743939
+856,ETRometer_2,0,,,1689444326
+857,ETRometer_1,0,,,1690742111
+858,ETRometer_2,0,,,1689444339
+859,WeatherStation_n1,,,,1690743987
+860,ETRometer_1,0,,,1690742125
+861,ETRometer_2,0,,,1689444351
+862,ETRometer_1,0,,,1690742138
+863,WeatherStation_n1,,,,1690744044
+864,ETRometer_2,0,,,1689444363
+865,ETRometer_1,0,,,1690742152
+866,ETRometer_2,0,,,1689444376
+867,ETRometer_1,0,,,1690742167
+868,WeatherStation_n1,,,,1690744091
+869,ETRometer_2,0,,,1689444388
+870,ETRometer_1,0,,,1690742182
+871,ETRometer_2,0,,,1689444400
+872,ETRometer_1,0,,,1690742196
+873,WeatherStation_n1,,,,1690744147
+874,ETRometer_2,0,,,1689444413
+875,ETRometer_1,0,,,1690742211
+876,ETRometer_2,0,,,1689444425
+877,ETRometer_1,0,,,1690742224
+878,WeatherStation_n1,,,,1690744203
+879,ETRometer_2,0,,,1689444437
+880,ETRometer_1,0,,,1690742237
+881,WeatherStation_n1,,,,1690744257
+882,ETRometer_1,0,,,1690742251
+883,WeatherStation_n1,,,,1690744305
+884,ETRometer_1,0,,,1690742265
+885,WeatherStation_n1,,,,1690744362
+886,ETRometer_1,0,,,1690742279
+887,WeatherStation_n1,,,,1690744418
+888,ETRometer_1,0,,,1690742343
+889,WeatherStation_n1,,,,1690744473
+890,ETRometer_1,0,,,1690742358
+891,WeatherStation_n1,,,,1690744522
+892,ETRometer_1,0,,,1690742372
+893,WeatherStation_n1,,,,1690744623
+894,ETRometer_1,0,,,1690742387
+895,WeatherStation_n1,,,,1690744679
+896,ETRometer_1,0,,,1690742401
+897,WeatherStation_n1,,,,1690744735
+898,ETRometer_1,0,,,1690742416
+899,WeatherStation_n1,,,,1690744782
+900,ETRometer_1,0,,,1690742429
+901,WeatherStation_n1,,,,1690744836
+902,ETRometer_1,0,,,1690742443
+903,WeatherStation_n1,,,,1690744890
+904,ETRometer_1,0,,,1690742457
+905,WeatherStation_n1,,,,1690744945
+906,ETRometer_1,0,,,1690742472
+907,WeatherStation_n1,,,,1690744993
+908,ETRometer_1,0,,,1690742485
+909,WeatherStation_n1,,,,1690745103
+910,ETRometer_1,0,,,1690742499
+911,WeatherStation_n1,,,,1690745151
+912,ETRometer_1,0,,,1690742514
+913,WeatherStation_n1,,,,1690745207
+914,ETRometer_1,0,,,1690742514
+915,WeatherStation_n1,,,,1690745307
+916,ETRometer_1,0,,,1690742545
+917,WeatherStation_n1,,,,1690745365
+918,ETRometer_1,0,,,1690742559
+919,WeatherStation_n1,,,,1690745420
+920,ETRometer_1,0,,,1690742573
+921,WeatherStation_n1,,,,1690745476
+922,ETRometer_1,0,,,1690742573
+923,WeatherStation_n1,,,,1690745528
+924,ETRometer_1,0,,,1690742600
+925,WeatherStation_n1,,,,1690745576
+926,ETRometer_1,0,,,1690742615
+927,WeatherStation_n1,,,,1690745623
+928,ETRometer_1,0,,,1690742629
+929,WeatherStation_n1,,,,1690745676
+930,ETRometer_1,0,,,1690742629
+931,WeatherStation_n1,,,,1690745724
+932,ETRometer_1,0,,,1690742657
+933,WeatherStation_n1,,,,1690745772
+934,ETRometer_1,0,,,1690742671
+935,WeatherStation_n1,,,,1690745820
+936,ETRometer_1,0,,,1690742686
+937,WeatherStation_n1,,,,1690745876
+938,ETRometer_1,0,,,1690742701
+939,WeatherStation_n1,,,,1690745941
+940,ETRometer_1,0,,,1690742731
+941,WeatherStation_n1,,,,1690745995
+942,ETRometer_1,0,,,1690742743
+943,WeatherStation_n1,,,,1690746042
+944,ETRometer_1,0,,,1690742757
+945,WeatherStation_n1,,,,1690746138
+946,ETRometer_1,0,,,1690742772
+947,WeatherStation_n1,,,,1690746193
+948,ETRometer_1,0,,,1690742786
+949,WeatherStation_n1,,,,1690746244
+950,ETRometer_1,0,,,1690742800
+951,WeatherStation_n1,,,,1690746291
+952,ETRometer_1,0,,,1690742815
+953,WeatherStation_n1,,,,1690746345
+954,ETRometer_1,0,,,1690742829
+955,WeatherStation_n1,,,,1690746395
+956,ETRometer_1,0,,,1690742829
+957,WeatherStation_n1,,,,1690746442
+958,ETRometer_1,0,,,1690742854
+959,WeatherStation_n1,,,,1690746498
+960,ETRometer_1,0,,,1690742869
+961,WeatherStation_n1,,,,1690746545
+962,ETRometer_1,0,,,1690742883
+963,WeatherStation_n1,,,,1690746601
+964,ETRometer_1,0,,,1690742899
+965,WeatherStation_n1,,,,1690746657
+966,ETRometer_1,0,,,1690742916
+967,WeatherStation_n1,,,,1690746704
+968,ETRometer_1,0,,,1690742952
+969,WeatherStation_n1,,,,1690746751
+970,ETRometer_1,0,,,1690742966
+971,WeatherStation_n1,,,,1690746798
+972,ETRometer_1,0,,,1690742966
+973,WeatherStation_n1,,,,1690746852
+974,ETRometer_1,0,,,1690742995
+975,WeatherStation_n1,,,,1690746908
+976,ETRometer_1,0,,,1690743010
+977,WeatherStation_n1,,,,1690746957
+978,ETRometer_1,0,,,1690743025
+979,WeatherStation_n1,,,,1690747015
+980,ETRometer_1,0,,,1690743025
+981,WeatherStation_n1,,,,1690747062
+982,ETRometer_1,0,,,1690743054
+983,WeatherStation_n1,,,,1690747109
+984,ETRometer_1,0,,,1690743068
+985,WeatherStation_n1,,,,1690747156
+986,ETRometer_1,0,,,1690743082
+987,WeatherStation_n1,,,,1690747231
+988,ETRometer_1,0,,,1690743082
+989,WeatherStation_n1,,,,1690747279
+990,ETRometer_1,0,,,1690743110
+991,WeatherStation_n1,,,,1690747335
+992,ETRometer_1,0,,,1690743124
+993,WeatherStation_n1,,,,1690747390
+994,ETRometer_1,0,,,1690743139
+995,WeatherStation_n1,,,,1690747437
+996,ETRometer_1,0,,,1690743156
+997,WeatherStation_n1,,,,1690747492
+998,ETRometer_1,0,,,1690743170
+999,WeatherStation_n1,,,,1690747546
+1000,ETRometer_1,0,,,1690743184
+1001,WeatherStation_n1,,,,1690747594
+1002,ETRometer_1,0,,,1690743199
+1003,WeatherStation_n1,,,,1692351071
+1004,ETRometer_1,0,,,1690743237
+1005,WeatherStation_n1,,,,1692351120
+1006,ETRometer_1,0,,,1690743251
+1007,WeatherStation_n1,,,,1692351169
+1008,ETRometer_1,0,,,1690743265
+1009,WeatherStation_n1,,,,1692351220
+1010,ETRometer_1,0,,,1690743338
+1011,WeatherStation_n1,,,,1692351278
+1012,ETRometer_1,0,,,1690743351
+1013,WeatherStation_n1,,,,1692351336
+1014,ETRometer_1,0,,,1690743366
+1015,WeatherStation_n1,,,,1692351395
+1016,ETRometer_1,0,,,1690743380
+1017,WeatherStation_n1,,,,1692351444
+1018,ETRometer_1,0,,,1690743394
+1019,WeatherStation_n1,,,,1693555391
+1020,ETRometer_1,0,,,1690743409
+1021,WeatherStation_n1,,,,1693555453
+1022,ETRometer_1,0,,,1690743423
+1023,WeatherStation_n1,,,,1693555517
+1024,ETRometer_1,0,,,1690743438
+1025,WeatherStation_n1,,,,1693555769
+1026,ETRometer_1,0,,,1690743452
+1027,WeatherStation_n1,,,,1693555833
+1028,ETRometer_1,0,,,1690743514
+1029,WeatherStation_n1,,,,1693555896
+1030,ETRometer_1,0,,,1690743529
+1031,WeatherStation_n1,,,,1693555958
+1032,ETRometer_1,0,,,1690743565
+1033,WeatherStation_n1,,,,1693556021
+1034,ETRometer_1,0,,,1690743580
+1035,WeatherStation_n1,,,,1693562622
+1036,ETRometer_1,0,,,1690743594
+1037,WeatherStation_n1,,,,1693562684
+1038,ETRometer_1,0,,,1690743608
+1039,WeatherStation_n1,,,,1693562747
+1040,ETRometer_1,0,,,1690743630
+1041,WeatherStation_n1,,,,1693562810
+1042,ETRometer_1,0,,,1690743645
+1043,WeatherStation_n1,,,,1693562872
+1044,ETRometer_1,0,,,1690743659
+1045,WeatherStation_n1,,,,1693562935
+1046,ETRometer_1,0,,,1690743673
+1047,WeatherStation_n1,,,,1693562997
+1048,ETRometer_1,0,,,1690743687
+1049,WeatherStation_n1,,,,1693563062
+1050,ETRometer_1,0,,,1690743701
+1051,WeatherStation_n1,,,,1693563124
+1052,ETRometer_1,0,,,1690743714
+1053,WeatherStation_n1,,,,1693563187
+1054,ETRometer_1,0,,,1690743729
+1055,WeatherStation_n1,,,,1693563250
+1056,ETRometer_1,0,,,1690743729
+1057,WeatherStation_n1,,,,1693563312
+1058,ETRometer_1,0,,,1690743757
+1059,WeatherStation_n1,,,,1693563375
+1060,ETRometer_1,0,,,1690743757
+1061,WeatherStation_n1,,,,1693563437
+1062,ETRometer_1,0,,,1690743786
+1063,WeatherStation_n1,,,,1693563500
+1064,ETRometer_1,0,,,1690743800
+1065,WeatherStation_n1,,,,1693563562
+1066,ETRometer_1,0,,,1690743800
+1067,WeatherStation_n1,,,,1693563625
+1068,ETRometer_1,0,,,1690743828
+1069,WeatherStation_n1,,,,1693563688
+1070,ETRometer_1,0,,,1690743842
+1071,WeatherStation_n1,,,,1693563752
+1072,ETRometer_1,0,,,1690743857
+1073,WeatherStation_n1,,,,1693563814
+1074,ETRometer_1,0,,,1690743870
+1075,WeatherStation_n1,,,,1693563877
+1076,ETRometer_1,0,,,1690743883
+1077,WeatherStation_n1,,,,1693564002
+1078,ETRometer_1,0,,,1690743898
+1079,WeatherStation_n1,,,,1693564064
+1080,ETRometer_1,0,,,1690743898
+1081,WeatherStation_n1,,,,1693564127
+1082,ETRometer_1,0,,,1690743912
+1083,WeatherStation_n1,,,,1693564190
+1084,ETRometer_1,0,,,1690743939
+1085,WeatherStation_n1,,,,1693564253
+1086,ETRometer_1,0,,,1690743954
+1087,WeatherStation_n1,,,,1693564315
+1088,ETRometer_1,0,,,1690743969
+1089,ETRometer_1,0,,,1690743968
+1090,ETRometer_1,0,,,1690743983
+1091,ETRometer_1,0,,,1690743999
+1092,ETRometer_1,0,,,1690744045
+1093,ETRometer_1,0,,,1690744060
+1094,ETRometer_1,0,,,1690744075
+1095,ETRometer_1,0,,,1690744089
+1096,ETRometer_1,0,,,1690744089
+1097,ETRometer_1,0,,,1690744118
+1098,ETRometer_1,0,,,1690744132
+1099,ETRometer_1,0,,,1690744132
+1100,ETRometer_1,0,,,1690744161
+1101,ETRometer_1,0,,,1690744175
+1102,ETRometer_1,0,,,1690744189
+1103,ETRometer_1,0,,,1690744228
+1104,ETRometer_1,0,,,1690744243
+1105,ETRometer_1,0,,,1690744256
+1106,ETRometer_1,0,,,1690744270
+1107,ETRometer_1,0,,,1690744285
+1108,ETRometer_1,0,,,1690744285
+1109,ETRometer_1,0,,,1690744300
+1110,ETRometer_1,0,,,1690744328
+1111,ETRometer_1,0,,,1690744342
+1112,ETRometer_1,0,,,1690744361
+1113,ETRometer_1,0,,,1690744375
+1114,ETRometer_1,0,,,1690744389
+1115,ETRometer_1,0,,,1690744389
+1116,ETRometer_1,0,,,1690744404
+1117,ETRometer_1,0,,,1690744432
+1118,ETRometer_1,0,,,1690744446
+1119,ETRometer_1,0,,,1690744461
+1120,ETRometer_1,0,,,1690744473
+1121,ETRometer_1,0,,,1690744488
+1122,ETRometer_1,0,,,1690744552
+1123,ETRometer_1,0,,,1690744566
+1124,ETRometer_1,0,,,1690744582
+1125,ETRometer_1,0,,,1690744596
+1126,ETRometer_1,0,,,1690744610
+1127,ETRometer_1,0,,,1690744623
+1128,ETRometer_1,0,,,1690744637
+1129,ETRometer_1,0,,,1690744652
+1130,ETRometer_1,0,,,1690744652
+1131,ETRometer_1,0,,,1690744679
+1132,ETRometer_1,0,,,1690744693
+1133,ETRometer_1,0,,,1690744707
+1134,ETRometer_1,0,,,1690744707
+1135,ETRometer_1,0,,,1690744721
+1136,ETRometer_1,0,,,1690744750
+1137,ETRometer_1,0,,,1690744764
+1138,ETRometer_1,0,,,1690744778
+1139,ETRometer_1,0,,,1690744794
+1140,ETRometer_1,0,,,1690744808
+1141,ETRometer_1,0,,,1690744823
+1142,ETRometer_1,0,,,1690744836
+1143,ETRometer_1,0,,,1690744850
+1144,ETRometer_1,0,,,1690744850
+1145,ETRometer_1,0,,,1690744863
+1146,ETRometer_1,0,,,1690744877
+1147,ETRometer_1,0,,,1690744904
+1148,ETRometer_1,0,,,1690744918
+1149,ETRometer_1,0,,,1690744933
+1150,ETRometer_1,0,,,1690744945
+1151,ETRometer_1,0,,,1690744960
+1152,ETRometer_1,0,,,1690744975
+1153,ETRometer_1,0,,,1690744989
+1154,ETRometer_1,0,,,1690745005
+1155,ETRometer_1,0,,,1690745019
+1156,ETRometer_1,0,,,1690745034
+1157,ETRometer_1,0,,,1690745046
+1158,ETRometer_1,0,,,1690745061
+1159,ETRometer_1,0,,,1690745076
+1160,ETRometer_1,0,,,1690745090
+1161,ETRometer_1,0,,,1690745103
+1162,ETRometer_1,0,,,1690745117
+1163,ETRometer_1,0,,,1690745132
+1164,ETRometer_1,0,,,1690745146
+1165,ETRometer_1,0,,,1690745146
+1166,ETRometer_1,0,,,1690745163
+1167,ETRometer_1,0,,,1690745191
+1168,ETRometer_1,0,,,1690745206
+1169,ETRometer_1,0,,,1690745221
+1170,ETRometer_1,0,,,1690745235
+1171,ETRometer_1,0,,,1690745250
+1172,ETRometer_1,0,,,1690745262
+1173,ETRometer_1,0,,,1690745275
+1174,ETRometer_1,0,,,1690745293
+1175,ETRometer_1,0,,,1690745307
+1176,ETRometer_1,0,,,1690745321
+1177,ETRometer_1,0,,,1690745336
+1178,ETRometer_1,0,,,1690745336
+1179,ETRometer_1,0,,,1690745364
+1180,ETRometer_1,0,,,1690745378
+1181,ETRometer_1,0,,,1690745393
+1182,ETRometer_1,0,,,1690745407
+1183,ETRometer_1,0,,,1690745420
+1184,ETRometer_1,0,,,1690745434
+1185,ETRometer_1,0,,,1690745449
+1186,ETRometer_1,0,,,1690745449
+1187,ETRometer_1,0,,,1690745476
+1188,ETRometer_1,0,,,1690745490
+1189,ETRometer_1,0,,,1690745504
+1190,ETRometer_1,0,,,1690745532
+1191,ETRometer_1,0,,,1690745547
+1192,ETRometer_1,0,,,1690745561
+1193,ETRometer_1,0,,,1690745575
+1194,ETRometer_1,0,,,1690745590
+1195,ETRometer_1,0,,,1690745604
+1196,ETRometer_1,0,,,1690745620
+1197,ETRometer_1,0,,,1690745635
+1198,ETRometer_1,0,,,1690745650
+1199,ETRometer_1,0,,,1690745664
+1200,ETRometer_1,0,,,1690745677
+1201,ETRometer_1,0,,,1690745691
+1202,ETRometer_1,0,,,1690745705
+1203,ETRometer_1,0,,,1690745720
+1204,ETRometer_1,0,,,1690745738
+1205,ETRometer_1,0,,,1690745753
+1206,ETRometer_1,0,,,1690745767
+1207,ETRometer_1,0,,,1690745786
+1208,ETRometer_1,0,,,1690745815
+1209,ETRometer_1,0,,,1690745828
+1210,ETRometer_1,0,,,1690745842
+1211,ETRometer_1,0,,,1690745857
+1212,ETRometer_1,0,,,1690745871
+1213,ETRometer_1,0,,,1690745910
+1214,ETRometer_1,0,,,1690745924
+1215,ETRometer_1,0,,,1690745924
+1216,ETRometer_1,0,,,1690745954
+1217,ETRometer_1,0,,,1690745968
+1218,ETRometer_1,0,,,1690745982
+1219,ETRometer_1,0,,,1690745995
+1220,ETRometer_1,0,,,1690746009
+1221,ETRometer_1,0,,,1690746023
+1222,ETRometer_1,0,,,1690746038
+1223,ETRometer_1,0,,,1690746055
+1224,ETRometer_1,0,,,1690746069
+1225,ETRometer_1,0,,,1690746089
+1226,ETRometer_1,0,,,1690746119
+1227,ETRometer_1,0,,,1690746133
+1228,ETRometer_1,0,,,1690746146
+1229,ETRometer_1,0,,,1690746160
+1230,ETRometer_1,0,,,1690746175
+1231,ETRometer_1,0,,,1690746190
+1232,ETRometer_1,0,,,1690746206
+1233,ETRometer_1,0,,,1690746234
+1234,ETRometer_1,0,,,1690746246
+1235,ETRometer_1,0,,,1690746261
+1236,ETRometer_1,0,,,1690746275
+1237,ETRometer_1,0,,,1690746289
+1238,ETRometer_1,0,,,1690746303
+1239,ETRometer_1,0,,,1690746318
+1240,ETRometer_1,0,,,1690746397
+1241,ETRometer_1,0,,,1690746412
+1242,ETRometer_1,0,,,1690746426
+1243,ETRometer_1,0,,,1690746440
+1244,ETRometer_1,0,,,1690746456
+1245,ETRometer_1,0,,,1690746470
+1246,ETRometer_1,0,,,1690746484
+1247,ETRometer_1,0,,,1690746498
+1248,ETRometer_1,0,,,1690746513
+1249,ETRometer_1,0,,,1690746527
+1250,ETRometer_1,0,,,1690746542
+1251,ETRometer_1,0,,,1690746557
+1252,ETRometer_1,0,,,1690746572
+1253,ETRometer_1,0,,,1690746586
+1254,ETRometer_1,0,,,1690746601
+1255,ETRometer_1,0,,,1690746615
+1256,ETRometer_1,0,,,1690746630
+1257,ETRometer_1,0,,,1690746644
+1258,ETRometer_1,0,,,1690746657
+1259,ETRometer_1,0,,,1690746673
+1260,ETRometer_1,0,,,1690746687
+1261,ETRometer_1,0,,,1690746702
+1262,ETRometer_1,0,,,1690746718
+1263,ETRometer_1,0,,,1690746747
+1264,ETRometer_1,0,,,1690746767
+1265,ETRometer_1,0,,,1690746783
+1266,ETRometer_1,0,,,1690746796
+1267,ETRometer_1,0,,,1690746810
+1268,ETRometer_1,0,,,1690746825
+1269,ETRometer_1,0,,,1690746839
+1270,ETRometer_1,0,,,1690746839
+1271,ETRometer_1,0,,,1690746867
+1272,ETRometer_1,0,,,1690746881
+1273,ETRometer_1,0,,,1690746894
+1274,ETRometer_1,0,,,1690746908
+1275,ETRometer_1,0,,,1690746923
+1276,ETRometer_1,0,,,1690746937
+1277,ETRometer_1,0,,,1690746982
+1278,ETRometer_1,0,,,1690746996
+1279,ETRometer_1,0,,,1690747010
+1280,ETRometer_1,0,,,1690747028
+1281,ETRometer_1,0,,,1690747046
+1282,ETRometer_1,0,,,1690747076
+1283,ETRometer_1,0,,,1690747090
+1284,ETRometer_1,0,,,1690747106
+1285,ETRometer_1,0,,,1690747121
+1286,ETRometer_1,0,,,1690747151
+1287,ETRometer_1,0,,,1690747170
+1288,ETRometer_1,0,,,1690747184
+1289,ETRometer_1,0,,,1690747198
+1290,ETRometer_1,0,,,1690747212
+1291,ETRometer_1,0,,,1690747231
+1292,ETRometer_1,0,,,1690747246
+1293,ETRometer_1,0,,,1690747260
+1294,ETRometer_1,0,,,1690747274
+1295,ETRometer_1,0,,,1690747288
+1296,ETRometer_1,0,,,1690747303
+1297,ETRometer_1,0,,,1690747317
+1298,ETRometer_1,0,,,1690747317
+1299,ETRometer_1,0,,,1690747348
+1300,ETRometer_1,0,,,1690747362
+1301,ETRometer_1,0,,,1690747376
+1302,ETRometer_1,0,,,1690747389
+1303,ETRometer_1,0,,,1690747404
+1304,ETRometer_1,0,,,1690747418
+1305,ETRometer_1,0,,,1690747432
+1306,ETRometer_1,0,,,1690747445
+1307,ETRometer_1,0,,,1690747460
+1308,ETRometer_1,0,,,1690747474
+1309,ETRometer_1,0,,,1690747489
+1310,ETRometer_1,0,,,1690747504
+1311,ETRometer_1,0,,,1690747532
+1312,ETRometer_1,0,,,1690747546
+1313,ETRometer_1,0,,,1690747560
+1314,ETRometer_1,0,,,1690747575
+1315,ETRometer_1,0,,,1690747589
+1316,ETRometer_1,0,,,1690747603
+1317,ETRometer_1,0,,,1690747617
+1318,WeatherStation_n1,,,,1693567771
+1319,WeatherStation_n1,,,,1693568211
+1323,WeatherStation_n1,,,,1693568274
+1324,WeatherStation_n1,,,,1693568336
+1325,WeatherStation_n1,,,,1693568399
+1326,WeatherStation_n1,,,,1693568462
+1327,WeatherStation_n1,,,,1693568525
+1328,WeatherStation_n1,,,,1693568589
+1329,WeatherStation_n1,,,,1693568652
+1330,WeatherStation_n1,,,,1693568715
+1331,WeatherStation_n1,,,,1693568777
+1332,WeatherStation_n1,,,,1693568840
+1333,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693566000
+1334,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693566000
+1335,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693566000
+1336,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693566000
+1337,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693566000
+1338,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693566000
+1339,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693566000
+1340,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693566000
+1341,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693566000
+1342,WeatherStation_n1,,,,1693568903
+1343,WeatherStation_n1,,,,1693568965
+1344,WeatherStation_n1,,,,1693569028
+1345,WeatherStation_n1,,,,1693569090
+1346,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693569600
+1347,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693569600
+1348,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693569600
+1349,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693569600
+1350,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693569600
+1351,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693569600
+1352,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693569600
+1353,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693569600
+1354,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693569600
+1367,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693573200
+1368,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693573200
+1369,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693573200
+1370,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693573200
+1371,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693573200
+1372,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693573200
+1373,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693573200
+1374,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693573200
+1375,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693573200
+1376,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693576800
+1377,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693576800
+1378,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693576800
+1379,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693576800
+1380,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693576800
+1381,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693576800
+1382,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693576800
+1383,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693576800
+1384,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693576800
+1385,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693580400
+1386,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693580400
+1387,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693580400
+1388,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693580400
+1389,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693580400
+1390,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693580400
+1391,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693580400
+1392,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693580400
+1393,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693580400
+1394,WeatherStation_n1,,,,1693585636
+1395,WeatherStation_n1,,,,1693585699
+1396,WeatherStation_n1,,,,1693585761
+1397,WeatherStation_n1,,,,1693585824
+1398,WeatherStation_n1,,,,1693585887
+1399,WeatherStation_n1,,,,1693585950
+1400,WeatherStation_n1,,,,1693586013
+1401,WeatherStation_n1,,,,1693586075
+1402,WeatherStation_n1,,,,1693586138
+1403,WeatherStation_n1,,,,1693586200
+1404,WeatherStation_n1,,,,1693586262
+1405,WeatherStation_n1,,,,1693586324
+1406,WeatherStation_n1,,,,1693586387
+1407,WeatherStation_n1,,,,1693586449
+1408,WeatherStation_n1,,,,1693586511
+1409,WeatherStation_n1,,,,1693586573
+1411,WeatherStation_n1,,,,1693586636
+1412,WeatherStation_n1,,,,1693586698
+1414,WeatherStation_n1,,,,1693586760
+1415,WeatherStation_n1,,,,1693586823
+1417,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693584000
+1418,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693584000
+1419,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693584000
+1420,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693584000
+1421,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693584000
+1422,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693584000
+1423,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693584000
+1424,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693584000
+1425,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693584000
+1426,WeatherStation_n1,,,,1693586885
+1427,WeatherStation_n1,,,,1693586948
+1428,WeatherStation_n1,,,,1693587010
+1429,WeatherStation_n1,,,,1693587072
+1430,WeatherStation_n1,,,,1693587134
+1432,WeatherStation_n1,,,,1693587196
+1433,WeatherStation_n1,,,,1693587259
+1434,WeatherStation_n1,,,,1693587321
+1435,WeatherStation_n1,,,,1693587384
+1436,WeatherStation_n1,,,,1693587446
+1437,WeatherStation_n1,,,,1693587509
+1438,WeatherStation_n1,,,,1693587571
+1439,WeatherStation_n1,,,,1693587634
+1440,WeatherStation_n1,,,,1693587696
+1441,WeatherStation_n1,,,,1693587759
+1444,WeatherStation_n1,,,,1693587822
+1446,WeatherStation_n1,,,,1693587884
+1448,WeatherStation_n1,,,,1693587946
+1449,WeatherStation_n1,,,,1693588008
+1450,WeatherStation_n1,,,,1693588073
+1451,WeatherStation_n1,,,,1693588135
+1454,WeatherStation_n1,,,,1693588197
+1456,WeatherStation_n1,,,,1693588259
+1457,WeatherStation_n1,,,,1693588321
+1458,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693587600
+1459,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693587600
+1460,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693587600
+1461,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693587600
+1462,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693587600
+1463,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693587600
+1464,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693587600
+1465,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693587600
+1466,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693587600
+1467,WeatherStation_n1,,,,1693591439
+1468,WeatherStation_n1,,,,1693591502
+1469,WeatherStation_n1,,,,1693591564
+1470,WeatherStation_n1,,,,1693591628
+1471,WeatherStation_n1,,,,1693591691
+1472,WeatherStation_n1,,,,1693591753
+1473,WeatherStation_n1,,,,1693591816
+1474,WeatherStation_n1,,,,1693591878
+1475,WeatherStation_n1,,,,1693591940
+1476,WeatherStation_n1,,,,1693592002
+1477,WeatherStation_n1,,,,1693592064
+1478,WeatherStation_n1,,,,1693592127
+1479,WeatherStation_n1,,,,1693592189
+1480,WeatherStation_n1,,,,1693592251
+1481,WeatherStation_n1,,,,1693592314
+1482,WeatherStation_n1,,,,1693592376
+1483,WeatherStation_n1,,,,1693592438
+1484,WeatherStation_n1,,,,1693592500
+1485,WeatherStation_n1,,,,1693592563
+1486,WeatherStation_n1,,,,1693592625
+1487,WeatherStation_n1,,,,1693592688
+1488,WeatherStation_n1,,,,1693592752
+1489,WeatherStation_n1,,,,1693592814
+1490,WeatherStation_n1,,,,1693592876
+1491,WeatherStation_n1,,,,1693592939
+1492,WeatherStation_n1,,,,1693593001
+1493,WeatherStation_n1,,,,1693593063
+1494,WeatherStation_n1,,,,1693593126
+1495,WeatherStation_n1,,,,1693593188
+1496,WeatherStation_n1,,,,1693593251
+1497,WeatherStation_n1,,,,1693593313
+1498,WeatherStation_n1,,,,1693593375
+1499,WeatherStation_n1,,,,1693593437
+1500,WeatherStation_n1,,,,1693593500
+1501,WeatherStation_n1,,,,1693593564
+1502,WeatherStation_n1,,,,1693593626
+1505,WeatherStation_n1,,,,1693593688
+1506,WeatherStation_n1,,,,1693593750
+1507,WeatherStation_n1,,,,1693593813
+1508,WeatherStation_n1,,,,1693593875
+1509,WeatherStation_n1,,,,1693593937
+1510,WeatherStation_n1,,,,1693593999
+1511,WeatherStation_n1,,,,1693594062
+1512,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693591200
+1513,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693591200
+1514,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693591200
+1515,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693591200
+1516,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693591200
+1517,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693591200
+1518,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693591200
+1519,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693591200
+1520,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693591200
+1521,WeatherStation_n1,,,,1693594124
+1522,WeatherStation_n1,,,,1693594186
+1523,WeatherStation_n1,,,,1693594249
+1524,WeatherStation_n1,,,,1693594311
+1525,WeatherStation_n1,,,,1693594374
+1526,WeatherStation_n1,,,,1693594436
+1527,WeatherStation_n1,,,,1693594498
+1528,WeatherStation_n1,,,,1693594560
+1529,WeatherStation_n1,,,,1693594623
+1530,WeatherStation_n1,,,,1693594685
+1531,WeatherStation_n1,,,,1693594747
+1532,WeatherStation_n1,,,,1693594809
+1533,WeatherStation_n1,,,,1693594872
+1534,WeatherStation_n1,,,,1693594935
+1535,WeatherStation_n1,,,,1693594997
+1536,WeatherStation_n1,,,,1693595059
+1537,WeatherStation_n1,,,,1693595121
+1538,WeatherStation_n1,,,,1693595184
+1539,WeatherStation_n1,,,,1693595246
+1540,WeatherStation_n1,,,,1693595309
+1541,WeatherStation_n1,,,,1693595371
+1542,WeatherStation_n1,,,,1693595433
+1543,WeatherStation_n1,,,,1693595495
+1544,WeatherStation_n1,,,,1693595557
+1545,WeatherStation_n1,,,,1693595620
+1546,WeatherStation_n1,,,,1693595682
+1547,WeatherStation_n1,,,,1693595744
+1548,WeatherStation_n1,,,,1693595806
+1549,WeatherStation_n1,,,,1693595868
+1550,WeatherStation_n1,,,,1693595930
+1551,WeatherStation_n1,,,,1693595993
+1552,WeatherStation_n1,,,,1693596055
+1553,WeatherStation_n1,,,,1693596117
+1554,WeatherStation_n1,,,,1693596180
+1555,WeatherStation_n1,,,,1693596242
+1556,WeatherStation_n1,,,,1693596304
+1557,WeatherStation_n1,,,,1693596366
+1558,WeatherStation_n1,,,,1693596428
+1559,WeatherStation_n1,,,,1693596490
+1560,WeatherStation_n1,,,,1693596552
+1561,WeatherStation_n1,,,,1693596615
+1562,WeatherStation_n1,,,,1693596677
+1563,WeatherStation_n1,,,,1693596740
+1564,WeatherStation_n1,,,,1693596802
+1565,WeatherStation_n1,,,,1693596865
+1566,WeatherStation_n1,,,,1693596928
+1567,WeatherStation_n1,,,,1693596990
+1568,WeatherStation_n1,,,,1693597052
+1569,WeatherStation_n1,,,,1693597114
+1570,WeatherStation_n1,,,,1693597176
+1571,WeatherStation_n1,,,,1693597239
+1572,WeatherStation_n1,,,,1693597302
+1573,WeatherStation_n1,,,,1693597364
+1574,WeatherStation_n1,,,,1693597426
+1575,WeatherStation_n1,,,,1693597489
+1576,WeatherStation_n1,,,,1693597551
+1577,WeatherStation_n1,,,,1693597614
+1578,WeatherStation_n1,,,,1693597676
+1579,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693594800
+1580,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693594800
+1581,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693594800
+1582,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693594800
+1583,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693594800
+1584,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693594800
+1585,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693594800
+1586,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693594800
+1587,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693594800
+1588,WeatherStation_n1,,,,1693597738
+1589,WeatherStation_n1,,,,1693597801
+1590,WeatherStation_n1,,,,1693597864
+1591,WeatherStation_n1,,,,1693597926
+1592,WeatherStation_n1,,,,1693597989
+1593,WeatherStation_n1,,,,1693598051
+1594,WeatherStation_n1,,,,1693598114
+1595,WeatherStation_n1,,,,1693598177
+1596,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693598400
+1597,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693598400
+1598,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693598400
+1599,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693598400
+1600,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693598400
+1601,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693598400
+1602,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693598400
+1603,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693598400
+1604,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693598400
+1605,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693602000
+1606,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693602000
+1607,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693602000
+1608,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693602000
+1609,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693602000
+1610,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693602000
+1611,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693602000
+1612,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693602000
+1613,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693602000
+1619,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693605600
+1620,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693605600
+1621,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693605600
+1622,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693605600
+1623,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693605600
+1624,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693605600
+1625,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693605600
+1626,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693605600
+1627,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693605600
+1628,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693645200
+1629,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693645200
+1630,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693645200
+1631,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693645200
+1632,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693645200
+1633,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693645200
+1634,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693645200
+1635,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693645200
+1636,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693645200
+1646,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693890000
+1647,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693890000
+1648,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693890000
+1649,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693890000
+1650,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693890000
+1651,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693890000
+1652,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693890000
+1653,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693890000
+1654,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693890000
+1675,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693893600
+1676,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693893600
+1677,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693893600
+1678,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693893600
+1679,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693893600
+1680,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693893600
+1681,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693893600
+1682,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693893600
+1683,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693893600
+1687,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693897200
+1688,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693897200
+1689,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693897200
+1690,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693897200
+1691,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693897200
+1692,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693897200
+1693,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693897200
+1694,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693897200
+1695,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693897200
+1696,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693900800
+1697,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693900800
+1698,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693900800
+1699,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693900800
+1700,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693900800
+1701,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693900800
+1702,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693900800
+1703,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693900800
+1704,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693900800
+1705,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693904400
+1706,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693904400
+1707,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693904400
+1708,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693904400
+1709,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693904400
+1710,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693904400
+1711,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693904400
+1712,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693904400
+1713,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693904400
+1714,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693908000
+1715,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693908000
+1716,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693908000
+1717,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693908000
+1718,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693908000
+1719,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693908000
+1720,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693908000
+1721,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693908000
+1722,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693908000
+1723,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693911600
+1724,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693911600
+1725,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693911600
+1726,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693911600
+1727,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693911600
+1728,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693911600
+1729,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693911600
+1730,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693911600
+1731,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693911600
+1732,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693915200
+1733,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693915200
+1734,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693915200
+1735,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693915200
+1736,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693915200
+1737,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693915200
+1738,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693915200
+1739,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693915200
+1740,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693915200
+1741,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693918800
+1742,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693918800
+1743,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693918800
+1744,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693918800
+1745,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693918800
+1746,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693918800
+1747,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693918800
+1748,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693918800
+1749,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693918800
+1750,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693922400
+1751,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693922400
+1752,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693922400
+1753,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693922400
+1754,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693922400
+1755,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693922400
+1756,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693922400
+1757,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693922400
+1758,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693922400
+1759,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693926000
+1760,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693926000
+1761,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693926000
+1762,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693926000
+1763,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693926000
+1764,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693926000
+1765,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693926000
+1766,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693926000
+1767,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693926000
+1768,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693929600
+1769,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693929600
+1770,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693929600
+1771,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693929600
+1772,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693929600
+1773,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693929600
+1774,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693929600
+1775,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693929600
+1776,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693929600
+1777,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693933200
+1778,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693933200
+1779,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693933200
+1780,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693933200
+1781,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693933200
+1782,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693933200
+1783,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693933200
+1784,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693933200
+1785,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693933200
+1786,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693936800
+1787,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693936800
+1788,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693936800
+1789,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693936800
+1790,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693936800
+1791,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693936800
+1792,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693936800
+1793,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693936800
+1794,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693936800
+1795,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693940400
+1796,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693940400
+1797,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693940400
+1798,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693940400
+1799,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693940400
+1800,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693940400
+1801,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693940400
+1802,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693940400
+1803,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693940400
+1804,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693944000
+1805,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693944000
+1806,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693944000
+1807,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693944000
+1808,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693944000
+1809,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693944000
+1810,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693944000
+1811,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693944000
+1812,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693944000
+1813,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693947600
+1814,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693947600
+1815,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693947600
+1816,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693947600
+1817,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693947600
+1818,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693947600
+1819,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693947600
+1820,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693947600
+1821,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693947600
+1822,WeatherStation_v0,,"[-3.48101, 40.312878]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693951200
+1823,WeatherStation_v1,,"[12.851667, 43.686944]",urn:ngsi-ld:AgriFarm:001,1693951200
+1824,WeatherStation_v2,,"[10.809061, 44.88142]",urn:ngsi-ld:AgriFarm:002,1693951200
+1825,WeatherStation_v3,,"[11.40969, 44.54938]",urn:ngsi-ld:AgriFarm:003,1693951200
+1826,WeatherStation_v4,,"[11.40517, 44.51433]",urn:ngsi-ld:AgriFarm:004,1693951200
+1827,WeatherStation_v5,,"[11.35339, 44.50046]",urn:ngsi-ld:AgriFarm:005,1693951200
+1828,WeatherStation_v6,,"[11.47373, 44.41341]",urn:ngsi-ld:AgriFarm:006,1693951200
+1829,WeatherStation_v7,,"[12.29216, 55.65173]",urn:ngsi-ld:AgriFarm:006,1693951200
+1830,WeatherStation_v8,,"[5.1729, 51.366]",urn:ngsi-ld:AgriFarm:6991ac61-8db8-4a32-8fef-c462e2369055,1693951200
