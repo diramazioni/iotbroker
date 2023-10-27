@@ -18,7 +18,7 @@ for csv_file in csv_files:
     df = pd.read_csv(input_csv)
 
     # Convert the "timestamp" column to ISO 8601 format
-    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s', origin='unix')
+    df['timestamp'] = pd.to_datetime(df['timestamp']/1000, unit='s', origin='unix')
     if 'Device' in csv_file:         
         df['calibration'] = df['calibration'].apply(lambda x: bool(int(x)) if not np.isnan(x) else None)
     df.to_csv(output_csv, index=False)

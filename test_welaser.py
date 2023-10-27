@@ -242,6 +242,7 @@ def test_WeatherStation():
         {
             "name": "WeatherStation_n_test",
             "id": "urn:ngsi-ld:Device:WeatherStation_n_test",
+            "timestamp": TS*1000,
             "value": [
                 {
                     "name": "WeatherStation_n_test_BAT",
@@ -299,13 +300,22 @@ def test_WeatherStation():
                     "units": ["degC", "degC", "degC", "%", "%", "%"],
                 },
             ],
-            "timestamp": TS*1000, 
         }
     )
     #1690740135000
     mqtt_publish(mqtts_client, ptopic, payload)
 
-
+def test_WeatherStationStd():
+    print("=" * 80 + "\ntest_WeatherStationStd")
+    device = "Device:WeatherStation_s_test"
+    ptopic = f"{FIWARE}{ENTITY}{device}{ATTRS}"
+    print("ptopic=" + ptopic)
+    ID = f"{ENTITY}{device}"
+    payload = json.dumps(
+        
+    )    
+    mqtt_publish(mqtts_client, ptopic, payload)
+    
 def test_WeatherStationVirtual():
     print("=" * 80 + "\ntest_WeatherStationVirtual")
     device = "Device:WeatherStation_v_test"
@@ -444,10 +454,11 @@ if __name__ == "__main__":
                     "x" to exit., \n\
                     "1" test_Canera \n\
                     "2" test_WeatherStation \n\
-                    "3" test_WeatherStationVirtual\n\
-                    "4" test_ETRometer\n\
-                    "5" test Camera sending to Ardesia\n\
-                    "6" test FTP servers ARDESIA & CESENA\n'
+                    "3" test_WeatherStationStd\n\
+                    "4" test_WeatherStationVirtual\n\
+                    "5" test_ETRometer\n\
+                    "c" test Camera sending to Ardesia\n\
+                    "f" test FTP servers ARDESIA & CESENA\n'
             )
             print("\/" * 40)
             if in_ in ["1"]:
@@ -455,12 +466,14 @@ if __name__ == "__main__":
             elif in_ in ["2"]:
                 test_WeatherStation()
             elif in_ in ["3"]:
-                test_WeatherStationVirtual()
+                test_WeatherStationStd()
             elif in_ in ["4"]:
-                test_ETRometer()
+                test_WeatherStationVirtual()
             elif in_ in ["5"]:
+                test_ETRometer()
+            elif in_ in ["c"]:
                 test_ARDESIA()
-            elif in_ in ["6"]:
+            elif in_ in ["f"]:
                 print("test ftp connections")
                 print("Testing FTP Ardesia")
                 client_from = ftp_connect(HOST_FROM, PORT_FROM, USER_FROM, PASS_FROM)
