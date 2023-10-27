@@ -14,9 +14,7 @@ export async function GET({ url, params }) {
 	}
   const db_result = await prisma.device.findMany({
     where: where,
-      // etrometers: {
-      //   some: {} // This condition ensures at least one ETRometer is associated
-      // },
+    orderBy: [{timestamp: 'asc'}],
 
     include: {
       etrometers: true,

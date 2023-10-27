@@ -20,7 +20,7 @@ export async function GET({ url, params }) {
     }
   });
 
-
+  console.log(db_result)
   const transformedData = db_result.map(entry => {
     const { timestamp, weatherStationStd } = entry;
     

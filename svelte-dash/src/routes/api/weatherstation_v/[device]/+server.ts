@@ -14,7 +14,7 @@ export async function GET({ url, params }) {
 	}
   const db_result = await prisma.device.findMany({
     where:  where,
-
+    orderBy: [{timestamp: 'asc'}],
     include: {
       weatherStationVirtual: true
     }
