@@ -14,12 +14,7 @@ export async function GET({ url, params }) {
 	}
   const db_result = await prisma.device.findMany({
     where:  where,
-    // {
-    //   name: { 'equals': params.device },
-    //   weatherStation: {
-    //     isNot: null,
-    //   },
-    // },
+    orderBy: [{timestamp: 'asc'}],
     include: {
       weatherStation: true
     }
