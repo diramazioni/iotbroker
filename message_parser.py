@@ -6,6 +6,8 @@ from prisma import Prisma
 import json
 import logging
 
+from prisma import Json
+
 #from prisma.models import DateTime
 
 """
@@ -32,6 +34,7 @@ class MessageParser:
     async def db_entry(self, payload) -> None:
         try:
             e = payload
+            # print(e)
             if "Camera" in e["id"] or "camera" in e["id"]:
                 device_type = "Camera"
             elif "ETRometer" in e["name"]:
@@ -49,11 +52,19 @@ class MessageParser:
             timestamp = datetime.utcfromtimestamp(int(e["timestamp"]/1000))  # .isoformat()
             logging.debug(f"Timestamp: {timestamp}")
             
+            # Insert the full message in the db
+            message = {
+                "timestamp": timestamp,
+                "device_type": device_type,
+                "message": Json(payload)
+            }
+            await self.db.messages.create(data=message)
+            
             # Camera message: insert directly ino the db
             if device_type == "Camera":
                 logging.info(f"Camera: {e['id']}")
                 camera_obj = {"timestamp": timestamp, "picture": e["picture"]}
-                await self.db.camera.create(camera_obj)
+                await self.db.camera.create(data=camera_obj)
                 return
 
             # Cache the Units table
@@ -61,8 +72,8 @@ class MessageParser:
                 units_db = await self.db.units.find_many()
                 logging.info("*" * 80)
                 for u in units_db:
-                    self.units[(u.type, u.name)] = u.value
-                logging.info(self.units)
+                    self.units[(u.device_type, u.name)] = u.value
+                logging.debug(self.units)
                 
             # Create the units if they don't exist
             async def insert_units(device_type, unames={}):
@@ -72,10 +83,12 @@ class MessageParser:
                         units_obj = {
                             "name": name,
                             "value": value,
-                            "type": device_type,
+                            "device_type": device_type,
                         }
-                        units_db = await self.db.units.create(units_obj)
+                        units_db = await self.db.units.create(data=units_obj)
+                        logging.info(f"Create units {name}")
                         self.units[(device_type, name)] = value
+                        
                     else:
                         logging.debug("skipping " + name)
             if all(isinstance(item, (int, float)) for item in e["value"]):
@@ -98,7 +111,7 @@ class MessageParser:
                 device_obj["areaServed"] = e["areaServed"]
             if "location" in e:
                 device_obj["location"] = str(e["location"]["coordinates"])
-            device_db = await self.db.device.create(device_obj)
+            device_db = await self.db.device.create(data=device_obj)
 
             sens_obj = {
                 "device": {
@@ -118,13 +131,13 @@ class MessageParser:
                     sens_obj.update(d)
                     
             if device_type == "ETRometer":
-                await self.db.etrometer.create(sens_obj)
+                await self.db.etrometer.create(data=sens_obj)
             elif device_type == "WeatherStation_v":
-                await self.db.weatherstationvirtual.create(sens_obj)
+                await self.db.weatherstationvirtual.create(data=sens_obj)
             elif device_type == "WeatherStation_n":
-                await self.db.weatherstation.create(sens_obj)
+                await self.db.weatherstation.create(data=sens_obj)
             elif device_type == "WeatherStation_s":
-                await self.db.weatherstationstd.create(sens_obj)
+                await self.db.weatherstationstd.create(data=sens_obj)
                 
             logging.info("-" * 80)
             logging.info(sens_obj)
@@ -151,7 +164,7 @@ async def main() -> None:
     import glob 
     loop = asyncio.get_event_loop()
     background_tasks = set()
-    for f in glob.glob("data/test/*.json"):
+    for f in glob.glob("dev_data/test/*.json"):
         print(f"Processing {f}")
         await asyncio.sleep(1)
         task = loop.create_task(message_parser.process_data(f))

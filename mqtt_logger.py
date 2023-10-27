@@ -111,9 +111,7 @@ async def main(interactive=False):
             # Here ends the flow, it'll keep watching if new message arrives and publish to MQTTS
             counter += 1
             if counter > 3600:  # restart the program every hour
-                import datetime
-                datetime = datetime.datetime.now()
-                logging.info("RESTART!", datetime)
+                logging.info("RESTART!")
                 break
             await asyncio.sleep(1)
     except asyncio.exceptions.CancelledError:

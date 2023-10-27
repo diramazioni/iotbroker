@@ -100,12 +100,18 @@ model ETRometer {
 
 model Units {
   id    Int    @id @default(autoincrement())
-  name  String @unique
+  name  String
   value String
-  type  String
+  device_type  String
 
 }
 
+model Messages {
+  id    Int    @id @default(autoincrement())
+  timestamp DateTime
+  device_type String
+  message      Json
+}
   //ETR     ETRometer[]
   //WeatherStation WeatherStation[]
 
