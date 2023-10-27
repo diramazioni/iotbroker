@@ -9,9 +9,14 @@ export 	const menu = [
     {
         name: 'Home',
         href: `${base}/`,
-    },{
+    },
+    {
         name: 'Weather Stations',
         href: `${base}/d/weatherstation_n`,
+    },
+    {
+        name: 'Weather Stations Std',
+        href: `${base}/d/weatherstation_s`,
     },
     // {
     //     name: 'Virtual Weather Stations',

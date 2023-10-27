@@ -224,31 +224,34 @@ def mess_append(device, message):
     except all_errors as e:
         logging.error(f"Error in append -> {e}")
 
+
 count = 1
 import random
+
+
 # =========================================================
 def test_WeatherStation():
     global count
     count += 3600
-    
+
     device = "Device:WeatherStation_n_test"
     ptopic = f"{FIWARE}{ENTITY}{device}{ATTRS}"
     print("ptopic=" + ptopic)
     ID = f"{ENTITY}{device}"
-    TS = time.time() + count 
+    TS = time.time() + count
     format_TS = datetime.datetime.fromtimestamp(TS).strftime("%Y-%m-%dT%H:%M:%SZ")
     print("=" * 80 + f"\ntest_WeatherStation {format_TS}")
     payload = json.dumps(
         {
             "name": "WeatherStation_n_test",
             "id": "urn:ngsi-ld:Device:WeatherStation_n_test",
-            "timestamp": TS*1000,
+            "timestamp": TS * 1000,
             "value": [
                 {
                     "name": "WeatherStation_n_test_BAT",
                     "id": "urn:ngsi-ld:Device:WeatherStation_n_test_BAT",
                     "controlledProperty": ["Battery_Voltage"],
-                    "value": [random.uniform(4.130879741, 5.0) ], #4.130879741
+                    "value": [random.uniform(4.130879741, 5.0)],  # 4.130879741
                     "units": ["volts"],
                 },
                 {
@@ -262,7 +265,10 @@ def test_WeatherStation():
                     "name": "WeatherStation_n_test_WIND",
                     "id": "urn:ngsi-ld:Device:WeatherStation_n_test_WIND",
                     "controlledProperty": ["W_vel", "W_dir"],
-                    "value": [random.uniform(78.63938536, 88.63938536), random.uniform(100.0, 134.9650667)],
+                    "value": [
+                        random.uniform(78.63938536, 88.63938536),
+                        random.uniform(100.0, 134.9650667),
+                    ],
                     "units": ["m/s", "deg-N-cw"],
                 },
                 {
@@ -275,7 +281,13 @@ def test_WeatherStation():
                         "GasResistance",
                         "Altitude",
                     ],
-                    "value": [random.uniform(20.0, 29.62742615), random.uniform(800.0, 1005.58), random.uniform(20.0, 50.22343063), random.uniform(400.0, 834.359), random.uniform(80.0, 103.4343262)],
+                    "value": [
+                        random.uniform(20.0, 29.62742615),
+                        random.uniform(800.0, 1005.58),
+                        random.uniform(20.0, 50.22343063),
+                        random.uniform(400.0, 834.359),
+                        random.uniform(80.0, 103.4343262),
+                    ],
                     "units": ["degC", "hPa", "%", "KOhms", "m"],
                 },
                 {
@@ -302,20 +314,82 @@ def test_WeatherStation():
             ],
         }
     )
-    #1690740135000
+    # 1690740135000
     mqtt_publish(mqtts_client, ptopic, payload)
+
 
 def test_WeatherStationStd():
     print("=" * 80 + "\ntest_WeatherStationStd")
     device = "Device:WeatherStation_s_test"
     ptopic = f"{FIWARE}{ENTITY}{device}{ATTRS}"
     print("ptopic=" + ptopic)
-    ID = f"{ENTITY}{device}"
-    payload = json.dumps(
-        
-    )    
-    mqtt_publish(mqtts_client, ptopic, payload)
+
+    global count
+    count += 1800
+    TS = time.time() + count
     
+    payload = json.dumps(
+        {
+            "name": "WeatherStation_s_test",
+            "id": "urn:ngsi-ld:Device:WeatherStation_s_test",
+            "wlan": "SPEEDY",
+            "timestamp": TS * 1000,
+            "value": [
+                {
+                    "name": "WeatherStation_s_test_RS",
+                    "id": "urn:ngsi-ld:Device:_RS",
+                    "controlledProperty": ["Solar_Radiation"],
+                    "value": [random.uniform(2.396604061, 3)],
+                    "units": ["W/m2"],
+                },
+                {
+                    "name": "WeatherStation_s_test_PA",
+                    "id": "urn:ngsi-ld:Device:_PA",
+                    "controlledProperty": ["Atmospheric_Pressure"],
+                    "value": [random.uniform(979.1425781, 1000)],
+                    "units": ["hPa"],
+                },
+                {
+                    "name": "WeatherStation_s_test_TA",
+                    "id": "urn:ngsi-ld:Device:_TA",
+                    "controlledProperty": ["Air_Temperature"],
+                    "value": [random.uniform(23.64798927, 19)],
+                    "units": ["decC"],
+                },
+                {
+                    "name": "WeatherStation_s_test_RH",
+                    "id": "urn:ngsi-ld:Device:_RH",
+                    "controlledProperty": ["Relative_Humidity"],
+                    "value": [random.uniform(32.53982925, 60)],
+                    "units": ["%"],
+                },
+                {
+                    "name": "WeatherStation_s_test_WV",
+                    "id": "urn:ngsi-ld:Device:_WV",
+                    "controlledProperty": ["Wind_Velocity"],
+                    "value": [random.uniform(2.299999952, 6)],
+                    "units": ["km/h"],
+                },
+                {
+                    "name": "WeatherStation_s_test_WD",
+                    "id": "urn:ngsi-ld:Device:_WD",
+                    "controlledProperty": ["Wind_Direction"],
+                    "value": [random.uniform(1, 360)],
+                    "units": ["degNcw"],
+                },
+                {
+                    "name": "WeatherStation_s_test_PR",
+                    "id": "urn:ngsi-ld:Device:_PR",
+                    "controlledProperty": ["Rainfall"],
+                    "value": [random.uniform(0, 5)],
+                    "units": ["mm"],
+                },
+            ],
+        }
+    )
+    mqtt_publish(mqtts_client, ptopic, payload)
+
+
 def test_WeatherStationVirtual():
     print("=" * 80 + "\ntest_WeatherStationVirtual")
     device = "Device:WeatherStation_v_test"
@@ -487,5 +561,3 @@ if __name__ == "__main__":
     finally:
         mqtt_client.loop_stop()
         mqtts_client.loop_stop()
-
-        
