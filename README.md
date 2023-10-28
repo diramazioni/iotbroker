@@ -68,6 +68,8 @@ Listening to all the messages is `mqtt_logger.py`that sends websocket event to t
 ### Public facing API
 Public facing API are available from the `/api` routes, easing the integration of other web app:
 
+- GET all the messages for a given device as json `${base}/api/messages/${device_type}`  i.e. `/api/messages/weatherstation_s`
+
 - To GET the CSV for the selected device `${base}/api/csv/${device_type}/${device_selected}` i.e. `/api/csv/weatherstation_v/WeatherStation_v0` 
 
 - By using POST to get the CSV it's possible to select also the categories and start/end date
