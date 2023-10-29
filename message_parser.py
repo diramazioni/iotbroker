@@ -34,7 +34,16 @@ class MessageParser:
     async def db_entry(self, payload) -> None:
         try:
             e = payload
-            # print(e)
+            sens = {}
+            timestamp = datetime.utcfromtimestamp(int(e["timestamp"]/1000))  # .isoformat()
+            logging.debug(f"Timestamp: {timestamp}")
+            
+            # skip if an invalid timestamp
+            if timestamp < datetime(2023, 1, 1):
+                logging.error("T" * 80)
+                logging.error(f"timestamp out of range {e['timestamp']}")
+                return
+            
             if "Camera" in e["id"] or "camera" in e["id"]:
                 device_type = "Camera"
             elif "ETRometer" in e["name"]:
@@ -47,10 +56,6 @@ class MessageParser:
                 device_type = "WeatherStation_s"
             logging.info("-" * 80)
             logging.info(device_type)
-
-            sens = {}
-            timestamp = datetime.utcfromtimestamp(int(e["timestamp"]/1000))  # .isoformat()
-            logging.debug(f"Timestamp: {timestamp}")
             
             # Insert the full message in the db
             message = {
@@ -91,6 +96,7 @@ class MessageParser:
                         
                     else:
                         logging.debug("skipping " + name)
+            # Capture all the properties
             if all(isinstance(item, (int, float)) for item in e["value"]):
                 sens[e["name"]] = dict(zip(e["controlledProperty"], e["value"]))
                 units = dict(zip(e["controlledProperty"], e["units"]))
@@ -111,6 +117,8 @@ class MessageParser:
                 device_obj["areaServed"] = e["areaServed"]
             if "location" in e:
                 device_obj["location"] = str(e["location"]["coordinates"])
+            
+            # Create Device
             device_db = await self.db.device.create(data=device_obj)
 
             sens_obj = {
