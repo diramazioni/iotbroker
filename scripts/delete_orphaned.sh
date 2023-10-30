@@ -1,1 +1,1 @@
-sudo -u postgres psql -U postgres -d iotgreenlab -a -f ../dev_data/delete_orphaned.sql
+sudo -u postgres psql -U postgres -d iotbroker -a -f ./dev_data/delete_orphaned.sql

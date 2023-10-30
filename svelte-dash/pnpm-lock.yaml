@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@carbon/charts-svelte':
-    specifier: ^1.13.1
-    version: 1.13.1(d3-cloud@1.2.7)(d3-sankey@0.12.3)(d3@7.8.5)(svelte@4.2.1)
+    specifier: ^1.13.6
+    version: 1.13.6(d3-cloud@1.2.7)(d3-sankey@0.12.3)(d3@7.8.5)(svelte@4.2.1)
   '@carbon/styles':
     specifier: ^1.38.0
     version: 1.38.0
@@ -141,20 +141,20 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.19
 
-  /@babel/runtime@7.22.15:
-    resolution: {integrity: sha512-T0O+aa+4w0u06iNmapipJXMV4HoUir03hpx3/YqXXhu9xim3w+dVphjFWl1OH8NbZHw5Lbm9k45drDkgq2VNNA==}
+  /@babel/runtime@7.23.2:
+    resolution: {integrity: sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
     dev: false
 
-  /@carbon/charts-svelte@1.13.1(d3-cloud@1.2.7)(d3-sankey@0.12.3)(d3@7.8.5)(svelte@4.2.1):
-    resolution: {integrity: sha512-uuFwyhBafjOkY9/GiTTMa+kf2Pa9gflTN01NLrLoy5XPGYKQ+Z9o9MCzs/1cBs216KxuYMEMGksJ4l1jegSTPg==}
+  /@carbon/charts-svelte@1.13.6(d3-cloud@1.2.7)(d3-sankey@0.12.3)(d3@7.8.5)(svelte@4.2.1):
+    resolution: {integrity: sha512-xudNm2FjBi55UoPa0onEx6SOphRBS8QVMT/3Au8OhwOufs2KKM/o5HcWJAY+uBq+sWM5Ccuvh+Il3gO7OXjX4w==}
     requiresBuild: true
     peerDependencies:
       svelte: ^3.31.0 || ^4.0.0
     dependencies:
-      '@carbon/charts': 1.13.1(d3-cloud@1.2.7)(d3-sankey@0.12.3)(d3@7.8.5)
+      '@carbon/charts': 1.13.6(d3-cloud@1.2.7)(d3-sankey@0.12.3)(d3@7.8.5)
       '@carbon/telemetry': 0.1.0
       svelte: 4.2.1
     transitivePeerDependencies:
@@ -163,8 +163,8 @@ packages:
       - d3-sankey
     dev: false
 
-  /@carbon/charts@1.13.1(d3-cloud@1.2.7)(d3-sankey@0.12.3)(d3@7.8.5):
-    resolution: {integrity: sha512-6QnaBEsZeP3muWxk1M+Z4TZzshO7fwZo1HZWqwVzcgLdoEiMt1+r4FaowGXmALqa1W4auDL9dPv+fub5SBpN3A==}
+  /@carbon/charts@1.13.6(d3-cloud@1.2.7)(d3-sankey@0.12.3)(d3@7.8.5):
+    resolution: {integrity: sha512-Y4VHmMsOODzZ7MUss9AC/Byp3fqO/WKKSQb0x7cwNKOvJaKxSw1wn5n6Y6p2Rw+iW05ik4ptFKZtGvgZA4yHYg==}
     requiresBuild: true
     peerDependencies:
       d3: ^7.0.0
@@ -176,7 +176,7 @@ packages:
       d3-sankey:
         optional: true
     dependencies:
-      '@carbon/colors': 11.19.0
+      '@carbon/colors': 11.20.1
       '@carbon/telemetry': 0.1.0
       '@carbon/utils-position': 1.1.4
       carbon-components: 10.58.10
@@ -192,6 +192,10 @@ packages:
 
   /@carbon/colors@11.19.0:
     resolution: {integrity: sha512-cRDnv9GfktZo+p/t/Lsy2B3yvMbDI1Ht2ECU0rAikClQHVnOffz791Q4m2gy2STPdISnzjFSPmoRxGKLfYhLRA==}
+    dev: false
+
+  /@carbon/colors@11.20.1:
+    resolution: {integrity: sha512-CiW+05/LaYCZ8LW5ioEz4EL0DBxI0psZGdiA7leQSH/Wvec7mvEANhze3lYhfx3ZH700Q4Y2O9/roW+yLB1CQw==}
     dev: false
 
   /@carbon/feature-flags@0.16.0:
@@ -1880,7 +1884,7 @@ packages:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
     dependencies:
-      '@babel/runtime': 7.22.15
+      '@babel/runtime': 7.23.2
     dev: false
 
   /date-picker-svelte@2.8.0(svelte@4.2.1):
