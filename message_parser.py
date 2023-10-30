@@ -118,9 +118,7 @@ class MessageParser:
             if "location" in e:
                 device_obj["location"] = str(e["location"]["coordinates"])
             
-            # Create Device
-            device_db = await self.db.device.create(data=device_obj)
-
+            # Create sensors 
             sens_obj = {
                 "device": {
                     "connect": {
@@ -150,6 +148,9 @@ class MessageParser:
             logging.info("-" * 80)
             logging.info(sens_obj)
             
+            # Create Device
+            device_db = await self.db.device.create(data=device_obj)
+
         except Exception as e:
             logging.error(f"db_entry error:{e}")  # Print the exception
             logging.error(traceback.format_exc())
