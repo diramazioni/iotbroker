@@ -77,8 +77,8 @@
 
 <h2>Devices</h2>
 
-<div class="grid grid-cols-3 grid-flow-col gap-2 m-5 w-2/4">
-	<div>
+<div class="flex m-5 w-2/4">
+	<div class="flex-1" >
 		<select bind:value={device_selected} on:change={() => update_data()} class="devices">
 			{#each devices as device, index}
 				<option value={device}>
@@ -87,12 +87,12 @@
 			{/each}
 		</select>
 	</div>
-	<div>
+	<div class="flex-1">
 		start
 		<DateInput bind:value={domain_range[0]} closeOnSelection={true} dynamicPositioning={true} on:select={() => update_data()}/>
 		<!-- <input type="text" bind:value={domain_range[0]} class="range text-2xl" on:change={() => update_data()}/> -->
 	</div>
-	<div>
+	<div class="flex-1">
 		end
 		<DateInput bind:value={domain_range[1]} closeOnSelection={true} dynamicPositioning={true} on:select={() => update_data()}/>
 		<!-- <input type="text" bind:value={domain_range[1]} class="range text-2xl" on:change={() => update_data()}/> -->

@@ -11,17 +11,17 @@ export 	const menu = [
         href: `${base}/`,
     },
     {
-        name: 'Weather Stations',
+        name: 'WS New',
         href: `${base}/d/weatherstation_n`,
     },
     {
-        name: 'Weather Stations Std',
+        name: 'WS Standard',
         href: `${base}/d/weatherstation_s`,
     },
-    // {
-    //     name: 'Virtual Weather Stations',
-    //     href: `${base}/d/weatherstation_v`,
-    // },
+    {
+        name: 'Virtual WS',
+        href: `${base}/d/weatherstation_v`,
+    },
     {
         name: 'Etrometers',
         href: `${base}/d/etrometer`,

@@ -7,6 +7,7 @@ export const prerender = false;
 export async function GET({ url, params }) {
 	const startParam = url.searchParams.get('start');
 	const endParam = url.searchParams.get('end');
+	const device_type = params.device_type
 	const where = {
 		device_type: { 
 			'equals': device_type,
@@ -19,7 +20,6 @@ export async function GET({ url, params }) {
 			lte: endParam  // end
 		}
 	}	
-	const device_type = params.device_type
 	const db_result = await prisma.messages.findMany({
 		where:  where,
 		orderBy:  { timestamp: 'asc' } 
