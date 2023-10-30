@@ -5,6 +5,8 @@
 	import { LineChart, AreaChart } from '@carbon/charts-svelte'
 	import '@carbon/styles/css/styles.css'
 	import '@carbon/charts-svelte/styles.css'
+	import { DateInput } from 'date-picker-svelte'
+
 	import { writable } from 'svelte/store'
 	import { fetch_data, fetch_opt } from '$lib/shared'
 
@@ -29,7 +31,7 @@
 		device_data = await fetch_data(fetch, device_type, device_selected, domain_range)
 		device_opt = await fetch_opt(fetch, device_type, device_selected, domain_range)
 		//device_opt.zoomBar.top.initialZoomDomain = domain_range
-		
+		console.log(`update ${domain_range}`)
 	}
 
 	async function handleWebSocketMessage(event) {
@@ -75,22 +77,26 @@
 
 <h2>Devices</h2>
 
-<select bind:value={device_selected} on:change={() => update_data()} class="devices">
-	{#each devices as device, index}
-		<option value={device}>
-			{device}
-		</option>
-	{/each}
-</select>
-<div class="w-100 text-center">
-	<label class="ml-3">
+<div class="grid grid-cols-3 grid-flow-col gap-2 m-5 w-2/4">
+	<div>
+		<select bind:value={device_selected} on:change={() => update_data()} class="devices">
+			{#each devices as device, index}
+				<option value={device}>
+					{device}
+				</option>
+			{/each}
+		</select>
+	</div>
+	<div>
 		start
-		<input type="text" bind:value={domain_range[0]} class="range text-2xl" on:change={() => update_data()}/>
-	</label>
-	<label class="ml-3">
+		<DateInput bind:value={domain_range[0]} closeOnSelection={true} dynamicPositioning={true} on:select={() => update_data()}/>
+		<!-- <input type="text" bind:value={domain_range[0]} class="range text-2xl" on:change={() => update_data()}/> -->
+	</div>
+	<div>
 		end
-		<input type="text" bind:value={domain_range[1]} class="range text-2xl" on:change={() => update_data()}/>
-	</label>
+		<DateInput bind:value={domain_range[1]} closeOnSelection={true} dynamicPositioning={true} on:select={() => update_data()}/>
+		<!-- <input type="text" bind:value={domain_range[1]} class="range text-2xl" on:change={() => update_data()}/> -->
+	</div>
 </div>
 
 
