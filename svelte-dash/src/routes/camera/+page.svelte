@@ -31,10 +31,10 @@
   {/each}
 
 </div>
+<!--
 <h1>Robot images</h1>
 <div class="grid grid-cols-4 gap-4 m-4">
   {#each Object.keys(robot_images) as src}
-	<!-- {#each robot_images as src } -->
     <div class="col-span-2 md:col-span-1">
         <img src={baseUrl + src} class="w-full h-auto" alt="{src}"/>
         <p class="text-center text-xl">{src.replace(/\.[^/.]+$/, '')}</p>
@@ -43,7 +43,7 @@
     {/each}
 
 </div>
-
+-->
 <style lang="postcss">
   h1 {
     @apply m-4;

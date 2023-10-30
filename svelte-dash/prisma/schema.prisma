@@ -67,8 +67,10 @@ model WeatherStation {
   Us_1                Float
   Us_2                Float
   Us_3                Float
-  W_vel               Float
-  W_dir               Float
+  F_nord              Float?
+  F_east              Float?
+  W_vel               Float?
+  W_dir               Float?
   device              Device @relation(fields: [deviceId], references: [id])
   deviceId            Int    @unique
 }

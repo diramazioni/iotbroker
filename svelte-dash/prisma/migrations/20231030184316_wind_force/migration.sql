@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "WeatherStation" ADD COLUMN     "F_east" DOUBLE PRECISION,
+ADD COLUMN     "F_nord" DOUBLE PRECISION,
+ALTER COLUMN "W_vel" DROP NOT NULL;

@@ -22,7 +22,6 @@ venv.bak/
 
 
 www/*
-data/1*
 
 logs/*
 doc/dashboard_test.ogv
