@@ -47,7 +47,7 @@ model WeatherStationVirtual {
   wind_speed  Float
   wind_deg    Float
   rain        Float
-  device      Device @relation(fields: [deviceId], references: [id])
+  device      Device @relation(fields: [deviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   deviceId    Int    @unique
 }
 
@@ -71,7 +71,7 @@ model WeatherStation {
   F_east              Float?
   W_vel               Float?
   W_dir               Float?
-  device              Device @relation(fields: [deviceId], references: [id])
+  device              Device @relation(fields: [deviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   deviceId            Int    @unique
 }
 model WeatherStationStd {
@@ -84,7 +84,7 @@ model WeatherStationStd {
   Wind_Velocity       Float
   Wind_Direction      Float
   Rainfall            Float
-  device      Device @relation(fields: [deviceId], references: [id])
+  device      Device @relation(fields: [deviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   deviceId    Int    @unique
 }
 model ETRometer {
@@ -96,7 +96,7 @@ model ETRometer {
   TC        Float
   RH        Float
   // Relation to Device model
-  device    Device @relation(fields: [deviceId], references: [id])
+  device    Device @relation(fields: [deviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   deviceId  Int
 }
 
