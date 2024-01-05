@@ -7,6 +7,7 @@
   const imagePath = Object.keys(imageModules).map((key) => imageModules[key].name.split('/').pop());	
 
   export let interval = 3500;
+  const socket = new WebSocket('ws://localhost:8765')
 </script>
   
 
