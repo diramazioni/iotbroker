@@ -32,7 +32,7 @@ class WebSocketServer:
             await self.parser.db_entry(message_)
             logging.info("*" * 50)
             await self.message_all(json.dumps(ws_data))
-            logging.debug(ws_data)
+            logging.debug(f"message_all-> {json.dumps(ws_data)}")
         except Exception as e:
             logging.error(f"send_event error:{e}")
             logging.error(traceback.format_exc())
@@ -63,6 +63,7 @@ class WebSocketServer:
             self.connected_clients.remove(websocket)
 
     async def start(self):
+        logging.debug("WS starting********************************")
         if self.parser:
             await self.parser.connect()
         # Set the stop condition when receiving SIGTERM.
@@ -70,6 +71,7 @@ class WebSocketServer:
         stop = self.loop.create_future()
         self.loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
         async with serve(self._handler, "localhost", 8765):
+            logging.debug("Websocket server started********************************")
             await stop
 
     async def stop(self):
