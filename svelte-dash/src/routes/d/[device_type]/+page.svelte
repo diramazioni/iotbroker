@@ -61,7 +61,8 @@
 	onMount(() => {
 		domain_range = device_opt.zoomBar.top.initialZoomDomain
 		domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
-		const ws = new WebSocket('ws://localhost:8765')
+		// Specify here where the websocket server is listening
+		const ws = new WebSocket('wss://greenlab.unibo.it/ws:443')
 		ws.addEventListener('message', handleWebSocketMessage)
 		// Update the socket store in the context with WebSocket connection
 		$socketStore = ws
