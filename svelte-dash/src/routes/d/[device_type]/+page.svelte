@@ -29,7 +29,8 @@
 
 	const update_data = async () => {
 		data.device_selected = device_selected
-		domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
+
+		//domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
 		device_data = await fetch_data(fetch, device_type, device_selected, domain_range)
 		device_opt = await fetch_opt(fetch, device_type, device_selected, domain_range)
 		//device_opt.zoomBar.top.initialZoomDomain = domain_range
@@ -57,6 +58,10 @@
 		}
 	}
 
+	async function handleNewRange(Event) {
+		console.log("handleNew " + Event.target )
+	}
+
 	function legendOnclick(e: MouseEvent) {
 		category_on = e.detail.dataGroups
 			.filter((element) => element.status === 1)
@@ -72,8 +77,12 @@
 	})
 
 	onMount(() => {
-		domain_range = device_opt.zoomBar.top.initialZoomDomain
-		domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
+		if ('domain_start' in localStorage) {
+			domain_range = [new Date(localStorage.domain_start),new Date(localStorage.domain_end)]
+		} else {
+			domain_range = device_opt.zoomBar.top.initialZoomDomain
+			domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
+		}
 		
 		// Specify here where the websocket server is listening
 		const ws = new WebSocket('wss://greenlab.unibo.it/ws:443')
@@ -92,16 +101,6 @@
 	$: if (chart) chart.services.events.addEventListener('zoom-domain-change', zoomDomainChange)
 </script>
 
-<!-- <button on:click={() => toast.push('New message from <strong>'+device_selected+'</strong><br>')}>SHOW TOAST</button>
-<button on:click={() => 			toast.push('Update for <strong>'+device_selected+'</strong><br>', {
-	theme: {
-		'--toastColor': 'mintcream',
-		'--toastBackground': '#2F855A',
-		'--toastBarBackground': 'rgba(72,187,120,0.9)'
-	},
-	initial: 0,
-})}>SHOW TOAST2</button> -->
-
 <h2>Devices</h2>
 
 <div class="flex m-5 w-2/4">
@@ -116,13 +115,18 @@
 	</div>
 	<div class="flex-1">
 		start
-		<DateInput bind:value={domain_range[0]} closeOnSelection={true} dynamicPositioning={true} on:select={() => update_data()}/>
+		<DateInput id="start" bind:value={domain_range[0]}  dynamicPositioning={true} timePrecision={"minute"} browseWithoutSelecting={false} closeOnSelection={true} 
+		on:select={() => update_data()} />
 		<!-- <input type="text" bind:value={domain_range[0]} class="range text-2xl" on:change={() => update_data()}/> -->
 	</div>
 	<div class="flex-1">
 		end
-		<DateInput bind:value={domain_range[1]} closeOnSelection={true} dynamicPositioning={true} on:select={() => update_data()}/>
+		<DateInput id="end" bind:value={domain_range[1]} dynamicPositioning={true} timePrecision={"minute"} browseWithoutSelecting={false} closeOnSelection={true} 
+		on:select={() => update_data()} />
 		<!-- <input type="text" bind:value={domain_range[1]} class="range text-2xl" on:change={() => update_data()}/> -->
+	</div>
+	<div class="flex-1">
+		<button class="button" on:click={() =>update_data()}>Set new range</button>
 	</div>
 </div>
 
