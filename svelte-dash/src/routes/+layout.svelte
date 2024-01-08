@@ -1,16 +1,32 @@
-	<script>
-		import ThemeSwitch from '$lib/ThemeSwitch.svelte';
-		
-		import { afterNavigate } from '$app/navigation';
-		import { page } from '$app/stores'
-		import { base } from '$app/paths'
-		
-		import { menu } from '$lib/constant'
-		// Carbon charts
-		import '../app.postcss';
-		import "carbon-components-svelte/css/all.css";
-		// import "carbon-components-svelte/css/white.css";
-		// import "carbon-components-svelte/css/g90.css";
+<script>
+	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
+
+	import { afterNavigate } from '$app/navigation';
+	import { page } from '$app/stores'
+	import { base } from '$app/paths'
+
+	import { menu } from '$lib/constant'
+	// Carbon charts
+	import '../app.postcss';
+	import "carbon-components-svelte/css/all.css";
+	// import "carbon-components-svelte/css/white.css";
+	// import "carbon-components-svelte/css/g90.css";
+
+	// svelte-toast
+	import { SvelteToast } from '@zerodevx/svelte-toast'
+
+	const options = 
+		{ 
+			// reversed: true, 
+			// intro: { 
+			// 	y: 192 
+			// },
+			pausable: true,
+			duration: 10000,
+			// Effectively disables autoclose when `initial`==`next`
+  			//initial: 0,
+		}
+	
 
 	// Scroll to top
 	afterNavigate((params) => {
@@ -18,9 +34,12 @@
 
 
 
-	
+// Optionally set default options here
+
 </script>
 
+
+<SvelteToast {options} />
 
 <div class="grid items-center grid-flow-col auto-cols-auto gap-4 space-y-4 p-4">
 	<div class="flex justify-between items-center place-self-start max-w-0">

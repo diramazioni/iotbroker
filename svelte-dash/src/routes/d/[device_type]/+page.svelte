@@ -10,6 +10,8 @@
 	import { writable } from 'svelte/store'
 	import { fetch_data, fetch_opt } from '$lib/shared'
 
+	import { toast } from '@zerodevx/svelte-toast'
+
 	// import { browser } from "$app/environment"
 
 	export let data: PageData
@@ -38,8 +40,19 @@
 		const edata = JSON.parse(event.data)
 		if (edata.device === device_selected) {
 			// console.log("WS: Update " + device_type +"/"+ device_selected)
+			toast.push('Update for <strong>'+edata.device+'</strong><br>'+
+			JSON.stringify(edata.content, null, 2), {
+				theme: {
+					'--toastColor': 'mintcream',
+					'--toastBackground': '#2F855A',
+					'--toastBarBackground': 'rgba(72,187,120,0.9)'
+				},
+				initial: 0,
+			})
 			update_data()
 		} else {
+			toast.push('Update for <strong>'+edata.device+'</strong><br>'+
+			JSON.stringify(edata.content, null, 2))
 			// console.log("WS: Ignoring message " + edata.device )
 		}
 	}
@@ -61,8 +74,11 @@
 	onMount(() => {
 		domain_range = device_opt.zoomBar.top.initialZoomDomain
 		domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
+		
 		// Specify here where the websocket server is listening
 		const ws = new WebSocket('wss://greenlab.unibo.it/ws:443')
+		//const ws = new WebSocket('ws://localhost:8765')
+		
 		ws.addEventListener('message', handleWebSocketMessage)
 		// Update the socket store in the context with WebSocket connection
 		$socketStore = ws
@@ -75,6 +91,16 @@
 	$: if (chart) chart.services.events.addEventListener('legend-items-update', legendOnclick)
 	$: if (chart) chart.services.events.addEventListener('zoom-domain-change', zoomDomainChange)
 </script>
+
+<!-- <button on:click={() => toast.push('New message from <strong>'+device_selected+'</strong><br>')}>SHOW TOAST</button>
+<button on:click={() => 			toast.push('Update for <strong>'+device_selected+'</strong><br>', {
+	theme: {
+		'--toastColor': 'mintcream',
+		'--toastBackground': '#2F855A',
+		'--toastBarBackground': 'rgba(72,187,120,0.9)'
+	},
+	initial: 0,
+})}>SHOW TOAST2</button> -->
 
 <h2>Devices</h2>
 
@@ -109,7 +135,7 @@
 	<LineChart data={device_data.TC} options={device_opt.TC} style="padding:2rem; flex:1;" />
 	<LineChart data={device_data.RH} options={device_opt.RH} style="padding:2rem; flex:1;" />
 {/if}
-<div style="margin-left: 1rem; ">
+<!-- <div style="margin-left: 1rem; ">
 	<a
 		href={`${base}/api/csv/${device_type}/${device_selected}`}
 		class="button"
@@ -117,7 +143,7 @@
 	>
 		get CSV
 	</a>
-</div>
+</div> -->
 
 <style>
 	h2,
@@ -125,4 +151,13 @@
 	.range {
 		margin-left: 1rem;
 	}
+	:root {
+		--toastContainerTop: auto;
+		--toastContainerRight: auto;
+		--toastContainerBottom: 8rem;
+		--toastContainerLeft: calc(50vw - 8rem);
+		--toastWidth: 100%;
+    	--toastMinHeight: 2rem;
+    	--toastPadding: 0 0.5rem;		
+	  }
 </style>
