@@ -30,4 +30,11 @@ export default {
   height: '600px',
   //"resizable": true,
   // width: '200px'
+
+  /*
+data : {
+selectedGroups : [
+0 : "Dataset 1"
+1 : "Dataset 3"]}
+  */
 }

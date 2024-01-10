@@ -28,7 +28,7 @@
 	let calibrated = true
 	const socketStore = writable(null)
 
-	// match medium screen size
+	// match medium screen size and change chart options 
 	let mediumScreen = mediaQueryStore(breakpoints["md"]);
 	$: {		
 		if($mediumScreen) {
@@ -41,8 +41,6 @@
 			// console.log("small screen")	
 		}
 	}
-
-	
 
 	const update_data = async () => {
 		data.device_selected = device_selected
@@ -78,23 +76,24 @@
 		}
 	}
 
-	async function handleNewRange(Event) {
-		console.log("handleNew " + Event.target )
+	async function handleNewRange(event) {
+		console.log(event)
+		localStorage.setItem('domain_start', domain_range[0].toLocaleString())
+		localStorage.setItem('domain_end', domain_range[1].toLocaleString())
+		await update_data()
 	}
 
 	function legendOnclick(e: MouseEvent) {
 		category_on = e.detail.dataGroups
 			.filter((element) => element.status === 1)
 			.map((element) => element.name)
+		localStorage.setItem('category_on', JSON.stringify(category_on))
 		// console.log(category_on);
 	}
 	function zoomDomainChange(e: MouseEvent) {
 		domain_range = e.detail.newDomain
 	}
 
-	afterUpdate(() => {
-		if (chart) category_on = chart.model.allDataGroups // init the category_on on first update
-	})
 
 	onMount(() => {
 		if ('domain_start' in localStorage) {
@@ -103,6 +102,11 @@
 			domain_range = device_opt.zoomBar.top.initialZoomDomain
 			domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
 		}
+		if('category_on' in localStorage) {
+			category_on = JSON.parse(localStorage.category_on); // init the category_on with previews settings
+			console.log(category_on);
+		}
+		//category_on = chart.model.allDataGroups // init the category_on on first update
 
 		// Specify here where the websocket server is listening
 		const ws = new WebSocket('wss://greenlab.unibo.it/ws:443')
@@ -136,17 +140,17 @@
 	<div class="md:m-5">
 		<p class="md:-mt-2">Start</p>
 		<DateInput id="start" bind:value={domain_range[0]}  dynamicPositioning={true} timePrecision={"minute"} browseWithoutSelecting={false} closeOnSelection={true} 
-		on:select={() => update_data()} />
+		on:select={handleNewRange} />
 		<!-- <input type="text" bind:value={domain_range[0]} class="range text-2xl" on:change={() => update_data()}/> -->
 	</div>
 	<div class="md:m-5">
 		<p class="md:-mt-2">End</p>
 		<DateInput id="end" bind:value={domain_range[1]} dynamicPositioning={true} timePrecision={"minute"} browseWithoutSelecting={false} closeOnSelection={true} 
-		on:select={() => update_data()} />
+		on:select={handleNewRange} />
 		<!-- <input type="text" bind:value={domain_range[1]} class="range text-2xl" on:change={() => update_data()}/> -->
 	</div>
 	<div class="md:m-5 items-center justify-center">
-		<button class="button" on:click={() =>update_data()}>Set</button>
+		<button class="button" on:click={handleNewRange}>Set</button>
 	</div>
 </div>
 
