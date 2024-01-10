@@ -15,6 +15,11 @@ export default {
       scaleType: 'linear'
     } 
   },
+  legend : {
+    position : "left",
+    orientation : "vertical",
+    alignment : "center"
+  },
   curve: 'curveMonotoneX',
   experimental : true,
   zoomBar : {
