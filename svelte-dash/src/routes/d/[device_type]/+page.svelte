@@ -40,6 +40,9 @@
 			device_opt.legend.orientation = "horizontal"	
 			// console.log("small screen")	
 		}
+		if (category_on.length) {
+			device_opt['data']['selectedGroups'] = category_on
+		}	
 	}
 
 	const update_data = async () => {
@@ -50,15 +53,16 @@
 		device_opt = await fetch_opt(fetch, device_type, device_selected, domain_range)
 
 		//device_opt.zoomBar.top.initialZoomDomain = domain_range
+		if('category_on' in localStorage) {
+			category_on = JSON.parse(localStorage.category_on); // init the category_on with previews settings
+		}	
 
-
-		console.log(`update ${domain_range}`)
 	}
 
 	async function handleWebSocketMessage(event) {
 		const edata = JSON.parse(event.data)
 		if (edata.device === device_selected) {
-			// console.log("WS: Update " + device_type +"/"+ device_selected)
+			// toast notification
 			toast.push('Update for <strong>'+edata.device+'</strong><br>'+
 			JSON.stringify(edata.content, null, 2), {
 				theme: {
@@ -77,9 +81,10 @@
 	}
 
 	async function handleNewRange(event) {
-		console.log(event)
-		localStorage.setItem('domain_start', domain_range[0].toLocaleString())
-		localStorage.setItem('domain_end', domain_range[1].toLocaleString())
+		localStorage.setItem('domain_range', JSON.stringify(domain_range))
+		//localStorage.setItem('domain_end', domain_range[1].toLocaleString())
+		console.log(`update ${domain_range}`)
+
 		await update_data()
 	}
 
@@ -88,23 +93,47 @@
 			.filter((element) => element.status === 1)
 			.map((element) => element.name)
 		localStorage.setItem('category_on', JSON.stringify(category_on))
+		if (category_on.length === 1) {
+			device_opt.axes.left.title = category_on[0]
+			delete device_opt.axes.right;
+		} else if (category_on.length === 2) {
+			device_opt.axes.left.title = category_on[0]
+			device_opt.axes.right = { 
+				title : category_on[1],
+				scaleType: 'linear',
+				mapsTo: 'value',
+				correspondingDatasets: [
+					category_on[1]
+				]				
+			}
+			console.log(JSON.stringify(device_opt))
+			
+		} else {
+			device_opt.axes.left.title = JSON.stringify(category_on)
+			delete device_opt.axes.right;
+		}
 		// console.log(category_on);
 	}
+	
 	function zoomDomainChange(e: MouseEvent) {
 		domain_range = e.detail.newDomain
 	}
 
 
 	onMount(() => {
-		if ('domain_start' in localStorage) {
-			domain_range = [new Date(localStorage.domain_start),new Date(localStorage.domain_end)]
+		if ('domain_range' in localStorage) {
+			domain_range = JSON.parse(localStorage.domain_range);
+			domain_range =  [new Date(domain_range[0]), new Date(domain_range[1])]
+			console.log(domain_range)
+			//domain_range = [new Date(localStorage.domain_start),new Date(localStorage.domain_end)]
+		
 		} else {
 			domain_range = device_opt.zoomBar.top.initialZoomDomain
 			domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
 		}
 		if('category_on' in localStorage) {
 			category_on = JSON.parse(localStorage.category_on); // init the category_on with previews settings
-			console.log(category_on);
+			//console.log(category_on);
 		}
 		//category_on = chart.model.allDataGroups // init the category_on on first update
 

@@ -12,7 +12,8 @@ export default {
     left: {
       mapsTo: 'value',
       title: 'Values',
-      scaleType: 'linear'
+      scaleType: 'linear',
+      main: true
     } 
   },
   legend : {
@@ -31,10 +32,9 @@ export default {
   //"resizable": true,
   // width: '200px'
 
-  /*
-data : {
-selectedGroups : [
-0 : "Dataset 1"
-1 : "Dataset 3"]}
-  */
+
+  data : {
+    selectedGroups : []
+  }
+  
 }

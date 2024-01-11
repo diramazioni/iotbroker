@@ -23,7 +23,7 @@ export async function GET({ url, params }) {
   // console.log(db_result)
   const transformedData = db_result.map(entry => {
     const { timestamp, weatherStationStd } = entry;
-    
+    console.log(weatherStationStd)
     return Object.entries(weatherStationStd)
     .filter(([key]) => key !== "id" && key !== "timestamp" && key !== "deviceId")
     .map(([group, value]) => ({
