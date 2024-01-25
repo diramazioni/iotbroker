@@ -7,6 +7,7 @@ import signal
 from message_parser import MessageParser
 from datetime import datetime
 import json
+import os
 
 """
 When send_event() is triggered, insert the new message into the DB 
@@ -54,7 +55,7 @@ class WebSocketServer:
                 if isinstance(message, bytes):
                     # Generate a filename with the current timestamp
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    filename = f"{timestamp}.jpg"
+                    filename = os.path.join("svelte-dash","build", "client","iot", f"{timestamp}.jpg")
                     with open(filename, "wb") as f:
                         f.write(message)
                     logging.debug(f"Binary data received and saved as {filename}")
