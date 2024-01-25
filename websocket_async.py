@@ -55,10 +55,11 @@ class WebSocketServer:
                 if isinstance(message, bytes):
                     # Generate a filename with the current timestamp
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    filename = os.path.join("svelte-dash","build", "client","iot", f"{timestamp}.jpg")
+                    filename = os.path.join("www", f"field_{timestamp}.jpg")
                     with open(filename, "wb") as f:
                         f.write(message)
                     logging.debug(f"Binary data received and saved as {filename}")
+                    await self.updateFileList()
                 else:
                     # Handle text message
                     await self.message_all(message)
@@ -91,6 +92,17 @@ class WebSocketServer:
             await self.parser.disconnect()
             signal.raise_signal(signal.SIGTERM)
 
+    async def updateFileList(self):
+        images = {}
+        for deviceType in ["field_", "robot_"]:
+            pattern = deviceType + "*.jpg"
+            files = glob.glob(os.path.join("www", pattern))
+            files.sort()
+            file_d = {file.replace("www/", ""): os.path.getctime(file) for file in files}
+            images[deviceType[:-1]] = file_d
+        with open(os.path.join("www", "images.json"), "w") as f:
+            f.write(json.dumps(images))  # , indent=2
+            f.close()
 
 async def main(interactive=False):
     try:
