@@ -5,6 +5,7 @@ import websockets
 from websockets.server import serve
 import signal
 from message_parser import MessageParser
+from datetime import datetime
 import json
 
 """
@@ -48,11 +49,21 @@ class WebSocketServer:
     async def _handler(self, websocket, path):
         self.connected_clients.add(websocket)
         try:
+            # broadcast the message to connected clients
             async for message in websocket:
-                await self.message_all(message)
-                await asyncio.sleep(0)
+                if isinstance(message, bytes):
+                    # Generate a filename with the current timestamp
+                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                    filename = f"{timestamp}.jpg"
+                    with open(filename, "wb") as f:
+                        f.write(message)
+                    logging.debug(f"Binary data received and saved as {filename}")
+                else:
+                    # Handle text message
+                    await self.message_all(message)
+                    await self.send_event(message)
+                    await asyncio.sleep(0)
 
-            # await websocket.wait_closed()
             logging.debug("Websocket _handler")
 
         except websockets.exceptions.ConnectionClosedError:
