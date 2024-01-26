@@ -60,7 +60,7 @@ class WebSocketServer:
                     with open(filename, "wb") as f:
                         f.write(message)
                     logging.debug(f"Binary data received and saved as {filename}")
-                    await self.updateFileList()
+                    # await self.updateFileList()
                 else:
                     # Handle text message
                     await self.message_all(message)
