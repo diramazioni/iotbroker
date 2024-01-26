@@ -55,6 +55,9 @@ class WebSocketServer:
             # broadcast the message to connected clients
             async for message in websocket:
                 if isinstance(message, bytes):
+                    # Append binary data to the existing buffer
+                    binary_data.extend(message)
+                else:
                     # Check for the end of the stream signal
                     if message == b'END_OF_STREAM':
                         # Create a file when the stream is finished
@@ -70,13 +73,10 @@ class WebSocketServer:
                         # Reset binary_data for the next stream
                         binary_data = bytearray()
                     else:
-                        # Append binary data to the existing buffer
-                        binary_data.extend(message)
-                else:
-                    # Handle text message
-                    await self.message_all(message)
-                    await self.send_event(message)
-                    await asyncio.sleep(0)
+                        # Handle text message
+                        await self.message_all(message)
+                        await self.send_event(message)
+                        await asyncio.sleep(0)
 
 
             logging.debug("Websocket _handler")
