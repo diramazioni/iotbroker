@@ -51,21 +51,25 @@ class WebSocketServer:
     async def _handler(self, websocket, path):
         self.connected_clients.add(websocket)
         try:
+            binary_data = bytearray() # stores the binary data
             # broadcast the message to connected clients
             async for message in websocket:
                 if isinstance(message, bytes):
-                    # Generate a filename with the current timestamp
-                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    filename = os.path.join("www", f"field_{timestamp}.jpg")
-                    with open(filename, "wb") as f:
-                        f.write(message)
-                    logging.debug(f"Binary data received and saved as {filename}")
+                    # Append binary data to the existing buffer
+                    binary_data.extend(message)
                     # await self.updateFileList()
                 else:
                     # Handle text message
                     await self.message_all(message)
                     await self.send_event(message)
                     await asyncio.sleep(0)
+            # After all chunks are received, create a file
+            if binary_data:
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                filename = os.path.join("www", f"field_{timestamp}.jpg")                
+                with open(filename, "wb") as f:
+                    f.write(binary_data)
+                logging.debug(f"Binary data received and saved as {filename}")
 
             logging.debug("Websocket _handler")
 
