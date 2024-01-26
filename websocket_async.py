@@ -55,12 +55,17 @@ class WebSocketServer:
             # broadcast the message to connected clients
             async for message in websocket:
                 if isinstance(message, bytes):
+                    # Append binary data to the existing buffer
+                    binary_data.extend(message)
+                else:
                     # Check for the end of the stream signal
-                    if message == b'END_OF_STREAM':
+                    if str(message).startswith('END_OF_STREAM'):
                         # Create a file when the stream is finished
                         if binary_data:
+                            device = str(message).replace('END_OF_STREAM-','')
                             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                            filename = os.path.join("www", f"field_{timestamp}.jpg")
+                            os.makedirs(os.path.join("www", device), exist_ok=True)
+                            filename = os.path.join("www", device, f"{timestamp}.jpg")
 
                             with open(filename, "wb") as f:
                                 f.write(binary_data)
@@ -70,15 +75,10 @@ class WebSocketServer:
                         # Reset binary_data for the next stream
                         binary_data = bytearray()
                     else:
-                        
-                        # Append binary data to the existing buffer
-                        binary_data.extend(message)
-                else:
-                    
-                    # Handle text message
-                    await self.message_all(message)
-                    await self.send_event(message)
-                    await asyncio.sleep(0)
+                        # Handle text message
+                        await self.message_all(message)
+                        await self.send_event(message)
+                        await asyncio.sleep(0)
 
 
             logging.debug("Websocket _handler")
