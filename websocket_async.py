@@ -61,7 +61,7 @@ class WebSocketServer:
         # Check if device is allowed to connect
         if user_agent == "TinyWebsockets Client":
             try:
-                device_string = await asyncio.wait_for(websocket.recv(), timeout=1)
+                device_string = await asyncio.wait_for(websocket.recv(), timeout=2)
                 if device_string in self.allowed_clients:
                     logging.debug(f"device_string: {device_string}")
                     CAM = True
@@ -69,7 +69,6 @@ class WebSocketServer:
                     await websocket.send("ACK")
 
             except asyncio.TimeoutError:
-                # Handle the timeout error (e.g., log it or close the connection)
                 logging.error("WebSocket receive timed out, Cam did not say hello")
                 await websocket.send("Cam not authorized")
 

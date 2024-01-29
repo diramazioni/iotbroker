@@ -13,8 +13,8 @@
 // define ssid_Router, password_Router, ws_server_address
 #include "credentials.h"
 
-String endOfStream = "END_OF_STREAM";
-
+// String endOfStream = "END_OF_STREAM";
+const char* endOfStream = "END_OF_STREAM";
 
 using namespace websockets;
 WebsocketsClient client;
@@ -49,7 +49,7 @@ void loopTask_Cmd(void *pvParameters) {
   Serial.println("Task send image with websocket starting ... ");
 
   while (1) {
-    if (client.available() ) {
+    if (client.available() && ALLOWED) {
       camera_fb_t * fb = NULL;
       fb = esp_camera_fb_get();
       if (fb != NULL) {
@@ -60,7 +60,7 @@ void loopTask_Cmd(void *pvParameters) {
           size_t chunkSize = std::min(bufferSize, fb->len - i);
           client.sendBinary((const char*)(fb->buf + i), chunkSize);
         }
-        client.sendBinary(endOfStream.c_str(), strlen(endOfStream.c_str()));
+        client.sendBinary(endOfStream, strlen(endOfStream));
         // Send the the end of the stream as text
         //client.send(endOfStream);
         esp_camera_fb_return(fb);
@@ -71,7 +71,10 @@ void loopTask_Cmd(void *pvParameters) {
         esp_camera_fb_return(fb);
         ESP.restart();
       }  
-    }  else {
+    }  else if (client.available() && !ALLOWED ) {
+      delay(1000);
+      // wait for the authentication do nothing
+    } else {
       Serial.println("WS client not available");
       ESP.restart();
     }
@@ -103,7 +106,7 @@ void init_wifi() {
 
 void init_ws() {
   client.setCACert(ssl_cert);
-  Serial.println("WebSocket: Connecting ");
+  Serial.println("WebSocket: Connecting " + String(ws_server_address));
   bool connected = client.connect(ws_server_address);
   if (connected) {
     Serial.println("WebSocket connected");
