@@ -62,7 +62,8 @@ class WebSocketServer:
         logging.debug(f"User Agent: {user_agent}")
         device_string = await websocket.recv()
         logging.debug(f"device_string: {device_string}")
-        if user_agent == "TinyWebsockets Client" & device_string in self.allowed_clients:
+        # Check if device is allowed to connect
+        if user_agent == "TinyWebsockets Client" and device_string in self.allowed_clients:
             CAM = True
             self.connected_esp_clients.add(websocket)
             await websocket.send("ACK")
@@ -74,6 +75,7 @@ class WebSocketServer:
         try:
             async for message in websocket:
                 if (isinstance(message, bytes) & CAM == True):
+                    # Check for the end of the stream signal
                     if str(message).startswith(END_OF_STREAM):
                         # Create a file when the stream is finished
                         if binary_data:
@@ -95,9 +97,6 @@ class WebSocketServer:
                 else:
                     if str(message).startswith(HELLO_CAM):
                         logging.debug(f"CAM connected: {message}")
-
-                    # Check for the end of the stream signal
-                 
                     else:
                         # Handle text message
                         await self.send_event(message)
@@ -118,9 +117,11 @@ class WebSocketServer:
 
     async def start(self):
         logging.debug("WS starting********************************")
+        # Load the client strings that are able to connect for sending binary images
         load_dotenv()
-        self.allowed_clients = os.getenv("allowed_clients").split(",")
+        self.allowed_clients = os.getenv("allowed_clients").strip().split(",")
         logging.debug(self.allowed_clients)
+
         if self.parser:
             await self.parser.connect()
         # Set the stop condition when receiving SIGTERM.

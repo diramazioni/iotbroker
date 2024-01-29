@@ -54,10 +54,15 @@ void loopTask_Cmd(void *pvParameters) {
       fb = esp_camera_fb_get();
       if (fb != NULL) {
         // Send binary data in chunks
-        for (size_t i = 0; i < fb->len; i += 1024) {
-          size_t chunkSize = std::min(static_cast<size_t>(1024), static_cast<size_t>(fb->len - i));          
+        size_t halfSize = fb->len / 2;
+        for (size_t i = 0; i < fb->len; i += halfSize) {
+          size_t chunkSize = std::min(halfSize, fb->len - i);
           client.sendBinary((const char*)(fb->buf + i), chunkSize);
-        }
+        }        
+        // for (size_t i = 0; i < fb->len; i += 1024) {
+        //   size_t chunkSize = std::min(static_cast<size_t>(1024), static_cast<size_t>(fb->len - i));          
+        //   client.sendBinary((const char*)(fb->buf + i), chunkSize);
+        // }
         client.sendBinary(endOfStream.c_str(), strlen(endOfStream.c_str()));
         // Send the the end of the stream as text
         //client.send(endOfStream);
