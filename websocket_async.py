@@ -16,8 +16,8 @@ from websockets import WebSocketServerProtocol
 When send_event() is triggered, insert the new message into the DB 
 and send event to all websocket connected clients
 """
-
-allowed_clients =[]
+cam_dir = os.path.join("www","cam")
+allowed_clients = []
 class WebSocketServer:
     def __init__(self, parser=None):
         self.logger = logging.getLogger(__name__)
@@ -91,8 +91,8 @@ class WebSocketServer:
                         if binary_data:
                             device = str(message).replace('END_OF_STREAM-','')
                             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                            os.makedirs(os.path.join("www", device), exist_ok=True)
-                            filename = os.path.join("www", device, f"{timestamp}.jpg")
+                            os.makedirs(os.path.join(cam_dir, device), exist_ok=True)
+                            filename = os.path.join(cam_dir, device, f"{timestamp}.jpg")
 
                             with open(filename, "wb") as f:
                                 f.write(binary_data)
@@ -140,7 +140,7 @@ class WebSocketServer:
         images = {}
         for deviceType in ["field_", "robot_"]:
             pattern = deviceType + "*.jpg"
-            files = glob.glob(os.path.join("www", pattern))
+            files = glob.glob(os.path.join("www", "cam", pattern))
             files.sort()
             file_d = {file.replace("www/", ""): os.path.getctime(file) for file in files}
             images[deviceType[:-1]] = file_d
