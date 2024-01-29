@@ -61,9 +61,12 @@ class WebSocketServer:
         headers = websocket.request_headers
         user_agent = headers.get("User-Agent", "Unknown User Agent")
         logging.debug(f"User Agent: {user_agent}")
+        device_string = await websocket.recv()
+        logging.debug(f"device_string: {device_string}")
         if user_agent == "TinyWebsockets Client":
             CAM = True
             self.connected_esp_clients.add(websocket)
+            websocket.send("ACK")
         else:
             CAM = False
             self.connected_web_clients.add(websocket)
@@ -89,7 +92,7 @@ class WebSocketServer:
         '''            
         try:
             async for message in websocket:
-                if isinstance(message, bytes):
+                if (isinstance(message, bytes) & CAM == True):
                     if str(message).startswith(END_OF_STREAM):
                         # Create a file when the stream is finished
                         if binary_data:
