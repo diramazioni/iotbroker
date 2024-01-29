@@ -63,7 +63,8 @@ class WebSocketServer:
                 logging.info(f"CAM connected: IP {ip}, Device: {device_string}")
                 self.connected_esp_clients.add(websocket)
                 websocket.send("ACK")
-
+            else:
+                logging.info(f"CAM unauthorized: IP {ip}, Device: {device_string}")
         except TimeoutError():
             CAM = False
             logging.info(f"Web client connection: IP {ip}, Device: {device_string}")

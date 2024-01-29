@@ -72,9 +72,9 @@ void loopTask_Cmd(void *pvParameters) {
       Serial.println("WS client not available");
       ESP.restart();
     }
-    client.poll();
-    delay(1000);
   }
+  client.poll();
+  delay(1000);
 }
 void loopTask_Blink(void *pvParameters) {
   Serial.println("Task Blink is starting ... ");
