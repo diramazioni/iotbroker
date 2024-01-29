@@ -69,8 +69,8 @@ class WebSocketServer:
                 # Handle the timeout error (e.g., log it or close the connection)
                 logging.error("WebSocket receive timed out")
             
-            logging.debug(f"device_string: {device_string}")
-            if device_string in self.allowed_clients:
+            if device_string and device_string in self.allowed_clients:
+                logging.debug(f"device_string: {device_string}")
                 CAM = True
                 self.connected_esp_clients.add(websocket)
                 await websocket.send("ACK")
