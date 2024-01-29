@@ -71,24 +71,24 @@ class WebSocketServer:
             CAM = False
             self.connected_web_clients.add(websocket)
         binary_data = bytearray() # stores the binary data
- 
         try:
             async for message in websocket:
+                # Handle incoming images
                 if (isinstance(message, bytes) & CAM == True):
                     # Check for the end of the stream signal
                     if str(message).startswith(END_OF_STREAM):
                         # Create a file when the stream is finished
-                        if binary_data:
-                            device = str(message).replace(END_OF_STREAM+'-','')
-                            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                            os.makedirs(os.path.join(cam_dir, device), exist_ok=True)
-                            filename = os.path.join(cam_dir, device, f"{timestamp}.jpg")
-
-                            with open(filename, "wb") as f:
-                                f.write(binary_data)
-
-                            logging.debug(f"Binary data received and saved as {filename}")
-
+                        device = str(message).replace(END_OF_STREAM+'-','')
+                        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                        os.makedirs(os.path.join(cam_dir, device), exist_ok=True)
+                        filename = os.path.join(cam_dir, device, f"{timestamp}.jpg")
+                        # Write the file on disk
+                        with open(filename, "wb") as f:
+                            f.write(binary_data)
+                        logging.debug(f"Binary data received and saved as {filename}")
+                        # Send the buffer to all connected_web_clients
+                        await websockets.broadcast(self.connected_web_clients, binary_data, binary=True)                            
+                        logging.debug(f"Binary data sent to all connected web clients")
                         # Reset binary_data for the next stream
                         binary_data = bytearray()
                     else:
