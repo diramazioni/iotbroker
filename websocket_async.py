@@ -10,6 +10,13 @@ from datetime import datetime
 import json
 import os
 
+from websockets import WebSocketServerProtocol
+
+class RemoteIP(WebSocketServerProtocol):
+    def connection_made(self, transport):
+        super().connection_made(transport)
+        self.remote_ip = transport.get_extra_info('peername')[0]
+
 """
 When send_event() is triggered, insert the new message into the DB 
 and send event to all websocket connected clients
@@ -52,13 +59,15 @@ class WebSocketServer:
 
     async def _handler(self, websocket, path):
         CAM = False
-        remote_ip = websocket.remote_address[0]
+        remote_ip = websocket.remote_ip
+        logging.info(f"client connection: IP {remote_ip}")
+        binary_data = bytearray() # stores the binary data
+        '''
         try:
             # Set a timeout for receiving client_info
             client_info_timeout = 15  # adjust as needed
             device_string = await asyncio.wait_for(websocket.recv(), timeout=client_info_timeout)
-            
-            # Check against your allowed combinations
+
             if (remote_ip+'-'+device_string) in allowed_clients:
                 CAM = True
                 logging.info(f"CAM connected: IP {remote_ip}, Device: {device_string}")
@@ -71,16 +80,18 @@ class WebSocketServer:
             logging.info(f"Web client connection: IP {remote_ip}, Device: {device_string}")
             self.connected_web_clients.add(websocket)
             #return
+        '''            
         try:
-            binary_data = bytearray() # stores the binary data
-
             async for message in websocket:
                 if isinstance(message, bytes):
                     # Append binary data to the existing buffer
                     binary_data.extend(message)
                 else:
+                    if str(message).startswith('CAM-'):
+                        CAM = True
+                        self.connected_esp_clients.add(websocket)
                     # Check for the end of the stream signal
-                    if str(message).startswith('END_OF_STREAM'):
+                    elif str(message).startswith('END_OF_STREAM'):
                         # Create a file when the stream is finished
                         if binary_data:
                             device = str(message).replace('END_OF_STREAM-','')
@@ -122,7 +133,7 @@ class WebSocketServer:
         self.loop = asyncio.get_event_loop()  # Create a new event loop
         stop = self.loop.create_future()
         self.loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
-        async with serve(self._handler, "localhost", 8765):
+        async with serve(self._handler, "localhost", 8765, klass=RemoteIP):
             logging.debug("Websocket server started********************************")
             await stop
 
