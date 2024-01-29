@@ -9,7 +9,7 @@ from message_parser import MessageParser
 from datetime import datetime
 import json
 import os
-
+from dotenv import load_dotenv
 from websockets import WebSocketServerProtocol
 
 """
@@ -17,7 +17,6 @@ When send_event() is triggered, insert the new message into the DB
 and send event to all websocket connected clients
 """
 cam_dir = os.path.join("www","cam")
-allowed_clients = []
 
 
 HELLO_CAM = "CAM"
@@ -63,33 +62,15 @@ class WebSocketServer:
         logging.debug(f"User Agent: {user_agent}")
         device_string = await websocket.recv()
         logging.debug(f"device_string: {device_string}")
-        if user_agent == "TinyWebsockets Client":
+        if user_agent == "TinyWebsockets Client" & device_string in self.allowed_clients:
             CAM = True
             self.connected_esp_clients.add(websocket)
-            websocket.send("ACK")
+            await websocket.send("ACK")
         else:
             CAM = False
             self.connected_web_clients.add(websocket)
         binary_data = bytearray() # stores the binary data
-        '''
-        try:
-            # Set a timeout for receiving client_info
-            client_info_timeout = 15  # adjust as needed
-            device_string = await asyncio.wait_for(websocket.recv(), timeout=client_info_timeout)
-
-            if (remote_ip+'-'+device_string) in allowed_clients:
-                CAM = True
-                logging.info(f"CAM connected: IP {remote_ip}, Device: {device_string}")
-                self.connected_esp_clients.add(websocket)
-                websocket.send("ACK")
-            else:
-                logging.info(f"CAM unauthorized: IP {remote_ip}, Device: {device_string}")
-        except TimeoutError:
-            CAM = False
-            logging.info(f"Web client connection: IP {remote_ip}, Device: {device_string}")
-            self.connected_web_clients.add(websocket)
-            #return
-        '''            
+ 
         try:
             async for message in websocket:
                 if (isinstance(message, bytes) & CAM == True):
@@ -137,6 +118,9 @@ class WebSocketServer:
 
     async def start(self):
         logging.debug("WS starting********************************")
+        load_dotenv()
+        self.allowed_clients = os.getenv("allowed_clients").split(",")
+        logging.debug(self.allowed_clients)
         if self.parser:
             await self.parser.connect()
         # Set the stop condition when receiving SIGTERM.
@@ -165,6 +149,7 @@ class WebSocketServer:
             f.close()
 
 async def main(interactive=False):
+
     try:
         message_parser = MessageParser()
         logging.info("message_parser started")
