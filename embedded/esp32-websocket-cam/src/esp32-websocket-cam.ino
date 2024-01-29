@@ -41,7 +41,7 @@ void setup() {
 void loop() {
 
   client.poll();
-  delay(1000);
+  delay(10000);
 
 }
 
@@ -106,7 +106,8 @@ void init_ws() {
     Serial.println("WebSocket connected");
     // Send the connection message
     if (client.available()) {
-      client.send('CAM-' + deviceString);
+      String cam = "CAM-" + String(deviceString);
+      client.send(cam.c_str());
     }
   } else {
     Serial.println("WebSocket connection failed.");
