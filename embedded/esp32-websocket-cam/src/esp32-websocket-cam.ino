@@ -13,7 +13,7 @@
 // define ssid_Router, password_Router, ws_server_address
 #include "credentials.h"
 
-String endOfStream = "END_OF_STREAM-" + String(deviceString);
+String endOfStream = "END_OF_STREAM";
 
 
 using namespace websockets;
@@ -54,20 +54,17 @@ void loopTask_Cmd(void *pvParameters) {
       fb = esp_camera_fb_get();
       if (fb != NULL) {
         // Send binary data in chunks
-        size_t halfSize = fb->len / 2;
-        for (size_t i = 0; i < fb->len; i += halfSize) {
-          size_t chunkSize = std::min(halfSize, fb->len - i);
+        size_t bufferSize = 1024*8;
+        for (size_t i = 0; i < fb->len; i += bufferSize) {
+          // size_t chunkSize = std::min(static_cast<size_t>(1024), static_cast<size_t>(fb->len - i));          
+          size_t chunkSize = std::min(bufferSize, fb->len - i);
           client.sendBinary((const char*)(fb->buf + i), chunkSize);
-        }        
-        // for (size_t i = 0; i < fb->len; i += 1024) {
-        //   size_t chunkSize = std::min(static_cast<size_t>(1024), static_cast<size_t>(fb->len - i));          
-        //   client.sendBinary((const char*)(fb->buf + i), chunkSize);
-        // }
+        }
         client.sendBinary(endOfStream.c_str(), strlen(endOfStream.c_str()));
         // Send the the end of the stream as text
         //client.send(endOfStream);
         esp_camera_fb_return(fb);
-        Serial.println("MJPG sent");
+        Serial.println("JPEG sent");
         delay(5000);
       } else {
         Serial.println("Camera capture failed");

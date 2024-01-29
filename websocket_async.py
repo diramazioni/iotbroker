@@ -83,12 +83,12 @@ class WebSocketServer:
                 # Handle incoming images
                 if (isinstance(message, bytes) & CAM == True):
                     # Check for the end of the stream signal
-                    if str(message).startswith(END_OF_STREAM):
+                    if str(message) == END_OF_STREAM:
                         # Create a file when the stream is finished
-                        device = str(message).replace(END_OF_STREAM+'-','')
+                        
                         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                        os.makedirs(os.path.join(cam_dir, device), exist_ok=True)
-                        filename = os.path.join(cam_dir, device, f"{timestamp}.jpg")
+                        os.makedirs(os.path.join(cam_dir, device_string), exist_ok=True)
+                        filename = os.path.join(cam_dir, device_string, f"{timestamp}.jpg")
                         # Write the file on disk
                         with open(filename, "wb") as f:
                             f.write(binary_data)
