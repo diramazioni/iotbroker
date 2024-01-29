@@ -12,11 +12,6 @@ import os
 
 from websockets import WebSocketServerProtocol
 
-class RemoteIP(WebSocketServerProtocol):
-    def connection_made(self, transport):
-        super().connection_made(transport)
-        self.remote_ip = transport.get_extra_info('peername')[0]
-
 """
 When send_event() is triggered, insert the new message into the DB 
 and send event to all websocket connected clients
@@ -59,8 +54,6 @@ class WebSocketServer:
 
     async def _handler(self, websocket, path):
         CAM = False
-        remote_ip = websocket.remote_ip
-        logging.info(f"client connection: IP {remote_ip}")
         binary_data = bytearray() # stores the binary data
         self.connected_web_clients.add(websocket)
         '''
@@ -91,6 +84,7 @@ class WebSocketServer:
                     if str(message).startswith('CAM-'):
                         CAM = True
                         self.connected_esp_clients.add(websocket)
+                        self.connected_web_clients.remove(websocket)
                     # Check for the end of the stream signal
                     elif str(message).startswith('END_OF_STREAM'):
                         # Create a file when the stream is finished
@@ -133,7 +127,7 @@ class WebSocketServer:
         self.loop = asyncio.get_event_loop()  # Create a new event loop
         stop = self.loop.create_future()
         self.loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
-        async with serve(self._handler, "localhost", 8765, klass=RemoteIP):
+        async with serve(self._handler, "localhost", 8765):
             logging.debug("Websocket server started********************************")
             await stop
 

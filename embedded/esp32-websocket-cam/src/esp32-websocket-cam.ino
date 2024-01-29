@@ -105,7 +105,9 @@ void init_ws() {
   if (connected) {
     Serial.println("WebSocket connected");
     // Send the connection message
-    client.send('CAM-' + deviceString);
+    if (client.available()) {
+      client.send('CAM-' + deviceString);
+    }
   } else {
     Serial.println("WebSocket connection failed.");
   }
