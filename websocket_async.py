@@ -53,6 +53,11 @@ class WebSocketServer:
             logging.error(f"message_all error:{e}")  # Print the exception
 
     async def _handler(self, websocket, path):
+        headers = websocket.request_headers
+
+        # Check if a custom header "User-Agent" is present
+        user_agent = headers.get("User-Agent", "Unknown User Agent")
+        print(f"WebSocket connection established with User Agent: {user_agent}")
         CAM = False
         binary_data = bytearray() # stores the binary data
         self.connected_web_clients.add(websocket)
