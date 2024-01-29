@@ -55,8 +55,8 @@ class WebSocketServer:
         remote_ip = websocket.remote_address[0]
         try:
             # Set a timeout for receiving client_info
-            client_info_timeout = 5  # adjust as needed
-            device_string = await websocket.recv() #await asyncio.wait_for(websocket.recv(), timeout=client_info_timeout)
+            client_info_timeout = 15  # adjust as needed
+            device_string = await asyncio.wait_for(websocket.recv(), timeout=client_info_timeout)
             
             # Check against your allowed combinations
             if (remote_ip+'-'+device_string) in allowed_clients:
