@@ -62,6 +62,7 @@ class WebSocketServer:
         remote_ip = websocket.remote_ip
         logging.info(f"client connection: IP {remote_ip}")
         binary_data = bytearray() # stores the binary data
+        self.connected_web_clients.add(websocket)
         '''
         try:
             # Set a timeout for receiving client_info
@@ -108,7 +109,6 @@ class WebSocketServer:
                         binary_data = bytearray()
                     else:
                         # Handle text message
-                        await self.message_all(message)
                         await self.send_event(message)
                         await asyncio.sleep(0)
 
@@ -133,7 +133,7 @@ class WebSocketServer:
         self.loop = asyncio.get_event_loop()  # Create a new event loop
         stop = self.loop.create_future()
         self.loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
-        async with serve(self._handler, "localhost", 8765, klass=RemoteIP):
+        async with serve(self._handler, "localhost", 8765): #, klass=RemoteIP
             logging.debug("Websocket server started********************************")
             await stop
 
