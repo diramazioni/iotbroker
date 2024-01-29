@@ -67,6 +67,9 @@ class WebSocketServer:
             CAM = True
             self.connected_esp_clients.add(websocket)
             await websocket.send("ACK")
+        elif user_agent == "TinyWebsockets Client" and device_string not in self.allowed_clients:
+            await websocket.send("Cam not authorized")
+            return
         else:
             CAM = False
             self.connected_web_clients.add(websocket)
