@@ -62,19 +62,20 @@ class WebSocketServer:
         logging.debug(f"User Agent: {user_agent}")
         device_string = await websocket.recv()
         logging.debug(f"device_string: {device_string}")
-        # Check if device is allowed to connect
-        if user_agent == "TinyWebsockets Client" and device_string in self.allowed_clients:
-            CAM = True
-            self.connected_esp_clients.add(websocket)
-            await websocket.send("ACK")
-        elif user_agent == "TinyWebsockets Client" and device_string not in self.allowed_clients:
-            await websocket.send("Cam not authorized")
-            return
-        else:
-            CAM = False
-            self.connected_web_clients.add(websocket)
-        binary_data = bytearray() # stores the binary data
         try:
+            # Check if device is allowed to connect
+            if user_agent == "TinyWebsockets Client" and device_string in self.allowed_clients:
+                CAM = True
+                self.connected_esp_clients.add(websocket)
+                await websocket.send("ACK")
+            elif user_agent == "TinyWebsockets Client" and device_string not in self.allowed_clients:
+                logging.debug(f"Cam not authorized")
+                await websocket.send("Cam not authorized")
+            else:
+                CAM = False
+                self.connected_web_clients.add(websocket)
+            binary_data = bytearray() # stores the binary data
+       
             async for message in websocket:
                 # Handle incoming images
                 if (isinstance(message, bytes) & CAM == True):
