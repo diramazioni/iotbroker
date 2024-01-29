@@ -52,22 +52,23 @@ class WebSocketServer:
 
     async def _handler(self, websocket, path):
         CAM = False
+        remote_ip = websocket.remote_address[0]
         try:
             # Set a timeout for receiving client_info
             client_info_timeout = 5  # adjust as needed
-            client_info = await asyncio.wait_for(websocket.recv(), timeout=client_info_timeout)
-            ip, device_string = client_info.split('-')
+            device_string = await asyncio.wait_for(websocket.recv(), timeout=client_info_timeout)
+            
             # Check against your allowed combinations
-            if (client_info) in allowed_clients:
+            if (remote_ip+'-'+device_string) in allowed_clients:
                 CAM = True
-                logging.info(f"CAM connected: IP {ip}, Device: {device_string}")
+                logging.info(f"CAM connected: IP {remote_ip}, Device: {device_string}")
                 self.connected_esp_clients.add(websocket)
                 websocket.send("ACK")
             else:
-                logging.info(f"CAM unauthorized: IP {ip}, Device: {device_string}")
-        except TimeoutError():
+                logging.info(f"CAM unauthorized: IP {remote_ip}, Device: {device_string}")
+        except asyncio.TimeoutError():
             CAM = False
-            logging.info(f"Web client connection: IP {ip}, Device: {device_string}")
+            logging.info(f"Web client connection: IP {remote_ip}, Device: {device_string}")
             self.connected_web_clients.add(websocket)
             #return
         try:

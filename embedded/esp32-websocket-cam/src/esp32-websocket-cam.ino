@@ -104,11 +104,8 @@ void init_ws() {
   bool connected = client.connect(ws_server_address);
   if (connected) {
     Serial.println("WebSocket connected");
-    String ipAddress = WiFi.localIP().toString();
-    // Create a JSON-like message with IP address and device string
-    String connectionMessage = ipAddress + "-" + deviceString;
     // Send the connection message
-    client.send(connectionMessage.c_str());
+    client.send(deviceString);
   } else {
     Serial.println("WebSocket connection failed.");
   }
