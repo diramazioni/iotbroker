@@ -60,17 +60,19 @@ class WebSocketServer:
         headers = websocket.request_headers
         user_agent = headers.get("User-Agent", "Unknown User Agent")
         logging.debug(f"User Agent: {user_agent}")
-        device_string = await websocket.recv()
-        logging.debug(f"device_string: {device_string}")
         try:
             # Check if device is allowed to connect
-            if user_agent == "TinyWebsockets Client" and device_string in self.allowed_clients:
-                CAM = True
-                self.connected_esp_clients.add(websocket)
-                await websocket.send("ACK")
-            elif user_agent == "TinyWebsockets Client" and device_string not in self.allowed_clients:
-                logging.debug(f"Cam not authorized")
-                await websocket.send("Cam not authorized")
+            if user_agent == "TinyWebsockets Client":
+                device_string = await websocket.recv()
+                logging.debug(f"device_string: {device_string}")
+                if device_string in self.allowed_clients:
+                    CAM = True
+                    self.connected_esp_clients.add(websocket)
+                    await websocket.send("ACK")
+                else:
+                    CAM = False
+                    logging.debug(f"Cam not authorized")
+                    await websocket.send("Cam not authorized")
             else:
                 CAM = False
                 self.connected_web_clients.add(websocket)
