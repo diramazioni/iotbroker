@@ -54,7 +54,7 @@ class WebSocketServer:
         CAM = False
         try:
             # Set a timeout for receiving client_info
-            client_info_timeout = 2  # adjust as needed
+            client_info_timeout = 5  # adjust as needed
             client_info = await asyncio.wait_for(websocket.recv(), timeout=client_info_timeout)
             ip, device_string = client_info.split('-')
             # Check against your allowed combinations
@@ -63,12 +63,13 @@ class WebSocketServer:
                 logging.info(f"CAM connected: IP {ip}, Device: {device_string}")
                 self.connected_esp_clients.add(websocket)
                 websocket.send("ACK")
-            else:
-                CAM = False
-                logging.info(f"Web client connection: IP {ip}, Device: {device_string}")
-                self.connected_web_clients.add(websocket)
-                #return
-            
+
+        except TimeoutError():
+            CAM = False
+            logging.info(f"Web client connection: IP {ip}, Device: {device_string}")
+            self.connected_web_clients.add(websocket)
+            #return
+        try:
             binary_data = bytearray() # stores the binary data
 
             async for message in websocket:
