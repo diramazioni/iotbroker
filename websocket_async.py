@@ -66,7 +66,7 @@ class WebSocketServer:
                 websocket.send("ACK")
             else:
                 logging.info(f"CAM unauthorized: IP {remote_ip}, Device: {device_string}")
-        except asyncio.exceptions.CancelledError():
+        except asyncio.exceptions.TimeoutError:
             CAM = False
             logging.info(f"Web client connection: IP {remote_ip}, Device: {device_string}")
             self.connected_web_clients.add(websocket)
