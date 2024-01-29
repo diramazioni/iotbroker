@@ -108,7 +108,10 @@ class WebSocketServer:
         except Exception as e:
             logging.error("WebSocket handler error:", e)  # Print the exception
         finally:
-            self.connected_web_clients.remove(websocket)
+            if(CAM):
+                self.connected_esp_clients.remove(websocket)
+            else:
+                self.connected_web_clients.remove(websocket)
 
     async def start(self):
         logging.debug("WS starting********************************")
