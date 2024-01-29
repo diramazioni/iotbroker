@@ -49,7 +49,7 @@ void loopTask_Cmd(void *pvParameters) {
   Serial.println("Task send image with websocket starting ... ");
 
   while (1) {
-    if (client.available() && ALLOWED) {
+    if (client.available() ) {
       camera_fb_t * fb = NULL;
       fb = esp_camera_fb_get();
       if (fb != NULL) {

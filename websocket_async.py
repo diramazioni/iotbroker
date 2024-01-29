@@ -82,6 +82,8 @@ class WebSocketServer:
                     binary_data.extend(message)
                 else:
                     if str(message).startswith('CAM-'):
+                        logging.debug(f"CAM connected: {message}")
+
                         CAM = True
                         self.connected_esp_clients.add(websocket)
                         self.connected_web_clients.remove(websocket)
