@@ -60,6 +60,7 @@ class WebSocketServer:
         headers = websocket.request_headers
         user_agent = headers.get("User-Agent", "Unknown User Agent")
         logging.debug(f"User Agent: {user_agent}")
+        CAM = False
         try:
             # Check if device is allowed to connect
             if user_agent == "TinyWebsockets Client":
