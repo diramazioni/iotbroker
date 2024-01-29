@@ -20,7 +20,7 @@ cam_dir = os.path.join("www","cam")
 
 
 HELLO_CAM = "CAM"
-END_OF_STREAM = b"END_OF_STREAM"
+END_OF_STREAM = "END_OF_STREAM"
 
 class WebSocketServer:
     def __init__(self):
@@ -91,7 +91,7 @@ class WebSocketServer:
                         # Write the file on disk
                         with open(filename, "wb") as f:
                             f.write(binary_data)
-                        logging.debug(f"Binary data received and saved as {filename}")
+                        logging.info(f"Binary data received and saved as {filename}")
                         # Send the buffer to all connected_web_clients
                         await websockets.broadcast(self.connected_web_clients, binary_data, binary=True)                            
                         logging.debug(f"Binary data sent to all connected web clients")
