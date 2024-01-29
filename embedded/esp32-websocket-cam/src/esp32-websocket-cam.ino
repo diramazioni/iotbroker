@@ -13,7 +13,7 @@
 // define ssid_Router, password_Router, ws_server_address
 #include "credentials.h"
 
-String endOfStreamMessage = "END_OF_STREAM-" + String(deviceString);
+String endOfStream = "END_OF_STREAM-" + String(deviceString);
 
 
 using namespace websockets;
@@ -58,8 +58,9 @@ void loopTask_Cmd(void *pvParameters) {
           size_t chunkSize = std::min(static_cast<size_t>(1024), static_cast<size_t>(fb->len - i));          
           client.sendBinary((const char*)(fb->buf + i), chunkSize);
         }
+        client.sendBinary(endOfStream.c_str(), strlen(endOfStream.c_str()));
         // Send the the end of the stream as text
-        client.send(endOfStreamMessage);
+        //client.send(endOfStream);
         esp_camera_fb_return(fb);
         Serial.println("MJPG sent");
         delay(5000);

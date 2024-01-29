@@ -18,6 +18,11 @@ and send event to all websocket connected clients
 """
 cam_dir = os.path.join("www","cam")
 allowed_clients = []
+
+
+HELLO_CAM = "CAM"
+END_OF_STREAM = "END_OF_STREAM"
+
 class WebSocketServer:
     def __init__(self, parser=None):
         self.logger = logging.getLogger(__name__)
@@ -54,13 +59,15 @@ class WebSocketServer:
 
     async def _handler(self, websocket, path):
         headers = websocket.request_headers
-
-        # Check if a custom header "User-Agent" is present
         user_agent = headers.get("User-Agent", "Unknown User Agent")
-        logging.debug(f"WebSocket connection established with User Agent: {user_agent}")
-        CAM = False
+        logging.debug(f"User Agent: {user_agent}")
+        if user_agent == "TinyWebsockets Client":
+            CAM = True
+            self.connected_esp_clients.add(websocket)
+        else:
+            CAM = False
+            self.connected_web_clients.add(websocket)
         binary_data = bytearray() # stores the binary data
-        self.connected_web_clients.add(websocket)
         '''
         try:
             # Set a timeout for receiving client_info
@@ -83,20 +90,10 @@ class WebSocketServer:
         try:
             async for message in websocket:
                 if isinstance(message, bytes):
-                    # Append binary data to the existing buffer
-                    binary_data.extend(message)
-                else:
-                    if str(message).startswith('CAM-'):
-                        logging.debug(f"CAM connected: {message}")
-
-                        CAM = True
-                        self.connected_esp_clients.add(websocket)
-                        self.connected_web_clients.remove(websocket)
-                    # Check for the end of the stream signal
-                    elif str(message).startswith('END_OF_STREAM'):
+                    if str(message).startswith(END_OF_STREAM):
                         # Create a file when the stream is finished
                         if binary_data:
-                            device = str(message).replace('END_OF_STREAM-','')
+                            device = str(message).replace(END_OF_STREAM+'-','')
                             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                             os.makedirs(os.path.join(cam_dir, device), exist_ok=True)
                             filename = os.path.join(cam_dir, device, f"{timestamp}.jpg")
@@ -108,6 +105,15 @@ class WebSocketServer:
 
                         # Reset binary_data for the next stream
                         binary_data = bytearray()
+                    else:
+                        # Append binary data to the existing buffer
+                        binary_data.extend(message)
+                else:
+                    if str(message).startswith(HELLO_CAM):
+                        logging.debug(f"CAM connected: {message}")
+
+                    # Check for the end of the stream signal
+                 
                     else:
                         # Handle text message
                         await self.send_event(message)
