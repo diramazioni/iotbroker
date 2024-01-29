@@ -15,12 +15,14 @@ When send_event() is triggered, insert the new message into the DB
 and send event to all websocket connected clients
 """
 
-
+allowed_clients =[]
 class WebSocketServer:
     def __init__(self, parser=None):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
-        self.connected_clients = set()
+        self.connected_web_clients = set()
+        self.connected_esp_clients = set()
+
         self.id = 0
         self.parser = parser
 
@@ -42,17 +44,33 @@ class WebSocketServer:
 
     async def message_all(self, message):
         try:
-            # await websockets.broadcast(self.connected_clients, message)
-            for client in self.connected_clients:
+            # await websockets.broadcast(self.connected_web_clients, message)
+            for client in self.connected_web_clients:
                 await client.send(message)
         except Exception as e:
             logging.error(f"message_all error:{e}")  # Print the exception
 
     async def _handler(self, websocket, path):
-        self.connected_clients.add(websocket)
+        CAM = False
         try:
+            # Set a timeout for receiving client_info
+            client_info_timeout = 2  # adjust as needed
+            client_info = await asyncio.wait_for(websocket.recv(), timeout=client_info_timeout)
+            ip, device_string = client_info.split('-')
+            # Check against your allowed combinations
+            if (client_info) in allowed_clients:
+                CAM = True
+                logging.info(f"CAM connected: IP {ip}, Device: {device_string}")
+                self.connected_esp_clients.add(websocket)
+                websocket.send("ACK")
+            else:
+                CAM = False
+                logging.info(f"Web client connection: IP {ip}, Device: {device_string}")
+                self.connected_web_clients.add(websocket)
+                #return
+            
             binary_data = bytearray() # stores the binary data
-            # broadcast the message to connected clients
+
             async for message in websocket:
                 if isinstance(message, bytes):
                     # Append binary data to the existing buffer
@@ -88,7 +106,7 @@ class WebSocketServer:
         except Exception as e:
             logging.error("WebSocket handler error:", e)  # Print the exception
         finally:
-            self.connected_clients.remove(websocket)
+            self.connected_web_clients.remove(websocket)
 
     async def start(self):
         logging.debug("WS starting********************************")

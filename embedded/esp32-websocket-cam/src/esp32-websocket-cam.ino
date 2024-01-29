@@ -13,15 +13,15 @@
 // define ssid_Router, password_Router, ws_server_address
 #include "credentials.h"
 
-String deviceString = "eli";
-String endOfStreamMessage = "END_OF_STREAM-" + deviceString;
+String endOfStreamMessage = "END_OF_STREAM-" + String(deviceString);
+
 
 using namespace websockets;
 WebsocketsClient client;
 
-
-
 extern TaskHandle_t loopTaskHandle;
+
+bool ALLOWED = false;
 
 void setup() {
   Serial.begin(115200);
@@ -49,7 +49,7 @@ void loopTask_Cmd(void *pvParameters) {
   Serial.println("Task send image with websocket starting ... ");
 
   while (1) {
-    if (client.available()) {
+    if (client.available() && ALLOWED) {
       camera_fb_t * fb = NULL;
       fb = esp_camera_fb_get();
       if (fb != NULL) {
@@ -104,12 +104,20 @@ void init_ws() {
   bool connected = client.connect(ws_server_address);
   if (connected) {
     Serial.println("WebSocket connected");
+    String ipAddress = WiFi.localIP().toString();
+    // Create a JSON-like message with IP address and device string
+    String connectionMessage = ipAddress + "-" + deviceString;
+    // Send the connection message
+    client.send(connectionMessage.c_str());
   } else {
     Serial.println("WebSocket connection failed.");
   }
   client.onMessage([&](WebsocketsMessage message) {
-    Serial.print("Got Message: ");
     Serial.println(message.data());
+    if(message.data() == "ACK") {
+      Serial.println("ALLOWED");
+      ALLOWED = true;
+    }
   });  
 }
 void cameraSetup() {
@@ -143,6 +151,7 @@ void cameraSetup() {
   // if PSRAM IC present, init with UXGA resolution and higher JPEG quality
   // for larger pre-allocated frame buffer.
   if(psramFound()){
+    Serial.print("psram device found");
     config.jpeg_quality = 10;
     config.fb_count = 2;
     config.grab_mode = CAMERA_GRAB_LATEST;
