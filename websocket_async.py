@@ -20,7 +20,7 @@ cam_dir = os.path.join("www","cam")
 
 
 HELLO_CAM = "CAM"
-END_OF_STREAM = "END_OF_STREAM"
+END_OF_STREAM = b"END_OF_STREAM"
 
 class WebSocketServer:
     def __init__(self):
