@@ -133,7 +133,7 @@ class WebSocketServer:
         self.loop = asyncio.get_event_loop()  # Create a new event loop
         stop = self.loop.create_future()
         self.loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
-        async with serve(self._handler, "localhost", 8765): #, klass=RemoteIP
+        async with serve(self._handler, "localhost", 8765, klass=RemoteIP):
             logging.debug("Websocket server started********************************")
             await stop
 
