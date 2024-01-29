@@ -15,9 +15,10 @@ Listen to MQTT messages and echo to the WebSocket server
 
 
 class MQTTLogger(AsyncMqttClient):
-    def __init__(self, websocket=None, log_json=False) -> None:
+    def __init__(self, parser=None, websocket=None, log_json=False) -> None:
         super().__init__()
         self.client = None
+        self.parser = parser
         self.websocket = websocket
         self.log_json = log_json
 
@@ -30,6 +31,9 @@ class MQTTLogger(AsyncMqttClient):
                 # device = message_.topic.split(":")[3][:-6]
                 logging.info(f"Received:{message_} from {message.topic} topic")
                 # asyncio.create_task(self.websocket.send_event(message))
+                if self.parser:
+                    asyncio.create_task( self.parser.db_entry(message_) )
+                    logging.info("*" * 50)
                 if self.websocket:
                     loop = self.websocket.loop
                     loop.create_task(self.websocket.send_event(message_))
@@ -86,10 +90,12 @@ async def main(interactive=False):
 
     try:
         message_parser = MessageParser()
-        wss = WebSocketServer(parser=message_parser)
+        asyncio.create_task(message_parser.connect())
+        wss = WebSocketServer()
         asyncio.create_task(wss.start())
         mqtt_logger = MQTTLogger(
             websocket=wss,
+            parser=message_parser,
             log_json=False,
         )
         logging.info("WebSocketServer started...")
@@ -123,6 +129,7 @@ async def main(interactive=False):
         await mqtt_logger.client.stop()
         await mqtt_logger.client.wait_started()
         await wss.stop()
+        await message_parser.disconnect()
 
 
 # logging.basicConfig()

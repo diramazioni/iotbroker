@@ -23,14 +23,13 @@ HELLO_CAM = "CAM"
 END_OF_STREAM = "END_OF_STREAM"
 
 class WebSocketServer:
-    def __init__(self, parser=None):
+    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
         self.connected_web_clients = set()
         self.connected_esp_clients = set()
 
         self.id = 0
-        self.parser = parser
 
     async def send_event(self, message):
         # send websocket event
@@ -40,8 +39,6 @@ class WebSocketServer:
             ws_data = {"id": self.id, "device": message_["name"], "content": message_}
             logging.debug(f"Sending WebSocket message: {ws_data}")
 
-            await self.parser.db_entry(message_)
-            logging.info("*" * 50)
             await self.message_all(json.dumps(ws_data))
             logging.debug(f"message_all-> {json.dumps(ws_data)}")
         except Exception as e:
@@ -70,14 +67,11 @@ class WebSocketServer:
                     CAM = True
                     self.connected_esp_clients.add(websocket)
                     await websocket.send("ACK")
-                else:
-                    CAM = False
-                    logging.debug(f"Cam not authorized")
-                    await websocket.send("Cam not authorized")
+
             except asyncio.TimeoutError:
                 # Handle the timeout error (e.g., log it or close the connection)
-                logging.error("WebSocket receive timed out")
-            
+                logging.error("WebSocket receive timed out, Cam did not say hello")
+                await websocket.send("Cam not authorized")
 
         else:
             CAM = False
@@ -135,8 +129,6 @@ class WebSocketServer:
         self.allowed_clients = os.getenv("allowed_clients").strip().split(",")
         logging.debug(self.allowed_clients)
 
-        if self.parser:
-            await self.parser.connect()
         # Set the stop condition when receiving SIGTERM.
         self.loop = asyncio.get_event_loop()  # Create a new event loop
         stop = self.loop.create_future()
@@ -146,9 +138,7 @@ class WebSocketServer:
             await stop
 
     async def stop(self):
-        if self.parser:
-            await self.parser.disconnect()
-            signal.raise_signal(signal.SIGTERM)
+        signal.raise_signal(signal.SIGTERM)
 
     async def updateFileList(self):
         images = {}
