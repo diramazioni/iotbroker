@@ -62,6 +62,7 @@ class WebSocketServer:
 
     async def _handler(self, websocket, path):
         headers = websocket.request_headers
+        logging.debug(f"request_headers: {json.dumps(headers, indent=2)}")
         user_agent = headers.get("User-Agent", "Unknown User Agent")
         logging.debug(f"User Agent: {user_agent}")
         CAM = False
@@ -91,17 +92,17 @@ class WebSocketServer:
                     # Check for the end of the stream signal
                     if END_OF_STREAM.encode() in message:
                         # Create a file when the stream is finished
-                        
                         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                         os.makedirs(os.path.join(cam_dir, device_string), exist_ok=True)
                         filename = os.path.join(cam_dir, device_string, f"{timestamp}.jpg")
                         # Write the file on disk
                         with open(filename, "wb") as f:
                             f.write(binary_data)
+                        websocket.send(f"jpeg receaved {device_string}/{timestamp}.jpg")
+
                         logging.info(f"Binary data received and saved as {filename}")
                         # Send the buffer to all connected_web_clients
-                        await self.image_all(binary_data)
-                        #await websockets.broadcast(self.connected_web_clients, binary_data, binary=True)                            
+                        await self.image_all(binary_data)                    
                         logging.debug(f"Binary data sent to all connected web clients")
                         # Reset binary_data for the next stream
                         binary_data = bytearray()
