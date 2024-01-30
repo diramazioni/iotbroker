@@ -25,9 +25,9 @@ class WebSocketServer:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
-        self.connected_web_clients = set()
-        self.connected_esp_clients = set()
-        self.connected_cam_clients = {}
+        self.connected_web_clients = set()  # Set of connected web clients for the frontend
+        self.connected_cam_clients = {} # Webclients for the video stream
+        self.connected_esp_clients = set()  # set client list of nodes
 
         self.id = 0
 
@@ -53,12 +53,25 @@ class WebSocketServer:
         except Exception as e:
             logging.error(f"message_all error:{e}")  # Print the exception
 
-    async def stream_image(self, device, message):
+    async def stream_image(self, device_string, message):
         try:
             for topic in self.connected_cam_clients.keys():
-                if topic == device:
-                    client = self.connected_cam_clients[device]
+                if topic == device_string:
+                    client = self.connected_cam_clients[device_string]
                     await client.send(message)
+        except Exception as e:
+            logging.error(f"image_all error:{e}")  # Print the exception
+
+
+    async def save_image(self, device_string, message):
+        try:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            os.makedirs(os.path.join(cam_dir, device_string), exist_ok=True)
+            filename = os.path.join(cam_dir, device_string, f"{timestamp}.jpg")
+            # Write the file on disk
+            with open(filename, "wb") as f:
+                f.write(message)
+            logging.info(f"Binary data received and saved as {filename}")                
         except Exception as e:
             logging.error(f"image_all error:{e}")  # Print the exception
 
@@ -70,7 +83,8 @@ class WebSocketServer:
         path = path.replace(SERVER_PATH+"/", "") # headers.get("URI", "")
 
         logging.debug(f"User Agent: {user_agent}")
-        camSend = False
+        camAuth = False
+        camDebug = False
         device_string = ""
         binary_data = bytearray() # stores the binary data
 
@@ -80,7 +94,7 @@ class WebSocketServer:
                 device_string = await asyncio.wait_for(websocket.recv(), timeout=2)
                 if device_string in self.allowed_clients:
                     logging.debug(f"device_string: {device_string}")
-                    camSend = True
+                    camAuth = True # allow the image to be sent    
                     self.connected_esp_clients.add(websocket)
                     await websocket.send("ACK")
 
@@ -89,31 +103,25 @@ class WebSocketServer:
                 await websocket.send("Cam not authorized")
 
         else: # All other client "should" be web-browser clients
-            camSend = False
-            # Check if the requested URI contains "cam" subscribe to video stream
+            camAuth = False
+            # Check if the requested path contains "cam" subscribe to video stream
             # otherwise add the client for normal messaging
-            if path.startswith("cam"):
+            if path.startswith("cam"): # 
                 device_string = path.replace("cam/", "")
                 self.connected_cam_clients[device_string] = websocket
-            else: 
+            else: # frontend clients
                 self.connected_web_clients.add(websocket)
        
         try:
             async for message in websocket:
                 # Handle incoming images
-                if (isinstance(message, bytes) & camSend == True):
+                if (isinstance(message, bytes) & camAuth == True):
                     # Check for the end of the stream signal
                     if END_OF_STREAM.encode() in message:
                         # Create a file when the stream is finished
-                        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                        os.makedirs(os.path.join(cam_dir, device_string), exist_ok=True)
-                        filename = os.path.join(cam_dir, device_string, f"{timestamp}.jpg")
-                        # Write the file on disk
-                        with open(filename, "wb") as f:
-                            f.write(binary_data)
-                        await websocket.send(f"jpeg receaved {device_string}/{timestamp}.jpg")
+                        if (camDebug == False):
+                            await self.save_image(device_string, binary_data)
 
-                        logging.info(f"Binary data received and saved as {filename}")
                         # Send the buffer to all connected_cam_clients
                         await self.stream_image(device_string, binary_data)                    
                         logging.debug(f"Binary data sent to all connected web clients")
@@ -124,7 +132,11 @@ class WebSocketServer:
                         binary_data.extend(message)
                 else:
                     if str(message).startswith(HELLO_CAM):
-                        logging.debug(f"CAM connected: {message}")
+                        logging.debug(f"CAM: {message}")
+                        # toggle the debug flag to avoid saving images
+                        if message == "CAM-DEBUG":
+                            camDebug = not camDebug
+                            logging.debug(f"DEBUG {camDebug}")
                     else:
                         # Handle text message
                         await self.send_event(message)
@@ -138,7 +150,7 @@ class WebSocketServer:
         except Exception as e:
             logging.error("WebSocket handler error:", e)  # Print the exception
         finally:
-            if(camSend):
+            if(camAuth):
                 self.connected_esp_clients.remove(websocket)
             elif path.startswith("cam"):
                 device_string = path.replace("cam/", "")

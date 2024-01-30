@@ -114,6 +114,7 @@ void init_ws() {
     if (client.available()) {
       String cam = "CAM-" + String(deviceString);
       client.send(cam.c_str());
+      client.send("CAM-DEBUG");
     }
   } else {
     Serial.println("WebSocket connection failed.");
