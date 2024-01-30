@@ -56,7 +56,7 @@ class WebSocketServer:
     async def image_all(self, message):
         try:
             for client in self.connected_esp_clients:
-                await client.send_image(message)
+                await client.send_binary(message)
         except Exception as e:
             logging.error(f"image_all error:{e}")  # Print the exception
 
