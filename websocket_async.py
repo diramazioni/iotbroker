@@ -111,7 +111,7 @@ class WebSocketServer:
                         # Write the file on disk
                         with open(filename, "wb") as f:
                             f.write(binary_data)
-                        websocket.send(f"jpeg receaved {device_string}/{timestamp}.jpg")
+                        await websocket.send(f"jpeg receaved {device_string}/{timestamp}.jpg")
 
                         logging.info(f"Binary data received and saved as {filename}")
                         # Send the buffer to all connected_cam_clients
