@@ -53,10 +53,12 @@ class WebSocketServer:
         except Exception as e:
             logging.error(f"message_all error:{e}")  # Print the exception
 
-    async def image_all(self, device, message):
+    async def stream_image(self, device, message):
         try:
-            for client in self.connected_web_clients:
-                await client.send(message)
+            for topic in self.connected_cam_clients.keys():
+                if topic == device:
+                    client = self.connected_cam_clients[device]
+                    await client.send(message)
         except Exception as e:
             logging.error(f"image_all error:{e}")  # Print the exception
 
@@ -65,9 +67,8 @@ class WebSocketServer:
         logging.debug(f"PATH: {path}")
         logging.debug(f"request_headers: {headers}")
         user_agent = headers.get("User-Agent", "Unknown User Agent")
-        URI = headers.get("URI", "")
-        if (len(URI) and URI.startswith(SERVER_PATH)):
-            URI = URI.replace(SERVER_PATH+"/", "")
+        path = path.replace(SERVER_PATH+"/", "") # headers.get("URI", "")
+
         logging.debug(f"User Agent: {user_agent}")
         camSend = False
         device_string = ""
@@ -91,8 +92,8 @@ class WebSocketServer:
             camSend = False
             # Check if the requested URI contains "cam" subscribe to video stream
             # otherwise add the client for normal messaging
-            if URI.startswith("cam"):
-                device_string = URI.replace("cam/", "")
+            if path.startswith("cam"):
+                device_string = path.replace("cam/", "")
                 self.connected_cam_clients[device_string] = websocket
             else: 
                 self.connected_web_clients.add(websocket)
@@ -113,8 +114,8 @@ class WebSocketServer:
                         websocket.send(f"jpeg receaved {device_string}/{timestamp}.jpg")
 
                         logging.info(f"Binary data received and saved as {filename}")
-                        # Send the buffer to all connected_web_clients
-                        await self.image_all(binary_data)                    
+                        # Send the buffer to all connected_cam_clients
+                        await self.stream_image(device_string, binary_data)                    
                         logging.debug(f"Binary data sent to all connected web clients")
                         # Reset binary_data for the next stream
                         binary_data = bytearray()
@@ -139,7 +140,9 @@ class WebSocketServer:
         finally:
             if(camSend):
                 self.connected_esp_clients.remove(websocket)
-            
+            elif path.startswith("cam"):
+                device_string = path.replace("cam/", "")
+                del self.connected_cam_clients[device_string]
             else:
                 self.connected_web_clients.remove(websocket)
 

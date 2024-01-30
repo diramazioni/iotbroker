@@ -11,8 +11,8 @@
     <script>
 		const host = "greenlab.unibo.it"; // Replace with the actual IP address or hostname
 		const port = 443;
-		const path = "ws"
-        const uri = "cam"
+		const path_ws = "ws"
+        const path = "cam"
 		let deviceName = 'CAM-eli'; // Replace with the actual device name
 
         const canvas = document.getElementById('imageCanvas');
@@ -21,7 +21,7 @@
 
         function initWebSocket() {
 
-            const wsUrl = `wss://${host}:${port}/${path}/${uri}/${deviceName}`;
+            const wsUrl = `wss://${host}:${port}/${path_ws}/${path}/${deviceName}`;
 
             ws = new WebSocket(wsUrl);
 
