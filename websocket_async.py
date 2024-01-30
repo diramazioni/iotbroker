@@ -53,6 +53,13 @@ class WebSocketServer:
         except Exception as e:
             logging.error(f"message_all error:{e}")  # Print the exception
 
+    async def image_all(self, message):
+        try:
+            for client in self.connected_esp_clients:
+                await client.send_image(message)
+        except Exception as e:
+            logging.error(f"image_all error:{e}")  # Print the exception
+
     async def _handler(self, websocket, path):
         headers = websocket.request_headers
         user_agent = headers.get("User-Agent", "Unknown User Agent")
@@ -93,7 +100,8 @@ class WebSocketServer:
                             f.write(binary_data)
                         logging.info(f"Binary data received and saved as {filename}")
                         # Send the buffer to all connected_web_clients
-                        await websockets.broadcast(self.connected_web_clients, binary_data, binary=True)                            
+                        await self.image_all(binary_data)
+                        #await websockets.broadcast(self.connected_web_clients, binary_data, binary=True)                            
                         logging.debug(f"Binary data sent to all connected web clients")
                         # Reset binary_data for the next stream
                         binary_data = bytearray()

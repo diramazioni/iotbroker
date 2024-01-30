@@ -13,7 +13,6 @@
 // define ssid_Router, password_Router, ws_server_address
 #include "credentials.h"
 
-// String endOfStream = "END_OF_STREAM";
 const char* endOfStream = "END_OF_STREAM";
 
 using namespace websockets;
@@ -72,6 +71,7 @@ void loopTask_Cmd(void *pvParameters) {
         ESP.restart();
       }  
     }  else if (client.available() && !ALLOWED ) {
+      client.poll();                                                                                                                                                                                                                                      
       delay(1000);
       // wait for the authentication do nothing
     } else {
