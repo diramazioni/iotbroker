@@ -5,7 +5,6 @@ import traceback
 import websockets
 from websockets.server import serve
 import signal
-from message_parser import MessageParser
 from datetime import datetime
 import json
 import os
@@ -18,7 +17,7 @@ and send event to all websocket connected clients
 """
 cam_dir = os.path.join("www","cam")
 
-
+SERVER_PATH="/ws"
 HELLO_CAM = "CAM"
 END_OF_STREAM = "END_OF_STREAM"
 
@@ -28,6 +27,7 @@ class WebSocketServer:
         self.logger.setLevel(logging.DEBUG)
         self.connected_web_clients = set()
         self.connected_esp_clients = set()
+        self.connected_cam_clients = {}
 
         self.id = 0
 
@@ -53,7 +53,7 @@ class WebSocketServer:
         except Exception as e:
             logging.error(f"message_all error:{e}")  # Print the exception
 
-    async def image_all(self, message):
+    async def image_all(self, device, message):
         try:
             for client in self.connected_web_clients:
                 await client.send(message)
@@ -62,17 +62,24 @@ class WebSocketServer:
 
     async def _handler(self, websocket, path):
         headers = websocket.request_headers
-        logging.debug(f"request_headers: {json.dumps(headers, indent=2)}")
+        logging.debug(f"PATH: {path}")
+        logging.debug(f"request_headers: {headers}")
         user_agent = headers.get("User-Agent", "Unknown User Agent")
+        URI = headers.get("URI", "")
+        if (len(URI) and URI.startswith(SERVER_PATH)):
+            URI = URI.replace(SERVER_PATH+"/", "")
         logging.debug(f"User Agent: {user_agent}")
-        CAM = False
+        camSend = False
+        device_string = ""
+        binary_data = bytearray() # stores the binary data
+
         # Check if device is allowed to connect
-        if user_agent == "TinyWebsockets Client":
+        if user_agent == "TinyWebsockets Client": # Arduino client
             try:
                 device_string = await asyncio.wait_for(websocket.recv(), timeout=2)
                 if device_string in self.allowed_clients:
                     logging.debug(f"device_string: {device_string}")
-                    CAM = True
+                    camSend = True
                     self.connected_esp_clients.add(websocket)
                     await websocket.send("ACK")
 
@@ -80,15 +87,20 @@ class WebSocketServer:
                 logging.error("WebSocket receive timed out, Cam did not say hello")
                 await websocket.send("Cam not authorized")
 
-        else:
-            CAM = False
-            self.connected_web_clients.add(websocket)
-        binary_data = bytearray() # stores the binary data
+        else: # All other client "should" be web-browser clients
+            camSend = False
+            # Check if the requested URI contains "cam" subscribe to video stream
+            # otherwise add the client for normal messaging
+            if URI.startswith("cam"):
+                device_string = URI.replace("cam/", "")
+                self.connected_cam_clients[device_string] = websocket
+            else: 
+                self.connected_web_clients.add(websocket)
        
         try:
             async for message in websocket:
                 # Handle incoming images
-                if (isinstance(message, bytes) & CAM == True):
+                if (isinstance(message, bytes) & camSend == True):
                     # Check for the end of the stream signal
                     if END_OF_STREAM.encode() in message:
                         # Create a file when the stream is finished
@@ -125,8 +137,9 @@ class WebSocketServer:
         except Exception as e:
             logging.error("WebSocket handler error:", e)  # Print the exception
         finally:
-            if(CAM):
+            if(camSend):
                 self.connected_esp_clients.remove(websocket)
+            
             else:
                 self.connected_web_clients.remove(websocket)
 
@@ -163,9 +176,9 @@ class WebSocketServer:
 async def main(interactive=False):
 
     try:
-        message_parser = MessageParser()
+
         logging.info("message_parser started")
-        wss = WebSocketServer(parser=message_parser)
+        wss = WebSocketServer()
         asyncio.create_task(wss.start())
         logging.info("WebSocketServer started...")
         if interactive:
