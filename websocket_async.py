@@ -82,7 +82,7 @@ class WebSocketServer:
                 # Handle incoming images
                 if (isinstance(message, bytes) & CAM == True):
                     # Check for the end of the stream signal
-                    if str(message) == END_OF_STREAM:
+                    if END_OF_STREAM.encode() in message:
                         # Create a file when the stream is finished
                         
                         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
