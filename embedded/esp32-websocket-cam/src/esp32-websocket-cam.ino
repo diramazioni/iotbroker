@@ -13,41 +13,75 @@
 // define ssid_Router, password_Router, ws_server_address
 #include "credentials.h"
 
+int wifiTimeout = 20*1000;
+int interval_debug = 3*1000;
+int interval_long = 60*60*1000;
+int interval = interval_debug;
+
+int counter = 1;
+
 const char* endOfStream = "END_OF_STREAM";
 
 using namespace websockets;
 WebsocketsClient client;
 
-extern TaskHandle_t loopTaskHandle;
-
 bool ALLOWED = false;
+bool DEBUG = true;
+
 
 void setup() {
-  Serial.begin(115200);
-  Serial.setDebugOutput(true);
+  Serial.begin(9600);
+  delay(1000);
+  //Serial.begin(115200);
+  //Serial.setTimeout(2000); // wait for X sec for the serial command
   Serial.println();
   pinMode(LED_BUILT_IN, OUTPUT);
   cameraSetup();
   init_wifi();    
   init_ws();
 
+
   //disableCore0WDT();
   // WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //disable brownout problems
-  xTaskCreateUniversal(loopTask_Cmd, "loopTask_Cmd", 8192, NULL, 1, &loopTaskHandle, 0);		//loopTask_Cmd uses core 0.
-  //xTaskCreateUniversal(loopTask_Blink, "loopTask_Blink", 8192, NULL, 1, &loopTaskHandle, 0);//loopTask_Blink uses core 0.
 }
-//task loop uses core 1.
 void loop() {
-
   client.poll();
-  delay(10000);
-
+  /*  
+  if (Serial.available() > 0) { // expires with setTimeout
+    char command = Serial.read();
+    serialCommand(command);
+  }  
+  */
+  // send the image
+  send_image();
 }
 
-void loopTask_Cmd(void *pvParameters) {
+void serialCommand(char command) {
+  switch (command) {
+    case 'd':      // Debug switch
+      DEBUG = !DEBUG;
+      Serial.println("DEBUG: " + String(DEBUG));
+      client.send("CAM-DEBUG");
+      if(DEBUG) {
+        interval = interval_debug;
+        Serial.setDebugOutput(true);
+      } else {
+        interval = interval_long;
+        Serial.setDebugOutput(false);
+      }
+      break;
+    case 'r':  // reset
+      Serial.println("RESET");
+      ESP.restart();              
+      break;
+    default:
+      Serial.println("Unknown command");
+      break;
+  }
+}
+void send_image() {
   Serial.println("Task send image with websocket starting ... ");
-
-  while (1) {
+  while (1)  {
     if (client.available() && ALLOWED) {
       camera_fb_t * fb = NULL;
       fb = esp_camera_fb_get();
@@ -63,8 +97,11 @@ void loopTask_Cmd(void *pvParameters) {
         // Send the the end of the stream as text
         //client.send(endOfStream);
         esp_camera_fb_return(fb);
+        Serial.print(counter);
         Serial.println("JPEG sent");
-        delay(5000);
+        client.poll();
+        counter++;
+        delay(interval);
       } else {
         Serial.println("Camera capture failed");
         esp_camera_fb_return(fb);
@@ -72,36 +109,36 @@ void loopTask_Cmd(void *pvParameters) {
       }  
     }  else if (client.available() && !ALLOWED ) {
       client.poll();                                                                                                                                                                                                                                      
-      delay(1000);
+      delay(100);
       // wait for the authentication do nothing
     } else {
-      Serial.println("WS client not available");
+      Serial.println("WebSocket not available");
       ESP.restart();
     }
   }
   client.poll();
-  delay(1000);
 }
-void loopTask_Blink(void *pvParameters) {
-  Serial.println("Task Blink is starting ... ");
-  while (1) {
-    digitalWrite(LED_BUILT_IN, !digitalRead(LED_BUILT_IN));
-    delay(1000);
-  }
-}
+  
+
+
 void init_wifi() {
-  WiFi.begin(ssid_Router, password_Router);
   Serial.print("Connecting ");
   Serial.print(ssid_Router);
-  while (WiFi.isConnected() != true) {
+  WiFi.begin(ssid_Router, password_Router);
+  // Wait for connection or timeout
+  unsigned long startTime = millis();
+  while (WiFi.status() != WL_CONNECTED && millis() - startTime < wifiTimeout) {
     delay(500);
     Serial.print(".");
-    //WiFi.begin(ssid_Router, password_Router);
   }
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
+
+  // Check if connected or timed out
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("\nConnected to WiFi");
+  } else {
+    Serial.println("\nWiFi connection timed out");
+    ESP.restart();
+  }
 }
 
 void init_ws() {
