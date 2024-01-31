@@ -14,7 +14,7 @@
 #include "credentials.h"
 
 int wifiTimeout = 20*1000;
-int interval_debug = 3*1000;
+int interval_debug = 1000;
 int interval_long = 60*60*1000;
 int interval = interval_debug;
 
@@ -80,7 +80,7 @@ void serialCommand(char command) {
   }
 }
 void send_image() {
-  Serial.println("Task send image with websocket starting ... ");
+  Serial.println("Task send image, authenticating ... ");
   while (1)  {
     if (client.available() && ALLOWED) {
       camera_fb_t * fb = NULL;
@@ -108,6 +108,7 @@ void send_image() {
         ESP.restart();
       }  
     }  else if (client.available() && !ALLOWED ) {
+      Serial.print(".");
       client.poll();                                                                                                                                                                                                                                      
       delay(100);
       // wait for the authentication do nothing
