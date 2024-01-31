@@ -29,7 +29,7 @@ class MQTTLogger(AsyncMqttClient):
             if message_:
                 logging.info(f"Received:\n{message_}\n from topic:\n{message.topic}")
                 if self.parser:
-                    asyncio.create_task( self.parser.db_entry(message_) )
+                    asyncio.create_task( self.parser.db_entry(json.loads(message_)) )
                     logging.info("*" * 50)
                 if self.websocket:
                     loop = self.websocket.loop

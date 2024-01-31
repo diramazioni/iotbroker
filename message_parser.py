@@ -158,9 +158,7 @@ class MessageParser:
         except Exception as e:
             logging.error(f"db_entry error:{e}")  # Print the exception
             logging.error(traceback.format_exc())
-            logging.error(json.dumps(payload, indent=2))
-            # import sys
-            # sys.exit(1)
+            #logging.error(payload)
 
     async def process_data(self, data_file) -> None:
         with open(data_file) as f:
