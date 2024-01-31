@@ -42,7 +42,6 @@ class WeatherLogger(AsyncMqttClient, AsyncHttpClient):
         response = json.loads(response)
         hr = response["hourly"][0]  # prendo il primo (non il secondo)
         timestamp = hr["dt"] * 1000
-        # TODO; Giuliano perché in microsec??? devo riconvertirlo dopo
         values = []
         for key in c["keys"]:
             value = None

@@ -11,8 +11,8 @@ from prisma import Json
 # from prisma.models import DateTime
 
 """
-Seed the DB with saved json messages from the MQTT broker
 Insert the MQTT messages into the DB
+Seed the DB with saved json messages from the MQTT broker
 """
 
 
@@ -34,6 +34,8 @@ class MessageParser:
         try:
             e = payload
             sens = {}
+            logging.debug(e["timestamp"])
+
             timestamp = datetime.utcfromtimestamp(
                 int(e["timestamp"] / 1000)
             )  # .isoformat()
@@ -156,13 +158,13 @@ class MessageParser:
         except Exception as e:
             logging.error(f"db_entry error:{e}")  # Print the exception
             logging.error(traceback.format_exc())
+            logging.error(json.dumps(payload, indent=2))
             # import sys
             # sys.exit(1)
 
     async def process_data(self, data_file) -> None:
         with open(data_file) as f:
             data_json = json.load(f)
-
             for e in data_json:
                 await self.db_entry(e)
                 await asyncio.sleep(0.1)
@@ -171,7 +173,11 @@ class MessageParser:
 async def main() -> None:
     message_parser = MessageParser()
     await message_parser.connect()
-    # await message_parser.process_data("data/ETRometer_2.json")
+    # Process single message
+    await message_parser.process_data("dev_data/test/ws_s.json")
+
+    # Process multiple json files
+    '''
     import glob
 
     loop = asyncio.get_event_loop()
@@ -185,9 +191,10 @@ async def main() -> None:
         # await message_parser.process_data(f)
     await asyncio.wait(background_tasks)
     await asyncio.sleep(1)
+    '''
     await message_parser.disconnect()
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     asyncio.run(main())

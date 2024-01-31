@@ -27,10 +27,7 @@ class MQTTLogger(AsyncMqttClient):
             device_name = message.topic.split(":")[-1].split("/")[0]
             message_ = message.payload.decode("utf-8")
             if message_:
-                # message_ = json.loads(message_)
-                # device = message_.topic.split(":")[3][:-6]
-                logging.info(f"Received:{message_} from {message.topic} topic")
-                # asyncio.create_task(self.websocket.send_event(message))
+                logging.info(f"Received:\n{message_}\n from topic:\n{message.topic}")
                 if self.parser:
                     asyncio.create_task( self.parser.db_entry(message_) )
                     logging.info("*" * 50)
