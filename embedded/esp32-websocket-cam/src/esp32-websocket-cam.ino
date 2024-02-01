@@ -88,8 +88,7 @@ void send_image() {
       if (fb != NULL) {
         // Send binary data in chunks
         size_t bufferSize = 1024*8;
-        for (size_t i = 0; i < fb->len; i += bufferSize) {
-          // size_t chunkSize = std::min(static_cast<size_t>(1024), static_cast<size_t>(fb->len - i));          
+        for (size_t i = 0; i < fb->len; i += bufferSize) {    
           size_t chunkSize = std::min(bufferSize, fb->len - i);
           client.sendBinary((const char*)(fb->buf + i), chunkSize);
         }
