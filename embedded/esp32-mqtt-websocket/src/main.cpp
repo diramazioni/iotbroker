@@ -1,13 +1,24 @@
 #include <Arduino.h>
 #include <WiFi.h>
-#include <WiFiClientSecure.h>
+//#include <WiFiClientSecure.h>
+#include <ArduinoWebsockets.h>
 #include <PubSubClient.h>
 
 #include "credentials.h"
 
 
-WiFiClientSecure espClient;
-PubSubClient client(espClient);
+using namespace websockets;
+WebsocketsClient wsclient;
+WiFiClient wifiClient;
+PubSubClient client(wifiClient);
+
+void sendMqttConnect() {
+  // Construct MQTT CONNECT packet
+  String connectPacket = String('\x10') + String('\x17') + String('\x00\x04') + String("MQTT") +
+                         String('\x04') + String('\xC2') + String('\x00\x0F') +
+                         String('\x00\x0B') + String("ESP32Client") + String('\x00\x00\x00\x00');
+  wsclient.send(connectPacket);
+}
 
 void setup() {
   Serial.begin(9600);
@@ -21,39 +32,31 @@ void setup() {
   Serial.println("Connected to WiFi");
 
   // Set up MQTT server over WSS
-  espClient.setCACert(ssl_cert);
-  Serial.print("Connecting to NGINX server...");
-  if (espClient.connect(mqtt_server, mqtt_port)) {
-    Serial.println("espClient connected!");
+  wsclient.setCACert(ssl_cert);
+  bool connected = wsclient.connect(ws_server_address);
+  if (connected) {
+    Serial.println("WebSocket connected");
+    //sendMqttConnect(); // this works 101 means succesfully upgraded
+                       // "GET /mqtt HTTP/1.1" 101 0 "-" "TinyWebsockets Client" 
+    client.setServer(mqtt_server, mqtt_port);
+    while (!client.connected()) {
+      Serial.println("Attempting MQTT connection...");
+      if (client.connect("ESP32Client", mqtt_username, mqtt_password)) {
+        Serial.println("Connected to MQTT server");
+        client.subscribe("exampleTopic");
+      } else {
+        Serial.print("Failed, rc=");
+        Serial.print(client.state());
+        Serial.println(" Retrying in 5 seconds");
+        delay(5000);
+      }
+    }
   } else {
-    Serial.println("Connection failed!");
-  }     
-  client.setServer(mqtt_server, mqtt_port);
+    Serial.println("WebSocket connection failed.");
+  }    
 }
 
 void loop() {
-  if (!client.connected()) {
-    reconnect();
-  }
+  wsclient.poll();
   client.loop();
-}
-
-void reconnect() {
-  while (!client.connected()) {
- 
-    Serial.println("Attempting MQTT connection...");
-    if (client.connect("ESP32Client", mqtt_username, mqtt_password)) {
-      Serial.println("Connected to MQTT server");
-      // Subscribe to MQTT topics or perform other actions as needed
-    } else {
-      Serial.print("Failed, rc=");
-      Serial.print(client.state());
-      Serial.println(" Retrying in 5 seconds");
-      delay(5000);
-    }
-  }
-}
-
-void callback(char* topic, byte* payload, unsigned int length) {
-  // Handle incoming MQTT messages here
 }
