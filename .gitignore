@@ -27,4 +27,7 @@ logs/*
 doc/dashboard_test.ogv
 svelte-dash/ecosystem.config.js
 svelte-dash/src/lib/assets
+embedded/esp32-websocket-cam/.pio
 embedded/esp32-websocket-cam/src/credentials.h
+embedded/esp32-mqtt-websocket/.pio
+embedded/esp32-mqtt-websocket/src/credentials.h
