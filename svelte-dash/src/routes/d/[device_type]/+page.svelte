@@ -34,16 +34,16 @@
 	// match medium screen size and change chart options 
 	let mediumScreen = mediaQueryStore(breakpoints["md"]);
 	$: {		
-		if($mediumScreen) {
+		if($mediumScreen && device_opt?.legend) {
 			device_opt.legend.position = "left"	
 			device_opt.legend.orientation = "vertical"
 			// console.log("medium screen")		
-		} else {
+		} else if (device_opt?.legend){
 			device_opt.legend.position = "bottom"	
 			device_opt.legend.orientation = "horizontal"	
 			// console.log("small screen")	
 		}
-		if (category_on.length) {
+		if (category_on.length && device_opt?.data) {
 			device_opt['data']['selectedGroups'] = category_on
 		}	
 	}
@@ -52,7 +52,7 @@
 		//data.device_selected = device_selected
 		console.log(selectedDevice)
 
-		let ranges =  await fetch_range(fetch, selectedDevice);
+		let ranges =  await fetch_range(fetch, device_type, selectedDevice);
   		ranges = ranges.slice(1)
   		domain_range = [new Date(ranges[0]), new Date(ranges[1])]
 		//domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]

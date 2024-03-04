@@ -56,7 +56,7 @@ def on_mqtt_connect(client, userdata, flags, rc):
     if rc == 0:
         logging.info("[INFO] Connected to MQTT broker - ARDESIA")
     else:
-        logging.error("[INFO] Error, connection failed")
+        logging.error("[INFO] Error, MQTT connection failed")
 
 
 # -------------------------------------------------
@@ -64,7 +64,7 @@ def on_mqtts_connect(client, userdata, flags, rc):
     if rc == 0:
         logging.info("[INFO] Connected to MQTTS broker - WeLASER")
     else:
-        logging.error("[INFO] Error, connection failed")
+        logging.error("[INFO] Error, MQTTS connection failed")
 
 
 # -------------------------------------------------
@@ -118,14 +118,15 @@ def mqtts_connect(mqtt_username, mqtt_password, broker_endpoint, port):
     mqtts_client.on_connect = on_mqtts_connect
     mqtts_client.on_publish = on_mqtts_publish
     mqtts_client.on_message = on_mqtts_message
-    mqtts_client.tls_set(
-        ca_certs=None,
-        certfile=None,
-        keyfile=None,
-        cert_reqs=ssl.CERT_NONE,  # <<<<<<<< MQTTS cert not Valid bypass
-        tls_version=ssl.PROTOCOL_TLSv1_2,
-        ciphers=None,
-    )
+    mqtts_client.tls_set_context()
+    # mqtts_client.tls_set(
+    #     ca_certs=None,
+    #     certfile=None,
+    #     keyfile=None,
+    #     cert_reqs=ssl.CERT_NONE,  # <<<<<<<< MQTTS cert not Valid bypass
+    #     tls_version=ssl.PROTOCOL_TLSv1_2,
+    #     ciphers=None,
+    # )
     mqtts_client.tls_insecure_set(True)  # <<<<<<<< MQTTS cert not Valid bypass
     mqtts_client.connect(broker_endpoint, port=port)
     mqtts_client.loop_start()
@@ -502,8 +503,8 @@ def test_ARDESIA():
 def main():
     logging.debug("main()")
     mqtts_connect(MQTTS_USERNAME, MQTTS_PASSWORD, MQTTS_BROKER, MQTTS_PORT)
-    mqtt_connect(MQTT_USERNAME, MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT)
-    if not (mqtts_client.is_connected() and mqtt_client.is_connected()):
+    #mqtt_connect(MQTT_USERNAME, MQTT_PASSWORD, MQTT_BROKER, MQTT_PORT)
+    if not (mqtts_client.is_connected() ):
         logging.error("to many failed attempts to connects to mqtt/mqtts")
         sys.exit(1)
     stopic = f"{FIWARE}+/attrs"
@@ -511,7 +512,7 @@ def main():
     mqtt_subscribe(mqtts_client, stopic)
     stopic = "#"
     logging.debug("ARDESIA stopic=" + stopic)
-    mqtt_subscribe(mqtt_client, stopic)
+    #mqtt_subscribe(mqtt_client, stopic)
 
 
 # ---------------------------------------------------------

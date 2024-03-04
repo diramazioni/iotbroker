@@ -1,7 +1,3 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 // python client
 
 
@@ -11,7 +7,10 @@ generator client {
 //   recursive_type_depth = "5"
 // }
 
-// provider = "sqlite"
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -19,24 +18,19 @@ datasource db {
 
 model Device {
   id          Int      @id @default(autoincrement())
-  name        String
+  name        String   //@unique
   calibration Boolean?
   location    String?
   areaServed  String?
-  timestamp   DateTime
+  //timestamp   DateTime
 
   // Relation to measurements
   etrometers            ETRometer[]
-  weatherStation        WeatherStation?
-  weatherStationVirtual WeatherStationVirtual?
-  weatherStationStd     WeatherStationStd?
+  weatherStation        WeatherStation[]
+  weatherStationVirtual WeatherStationVirtual[]
+  weatherStationStd     WeatherStationStd[]
 }
 
-model Camera {
-  id        Int    @id @default(autoincrement())
-  timestamp DateTime
-  picture   String
-}
 
 model WeatherStationVirtual {
   id          Int    @id @default(autoincrement())
@@ -47,8 +41,8 @@ model WeatherStationVirtual {
   wind_speed  Float
   wind_deg    Float
   rain        Float
-  device      Device @relation(fields: [deviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  deviceId    Int    @unique
+  device      Device @relation(fields: [deviceId], references: [id])
+  deviceId    Int   
 }
 
 model WeatherStation {
@@ -71,8 +65,8 @@ model WeatherStation {
   F_east              Float?
   W_vel               Float?
   W_dir               Float?
-  device              Device @relation(fields: [deviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  deviceId            Int    @unique
+  device              Device @relation(fields: [deviceId], references: [id])
+  deviceId            Int   
 }
 model WeatherStationStd {
   id                  Int    @id @default(autoincrement())
@@ -84,8 +78,8 @@ model WeatherStationStd {
   Wind_Velocity       Float
   Wind_Direction      Float
   Rainfall            Float
-  device      Device @relation(fields: [deviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  deviceId    Int    @unique
+  device      Device @relation(fields: [deviceId], references: [id])
+  deviceId    Int    
 }
 model ETRometer {
   id        Int    @id @default(autoincrement())
@@ -96,7 +90,7 @@ model ETRometer {
   TC        Float
   RH        Float
   // Relation to Device model
-  device    Device @relation(fields: [deviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  device    Device @relation(fields: [deviceId], references: [id])
   deviceId  Int
 }
 
@@ -106,6 +100,12 @@ model Units {
   value String
   device_type  String
 
+}
+
+model Camera {
+  id        Int    @id @default(autoincrement())
+  timestamp DateTime
+  picture   String
 }
 
 model Messages {

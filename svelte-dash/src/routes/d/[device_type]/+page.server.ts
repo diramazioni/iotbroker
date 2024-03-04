@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ fetch, url, params}) => {
   const device_type = params.device_type
   const devices = await fetch_dev(fetch, device_type);
   const device_selected = devices.sort()[0]
-  let ranges =  await fetch_range(fetch, device_selected);
+  let ranges =  await fetch_range(fetch, device_type, device_selected);
   console.log(ranges)
   ranges = ranges.slice(1)
   const range = [new Date(ranges[0]), new Date(ranges[1])]

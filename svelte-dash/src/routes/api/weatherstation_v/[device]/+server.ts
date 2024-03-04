@@ -3,29 +3,35 @@ import { prisma } from '$lib/prisma';
 
 
 export async function GET({ url, params }) {
+  const device_selected = params.device
   const startParam = url.searchParams.get('start');
   const endParam = url.searchParams.get('end');
-	const where = {	name: { equals: params.device } }
+	const where = {
+    device: {
+      name: { equals: device_selected },
+    },
+  }
+
 	if (startParam && endParam) {
 		where['timestamp'] = {
 			gte: startParam, // start
 			lte: endParam  // end
 		}
 	}
-  const db_result = await prisma.device.findMany({
+  const query = {
     where:  where,
     orderBy: [{timestamp: 'asc'}],
     include: {
-      weatherStationVirtual: true
+      device: true,
     }
-  });
-
+  }
+  const db_result = await prisma.weatherStationVirtual.findMany(query);
+  // console.log(query)
 
   const transformedData = db_result.map(entry => {
-    const { timestamp, weatherStationVirtual } = entry;
-    
-    return Object.entries(weatherStationVirtual)
-    .filter(([key]) => key !== "id" && key !== "timestamp" && key !== "deviceId")
+    const { id, timestamp, device, deviceId, ...rest } = entry;
+    // console.log(rest)
+    return Object.entries(rest)
     .map(([group, value]) => ({
       group,
       date: new Date(timestamp),

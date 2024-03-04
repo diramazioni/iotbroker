@@ -62,9 +62,9 @@ export async function fetch_CSV(fetch: Fetch, device_type: string, device_select
 		throw new Error(text)
 	}
 }
-export async function fetch_range(fetch: Fetch, device_selected: string) {
-	const url = `${base}/api/range/${device_selected}`
-	console.log(`fetch_range ${url} ${device_selected}`)
+export async function fetch_range(fetch: Fetch, device_type: string, device_selected: string) {
+	const url = `${base}/api/range/${device_type}/${device_selected}`
+	console.log(`fetch_range ${url}`)
 	const response = await fetch(url)
 	const json = await response.json()
 	if (response.ok) {

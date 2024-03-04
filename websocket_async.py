@@ -169,9 +169,16 @@ class WebSocketServer:
         self.loop = asyncio.get_event_loop()  # Create a new event loop
         stop = self.loop.create_future()
         self.loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
-        async with serve(self._handler, "localhost", 8765):
-            logging.debug("Websocket server started********************************")
-            await stop
+        try:
+            async with serve(self._handler, "localhost", 8765):
+                logging.debug("Websocket server started********************************")
+                await stop
+        except OSError:
+            logging.error("----------------Error: Port is already in use")
+            async with serve(self._handler, "localhost", 8766):
+                logging.debug("Websocket server started********************************")
+                await stop
+            
 
     async def stop(self):
         signal.raise_signal(signal.SIGTERM)

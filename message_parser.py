@@ -20,8 +20,8 @@ class MessageParser:
     def __init__(self):
         self.db = Prisma()
         self.logger = logging.getLogger(__name__)
+        self.devices = {}
         self.units = {}
-
     async def connect(self):
         logging.info("Connecting to DB")
         await self.db.connect()
@@ -68,6 +68,7 @@ class MessageParser:
             }
             await self.db.messages.create(data=message)
 
+               
             # Camera message: insert directly ino the db
             if device_type == "Camera":
                 logging.info(f"Camera: {e['id']}")
@@ -99,7 +100,7 @@ class MessageParser:
 
                     else:
                         logging.debug("skipping " + name)
-
+         
             # Capture all the properties
             if all(isinstance(item, (int, float)) for item in e["value"]):
                 sens[e["name"]] = dict(zip(e["controlledProperty"], e["value"]))
@@ -110,20 +111,30 @@ class MessageParser:
                     sens[se["name"]] = dict(zip(se["controlledProperty"], se["value"]))
                     units = dict(zip(se["controlledProperty"], se["units"]))
                     await insert_units(device_type, units)
+            # find the device
+            device_db = await self.db.device.find_first (
+                where={ 'name': e["name"] }          
+            )
+            logging.info("*" * 80)
+            logging.debug(device_db)
+            
+            # Check if the device is on the table otherwise insert it
+            if not device_db:
+                device_obj = {
+                    "name": e["name"],
+                }
+                if "calibration" in e:
+                    device_obj["calibration"] = bool(e["calibration"])
+                if "areaServed" in e:
+                    device_obj["areaServed"] = e["areaServed"]
+                if "location" in e:
+                    device_obj["location"] = str(e["location"]["coordinates"])
+                device_db = await self.db.device.create(data=device_obj)
+                self.devices[sn] = device_db
+                logging.debug("?" * 80)
+                logging.debug(device_db)
 
-            device_obj = {
-                "name": e["name"],
-                "timestamp": timestamp,
-            }
-            if "calibration" in e:
-                device_obj["calibration"] = bool(e["calibration"])
-            if "areaServed" in e:
-                device_obj["areaServed"] = e["areaServed"]
-            if "location" in e:
-                device_obj["location"] = str(e["location"]["coordinates"])
 
-            # Create Device
-            device_db = await self.db.device.create(data=device_obj)
 
             # Create sensors
             sens_obj = {
