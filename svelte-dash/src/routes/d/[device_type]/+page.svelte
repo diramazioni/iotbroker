@@ -8,18 +8,21 @@
 	import { DateInput } from 'date-picker-svelte'
 
 	import { writable } from 'svelte/store'
-	import { fetch_data, fetch_opt } from '$lib/shared'
+	import { fetch_range, fetch_data, fetch_opt } from '$lib/shared'
+
 
 	import { toast } from '@zerodevx/svelte-toast'
 	import {breakpoints, mediaQueryStore } from '$lib/stores'
 	//
 	import { browser } from "$app/environment"
+	import { PUBLIC_WS_HOST	} from '$env/static/public';
 
 	export let data: PageData
 
 	let chart: null | LineChart | AreaChart = null
 
 	$: ({ devices, device_type, device_selected, device_data, device_opt } = data)
+	$: selectedDevice = device_selected;
 
 	$: domain_range = [new Date(), new Date()]
 
@@ -46,11 +49,15 @@
 	}
 
 	const update_data = async () => {
-		data.device_selected = device_selected
+		//data.device_selected = device_selected
+		console.log(selectedDevice)
 
+		let ranges =  await fetch_range(fetch, selectedDevice);
+  		ranges = ranges.slice(1)
+  		domain_range = [new Date(ranges[0]), new Date(ranges[1])]
 		//domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
-		device_data = await fetch_data(fetch, device_type, device_selected, domain_range)
-		device_opt = await fetch_opt(fetch, device_type, device_selected, domain_range)
+		device_data = await fetch_data(fetch, device_type, selectedDevice, domain_range)
+		device_opt = await fetch_opt(fetch, device_type, selectedDevice, domain_range)
 
 		//device_opt.zoomBar.top.initialZoomDomain = domain_range
 		if('category_on' in localStorage) {
@@ -70,13 +77,13 @@
 					'--toastBackground': '#2F855A',
 					'--toastBarBackground': 'rgba(72,187,120,0.9)'
 				},
-				initial: 0,
+				duration: 2000,
+				//initial: 0,
 			})
 			update_data()
-		} else {
+		} else { // message on a different device
 			toast.push('Update for <strong>'+edata.device+'</strong><br>'+
-			JSON.stringify(edata.content, null, 2))
-			// console.log("WS: Ignoring message " + edata.device )
+			JSON.stringify(edata.content, null, 2), {duration: 1000})
 		}
 	}
 
@@ -96,22 +103,7 @@
 		if (category_on.length === 1) {
 			device_opt.axes.left.title = category_on[0]
 			delete device_opt.axes.right;
-		} else if (category_on.length === 2) {
-			device_opt.axes.left.title = category_on[0]
-			device_opt.axes.right = { 
-				title : category_on[1],
-				scaleType: 'linear',
-				mapsTo: 'value',
-				correspondingDatasets: [
-					category_on[1]
-				]				
-			}
-			console.log(JSON.stringify(device_opt))
-			
-		} else {
-			device_opt.axes.left.title = JSON.stringify(category_on)
-			delete device_opt.axes.right;
-		}
+		} 
 		// console.log(category_on);
 	}
 	
@@ -124,12 +116,14 @@
 		if ('domain_range' in localStorage) {
 			domain_range = JSON.parse(localStorage.domain_range);
 			domain_range =  [new Date(domain_range[0]), new Date(domain_range[1])]
-			console.log(domain_range)
+			//console.log(domain_range)
 			//domain_range = [new Date(localStorage.domain_start),new Date(localStorage.domain_end)]
 		
 		} else {
-			domain_range = device_opt.zoomBar.top.initialZoomDomain
-			domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
+			// if(device_opt) {
+			// 	domain_range = device_opt.zoomBar.top.initialZoomDomain
+			// 	domain_range = [new Date(domain_range[0]), new Date(domain_range[1])]
+// }
 		}
 		if('category_on' in localStorage) {
 			category_on = JSON.parse(localStorage.category_on); // init the category_on with previews settings
@@ -138,8 +132,8 @@
 		//category_on = chart.model.allDataGroups // init the category_on on first update
 
 		// Specify here where the websocket server is listening
-		const ws = new WebSocket('wss://greenlab.unibo.it/ws:443')
-		//const ws = new WebSocket('ws://localhost:8765')
+		const ws = new WebSocket(PUBLIC_WS_HOST)
+		console.log("WS CONNECT " + PUBLIC_WS_HOST)
 		
 		ws.addEventListener('message', handleWebSocketMessage)
 		// Update the socket store in the context with WebSocket connection
@@ -157,7 +151,7 @@
 <div class="ml-3  md:flex md:flex-row items-end">
 	<div class="md:m-5" >
 		<p class="-mt-2">Devices</p>
-		<select bind:value={device_selected} on:change={() => update_data()} 
+		<select bind:value={selectedDevice} on:change={() => update_data()} 
 			class="-mt-1">
 			{#each devices as device, index}
 				<option  value={device}>
