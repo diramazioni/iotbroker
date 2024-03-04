@@ -6,6 +6,12 @@
 --     GROUP BY name
 -- ) AS new_primary
 -- WHERE "WeatherStation"."deviceId" IN (SELECT id FROM "Device" WHERE name = new_primary.name);
+CREATE INDEX ON "WeatherStation"("deviceId");
+CREATE INDEX ON "WeatherStationStd"("deviceId");
+CREATE INDEX ON "WeatherStationVirtual"("deviceId");
+CREATE INDEX ON "ETRometer"("deviceId");
+CREATE INDEX ON "Device"("name");
+
 CREATE TEMP TABLE temp_primary_mapping AS
 SELECT MIN(id) AS new_primary_id, name
 FROM "Device"
