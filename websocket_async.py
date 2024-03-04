@@ -162,7 +162,7 @@ class WebSocketServer:
         logging.debug("WS starting********************************")
         # Load the client strings that are able to connect for sending binary images
         load_dotenv()
-        self.allowed_clients = os.getenv("allowed_clients").strip().split(",")
+        self.allowed_clients = [] if os.getenv("allowed_clients") is None else os.getenv("allowed_clients").strip().split(",")
         logging.debug(self.allowed_clients)
 
         # Set the stop condition when receiving SIGTERM.
